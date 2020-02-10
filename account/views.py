@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from random import seed, randint
 from django.core.mail import send_mail
+import sendgrid
+import os
 # Create your views here.
 from .forms import *
 from .models import Client
@@ -103,11 +105,37 @@ class ForgetPasswordView(View):
 			return redirect('account:Register')
 		user.verificationCode = randint(10000, 99999)
 		user.save()
-		res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'jayvince.serato@gmail.com', [user.email], fail_silently=False)
-		if res == 1:
-			form = self.form_class(None)
-			return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo})
-		return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo, 'error_message' : 'Sending email failed.'})
+		# res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatslab@yahoo.com', [user.email], fail_silently=False)
+		sg = sendgrid.SendGridAPIClient('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')
+		data = {
+		  "personalizations": [
+		    {
+		      "to": [
+		        {
+		          "email": user.email
+		        }
+		      ],
+		      "subject": 'Here is your verification code: ' + str(user.verificationCode)
+		    }
+		  ],
+		  "from": {
+		    "email": "wildcatslab@yahoo.com"
+		  },
+		  "content": [
+		    {
+		      "type": "text/plain",
+		      "value": "Reset Password"
+		    }
+		  ]
+		}
+		response = sg.client.mail.send.post(request_body=data)
+		
+		print(response.status_code)
+		print(response.body)
+		print(response.headers)
+		form = self.form_class(None)
+		return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo})
+		# return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo, 'error_message' : 'Sending email failed.'})
 
 	def post(self, request):
 		form = self.form_class(request.POST)
