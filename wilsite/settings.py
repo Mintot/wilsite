@@ -129,7 +129,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_TMP = '/static'
-STATIC_ROOT = ''
+STATIC_ROOT = '/static'
 
 redis_host = os.environ.get('REDIS_HOST', 'localhost')
 
