@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
 from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -148,4 +149,5 @@ CHANNEL_LAYERS = {
         "ROUTING": "skrib.routing.channel_routing",
     },
 }
- 
+ # Activate Django-Heroku.
+django_heroku.settings(locals())
