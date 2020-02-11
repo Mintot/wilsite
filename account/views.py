@@ -106,6 +106,7 @@ class ForgetPasswordView(View):
 		user.verificationCode = randint(10000, 99999)
 		user.save()
 		res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatslab@yahoo.com', [user.email], fail_silently=False)
+		print(res)
 		#sg = sendgrid.SendGridAPIClient('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')
 #		data = {
 #		  "personalizations": [
