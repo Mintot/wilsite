@@ -105,34 +105,34 @@ class ForgetPasswordView(View):
 			return redirect('account:Register')
 		user.verificationCode = randint(10000, 99999)
 		user.save()
-		# res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatslab@yahoo.com', [user.email], fail_silently=False)
-		sg = sendgrid.SendGridAPIClient('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')
-		data = {
-		  "personalizations": [
-		    {
-		      "to": [
-		        {
-		          "email": user.email
-		        }
-		      ],
-		      "subject": 'Here is your verification code: ' + str(user.verificationCode)
-		    }
-		  ],
-		  "from": {
-		    "email": "wildcatslab@yahoo.com"
-		  },
-		  "content": [
-		    {
-		      "type": "text/plain",
-		      "value": "Reset Password"
-		    }
-		  ]
-		}
-		response = sg.client.mail.send.post(request_body=data)
+		res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatslab@yahoo.com', [user.email], fail_silently=False)
+		#sg = sendgrid.SendGridAPIClient('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')
+#		data = {
+#		  "personalizations": [
+#		    {
+#		      "to": [
+#		        {
+#		          "email": user.email
+#		        }
+#		      ],
+#		      "subject": 'Here is your verification code: ' + str(user.verificationCode)
+#		    }
+#		  ],
+#		  "from": {
+#		    "email": "wildcatslab@yahoo.com"
+#		  },
+#		  "content": [
+#		    {
+#		      "type": "text/plain",
+#		      "value": "Reset Password"
+#		    }
+#		  ]
+#		}
+#		response = sg.client.mail.send.post(request_body=data)
 		
-		print(response.status_code)
-		print(response.body)
-		print(response.headers)
+#		print(response.status_code)
+#		print(response.body)
+#		print(response.headers)
 		form = self.form_class(None)
 		return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo})
 		# return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo, 'error_message' : 'Sending email failed.'})
