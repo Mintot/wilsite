@@ -17,7 +17,7 @@ class IndexForm(forms.ModelForm):
 			raise forms.ValidationError('User ID does not exist.')
 
 
-class RegForm(forms.ModelForm):
+class RegistrationForm(forms.ModelForm):
 	firstName = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'placeholder' : 'First Name'})) 
 	lastName = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'placeholder' : 'Last Name'})) 
 	email = forms.CharField(label='Email Address', widget=forms.EmailInput(attrs={'placeholder' : 'Email Address'}))
@@ -33,15 +33,21 @@ class RegForm(forms.ModelForm):
 		password_submit = self.cleaned_data.get('password')
 		if password_confirm != password_submit:
 			raise forms.ValidationError('Password does not match.')
-		return password_confirm			
+		return password_confirm		
 
-	def clean_email(self):
+	def getFNameTxt(self):
+		return self.cleaned_data.get('firstName')
+
+	def getLNameTxt(self):
+		return self.cleaned_data.get('lastName')
+
+	def inputDetails(self):
 		try:
 			email = self.cleaned_data.get('email') # [Fixing Merge Conflicts] from cleaed_data
 			validate_email(email)
-			return email
 		except ValidationError: # [Fixing Merge Conflicts] from validate_email.ValidationError
 			raise forms.ValidationError('Use a Proper Email')
+		return {'email' : email, }
 
 class SignInForm(forms.ModelForm):
 	# idNo = forms.CharField(label='ID Number', widget=forms.TextInput(attrs={'placeholder' : 'ID Number'}))

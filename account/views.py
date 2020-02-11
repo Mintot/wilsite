@@ -30,8 +30,8 @@ class IndexView(View):
 			return redirect('account:Signin')
 		return render(request=request, template_name=self.template_name, context={'form' : form})
 
-class RegView(View):
-	form_class = RegForm
+class RegistrationView(View):
+	form_class = RegistrationForm
 	template_name = 'account/reg_fin.html'
 
 	def get(self, request):
@@ -49,9 +49,9 @@ class RegView(View):
 			idNo = self.request.session['idNo']
 			password = form.cleaned_data['password']
 			conf_password = form.cleaned_data['conf_password']
-			firstName = form.cleaned_data['firstName']
-			lastName = form.cleaned_data['lastName']
-			email = form.cleaned_data['email']
+			firstName = form.getFNameTxt()
+			lastName = form.getLNameTxt()
+			email = form.inputDetails().get('email')
 			# user.set_username(idNo)
 			user = Client.objects.get(username=idNo)
 			user.first_name = firstName
@@ -105,34 +105,34 @@ class ForgetPasswordView(View):
 			return redirect('account:Register')
 		user.verificationCode = randint(10000, 99999)
 		user.save()
-		# res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatslab@yahoo.com', [user.email], fail_silently=False)
-		sg = sendgrid.SendGridAPIClient('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')
-		data = {
-		  "personalizations": [
-		    {
-		      "to": [
-		        {
-		          "email": user.email
-		        }
-		      ],
-		      "subject": 'Here is your verification code: ' + str(user.verificationCode)
-		    }
-		  ],
-		  "from": {
-		    "email": "wildcatslab@yahoo.com"
-		  },
-		  "content": [
-		    {
-		      "type": "text/plain",
-		      "value": "Reset Password"
-		    }
-		  ]
-		}
-		response = sg.client.mail.send.post(request_body=data)
+		res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatinnolabs@gmail.com', [user.email], fail_silently=False)
+		# sg = sendgrid.SendGridAPIClient('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')
+		# data = {
+		#   "personalizations": [
+		#     {
+		#       "to": [
+		#         {
+		#           "email": user.email
+		#         }
+		#       ],
+		#       "subject": 'Here is your verification code: ' + str(user.verificationCode)
+		#     }
+		#   ],
+		#   "from": {
+		#     "email": "wildcatslab@yahoo.com"
+		#   },
+		#   "content": [
+		#     {
+		#       "type": "text/plain",
+		#       "value": "Reset Password"
+		#     }
+		#   ]
+		# }
+		# response = sg.client.mail.send.post(request_body=data)
 		
-		print(response.status_code)
-		print(response.body)
-		print(response.headers)
+		# print(response.status_code)
+		# print(response.body)
+		# print(response.headers)
 		form = self.form_class(None)
 		return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo})
 		# return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo, 'error_message' : 'Sending email failed.'})
