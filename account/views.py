@@ -105,6 +105,7 @@ class ForgetPasswordView(View):
 			return redirect('account:Register')
 		user.verificationCode = randint(10000, 99999)
 		user.save()
+<<<<<<< HEAD
 		res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatinnolabs@gmail.com', [user.getEmail()], fail_silently=False)
 		# sg = sendgrid.SendGridAPIClient('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')
 		# data = {
@@ -133,6 +134,37 @@ class ForgetPasswordView(View):
 		# print(response.status_code)
 		# print(response.body)
 		# print(response.headers)
+=======
+		res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatslabs@yahoo.com', [user.email], fail_silently=False)
+		print(res)
+		#sg = sendgrid.SendGridAPIClient('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')
+#		data = {
+#		  "personalizations": [
+#		    {
+#		      "to": [
+#		        {
+#		          "email": user.email
+#		        }
+#		      ],
+#		      "subject": 'Here is your verification code: ' + str(user.verificationCode)
+#		    }
+#		  ],
+#		  "from": {
+#		    "email": "wildcatslab@yahoo.com"
+#		  },
+#		  "content": [
+#		    {
+#		      "type": "text/plain",
+#		      "value": "Reset Password"
+#		    }
+#		  ]
+#		}
+#		response = sg.client.mail.send.post(request_body=data)
+		
+#		print(response.status_code)
+#		print(response.body)
+#		print(response.headers)
+>>>>>>> 92f6bed6fffef9ad6612585aa228df64dff3c37d
 		form = self.form_class(None)
 		return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo})
 		# return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo, 'error_message' : 'Sending email failed.'})
