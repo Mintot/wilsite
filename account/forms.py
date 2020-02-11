@@ -49,7 +49,7 @@ class RegistrationForm(forms.ModelForm):
 			raise forms.ValidationError('Use a Proper Email')
 		return {'email' : email, }
 
-class SignInForm(forms.ModelForm):
+class LogInForm(forms.ModelForm):
 	# idNo = forms.CharField(label='ID Number', widget=forms.TextInput(attrs={'placeholder' : 'ID Number'}))
 	password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder' : 'Password'}))
 

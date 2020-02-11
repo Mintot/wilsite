@@ -68,8 +68,8 @@ class RegistrationView(View):
 		return render(request, self.template_name, {'form' : form})
 
 
-class SigninView(View):
-	form_class = SignInForm
+class LoginView(View):
+	form_class = LogInForm
 	template_name = 'account/reg_fin.html'
 	def get(self, request):
 		idNo = request.session.get('idNo')
@@ -105,7 +105,7 @@ class ForgetPasswordView(View):
 			return redirect('account:Register')
 		user.verificationCode = randint(10000, 99999)
 		user.save()
-		res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatinnolabs@gmail.com', [user.email], fail_silently=False)
+		res = send_mail('Reset Password', 'Here is your verification code: ' + str(user.verificationCode), 'wildcatinnolabs@gmail.com', [user.getEmail()], fail_silently=False)
 		# sg = sendgrid.SendGridAPIClient('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')
 		# data = {
 		#   "personalizations": [
