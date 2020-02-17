@@ -1,18 +1,21 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import  logout
 from random import seed, randint
 from django.core.mail import send_mail
 import sendgrid
+# import djangoscheduler
 import os
 # Create your views here.
 from .forms import *
+from .controllers import *
 from .models import Client
 
 class IndexView(View):
 	form_class = IndexForm
 	template_name = 'account/reg.html'
+	controller = IndexController
 	def get(self, request):
 		client = self.request.user
 		if client.is_authenticated:
@@ -21,17 +24,18 @@ class IndexView(View):
 		return render(request=request, template_name=self.template_name, context={'form' : form})
 	def post(self, request):
 		form = self.form_class(request.POST)
+		controller = self.controller
 		if form.is_valid():
 			idNo = form.cleaned_data['idNo']
-			firstName = Client.objects.get(username=idNo).first_name
 			request.session['idNo'] = idNo
-			if firstName == "":
+			if controller.verifyIdNewUser(idNo):
 				return redirect('account:Register')
 			return redirect('account:Signin')
 		return render(request=request, template_name=self.template_name, context={'form' : form})
 
-class RegView(View):
-	form_class = RegForm
+class RegistrationView(View):
+	form_class = RegistrationForm
+	controller = RegistrationController
 	template_name = 'account/reg_fin.html'
 
 	def get(self, request):
@@ -41,40 +45,34 @@ class RegView(View):
 			return redirect('home:Homepage')
 		if idNo == None:
 			return redirect('account:Index')
+		if IndexController.verifyIdNewUser(idNo) == False:
+			return redirect('account:Signin')
 		form = self.form_class(None)
 		return render(request=request, template_name=self.template_name, context={'form': form, 'idNo' : idNo})
 	def post(self, request):
 		form = self.form_class(request.POST)
+		controller = self.controller
 		if form.is_valid():
 			idNo = self.request.session['idNo']
-			password = form.cleaned_data['password']
-			conf_password = form.cleaned_data['conf_password']
-			firstName = form.cleaned_data['firstName']
-			lastName = form.cleaned_data['lastName']
-			email = form.cleaned_data['email']
-			# user.set_username(idNo)
-			user = Client.objects.get(username=idNo)
-			user.first_name = firstName
-			user.last_name = lastName
-			user.email = email
-			user.set_password(conf_password)
-			# user.set_first_name(firstName)
-			# user.set_last_name(lastName)
-			user.save()
-			user = authenticate(username=idNo, password=conf_password)
-			if user is not None:
-				login(request, user)
+			password = form.inputDetails().get('password')
+			firstName = form.getFNameTxt()
+			lastName = form.getLNameTxt()
+			email = form.inputDetails().get('email')
+			result = controller.saveUserAndLogin(request, idNo, password, firstName, lastName, email)
+			if result:
 				return redirect('home:Homepage')
 		return render(request, self.template_name, {'form' : form})
 
 
-class SigninView(View):
-	form_class = SignInForm
+class LoginView(View):
+	form_class = LogInForm
 	template_name = 'account/reg_fin.html'
 	def get(self, request):
 		idNo = request.session.get('idNo')
 		if idNo == None:
 			return redirect('account:Index')
+		if IndexController.verifyIdNewUser(idNo):
+			return redirect('account:Register')
 		form = self.form_class(None)
 		return render(request=request, template_name=self.template_name, context={'form': form, 'idNo' : idNo})
 	def post(self, request):
@@ -130,7 +128,6 @@ class ForgetPasswordView(View):
 #		  ]
 #		}
 #		response = sg.client.mail.send.post(request_body=data)
-		
 #		print(response.status_code)
 #		print(response.body)
 #		print(response.headers)

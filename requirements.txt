@@ -1,6 +1,12 @@
 django==3.0.3
+<<<<<<< HEAD
 python-decouple==3.1 
 Pillow>=5.1.0  
+=======
+python-decouple>=3.1
+Pillow>=5.1.0
+>>>>>>> b7c6ef697086226c7522688feb2c1ee2bd5bffb6
 gunicorn
 django-heroku
 sendgrid
+django-scheduler

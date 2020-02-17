@@ -1,28 +1,28 @@
 from django import forms
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
 from .models import Client
+from .controllers import *
 
 class IndexForm(forms.ModelForm):
 	idNo = forms.CharField(label='Your ID Number', max_length=20, widget=forms.TextInput(attrs={'placeholder' : 'ID Number'}))
+	controller = IndexController
 	class Meta:
 		model = Client
 		fields = ["idNo"]
 	def clean_idNo(self):
 		idNo = self.cleaned_data.get('idNo')
-		try:
-			Client.objects.get(username=idNo)
+		controller = self.controller
+		if controller.verifyId(idNo):
 			return idNo
-		except Client.DoesNotExist:
+		else:
 			raise forms.ValidationError('User ID does not exist.')
 
-
-class RegForm(forms.ModelForm):
+class RegistrationForm(forms.ModelForm):
 	firstName = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'placeholder' : 'First Name'})) 
 	lastName = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'placeholder' : 'Last Name'})) 
 	email = forms.CharField(label='Email Address', widget=forms.EmailInput(attrs={'placeholder' : 'Email Address'}))
 	password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder' : 'Enter Password'}), min_length=8)
 	conf_password = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'placeholder' : 'Confirm Password'}), min_length=8)
+	controller = RegistrationController
 
 	class Meta:
 		model = Client
@@ -33,17 +33,28 @@ class RegForm(forms.ModelForm):
 		password_submit = self.cleaned_data.get('password')
 		if password_confirm != password_submit:
 			raise forms.ValidationError('Password does not match.')
-		return password_confirm			
+		return password_confirm		
 
-	def clean_email(self):
-		try:
-			email = self.cleaned_data.get('email') # [Fixing Merge Conflicts] from cleaed_data
-			validate_email(email)
-			return email
-		except ValidationError: # [Fixing Merge Conflicts] from validate_email.ValidationError
+	def getFNameTxt(self):
+		return self.cleaned_data.get('firstName')
+
+	def getLNameTxt(self):
+		return self.cleaned_data.get('lastName')
+
+	def inputDetails(self):
+		controller = self.controller
+		email = self.cleaned_data.get('email') # [Fixing Merge Conflicts] from cleaed_data
+		password = self.cleaned_data.get('conf_password')
+		if (controller.verifyEmail(email)):
+			return {
+			'email' : email, 
+			'password' : password,
+			}
+		else: # [Fixing Merge Conflicts] from validate_email.ValidationError
 			raise forms.ValidationError('Use a Proper Email')
+		
 
-class SignInForm(forms.ModelForm):
+class LogInForm(forms.ModelForm):
 	# idNo = forms.CharField(label='ID Number', widget=forms.TextInput(attrs={'placeholder' : 'ID Number'}))
 	password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder' : 'Password'}))
 
