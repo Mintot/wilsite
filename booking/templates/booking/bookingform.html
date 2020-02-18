@@ -1,0 +1,144 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href= "{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="{% static 'fullcalendar/packages/core/main.css' %}">
+    <!--<link href='fullcalendar/packages/core/main.css' rel='stylesheet' />-->
+
+    <link href="{% static 'fullcalendar/packages/daygrid/main.css' %}" rel='stylesheet' />
+    <link href="{% static 'fullcalendar/packages/list/main.css' %}" rel='stylesheet' />
+    <link href="{% static 'fullcalendar/packages/timegrid/main.css' %}" rel='stylesheet' />
+
+    <script src="{% static 'fullcalendar/packages/core/main.js' %}"></script>
+
+    <script src="{% static 'fullcalendar/packages/daygrid/main.js' %}"></script>
+    <script src="{% static 'fullcalendar/packages/list/main.js' %}"></script>
+    <script src="{% static 'fullcalendar/packages/timegrid/main.js' %}"></script>
+ 
+
+    <title>Booking</title>
+  </head>
+
+  <body>
+
+  	<form action="/" method="get">
+	<span>Welcome, {{ user.first_name }} </span>
+	<a href="/signin/logout">Logout</a>
+	</form>
+
+  	<button type="submit" class="btn btn-info" name="btnBook" value="Reserve" data-toggle="modal" href="#book">Reserve</button>
+
+  	<div id='calendar'></div>
+
+  	<!--Book Modal--->
+              <div class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Reservation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="regForm" action="">
+						  <!-- One "tab" for each step in the form: -->
+						  <div class="tab">Date & Time:
+						    <p><input type="date" placeholder="Start Date..." oninput="this.className = ''" name="startDate"></p>
+						    <p><input type="date" placeholder="End Date..." oninput="this.className = ''" name="endDate"></p>
+						    <p><input type="time" placeholder="Start Time..." oninput="this.className = ''" name="endDate"></p>
+						    <p><input type="time" placeholder="End Time..." oninput="this.className = ''" name="endDate"></p>
+						  </div>
+						  <div class="tab">Booking Info:
+						    <p>Purpose: <select id="cars" name="purpose" placeholder="Choose Purpose" oninput="this.className = ''">
+										    <option value="volvo">A</option>
+										    <option value="saab">B</option>
+										    <option value="fiat">C</option>
+										    <option value="audi">D</option>
+										</select>
+							</p>
+						    	
+						    <p>Attendees: <input type="text" placeholder="Add Guests" name="search" oninput="this.className = ''" class="fa fa-search">
+      									  <button type="submit"><i class="fa fa-search"></i></button>
+						   </p>
+
+						  </div>
+						  <div class="tab">Summary:
+						    <p>Booking Reference No.: <input placeholder="Reference No." oninput="this.className = ''" name="refNo"></p>
+						    <p>Attendees: <input placeholder="Attendees" oninput="this.className = ''" name="attendees"></p>
+						    <p>Facilities: <input placeholder="Facilities" oninput="this.className = ''" name="facilities"></p>
+						    <p>Date: <input placeholder="Date" oninput="this.className = ''" name="date"></p>
+						    <p>Time: <input placeholder="Time" oninput="this.className = ''" name="time"></p>
+						    <p>Cost: <input placeholder="Cost" oninput="this.className = ''" name="cost"></p>
+						  </div>
+						  <div style="overflow:auto;">
+						    <div style="float:right;">
+						      <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+						      <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+						    </div>
+						  </div>
+						  <!-- Circles which indicates the steps of the form: -->
+						  <div style="text-align:center;margin-top:40px;">
+						    <span class="step"></span>
+						    <span class="step"></span>
+						    <span class="step"></span>
+						  </div>
+						</form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--END Book Modal-->
+
+             <script>
+      document.addEventListener('DOMContentLoaded', function() {
+		  var calendarEl = document.getElementById('calendar');
+
+		  var calendar = new FullCalendar.Calendar(calendarEl, {
+		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+		    defaultView: 'dayGridMonth',
+		    defaultDate: '2020-02-07',
+		    header: {
+		      left: 'prev,next today',
+		      center: 'title',
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+		    },
+		    events: [
+		      {
+		        title: 'All Day Event',
+		        start: '2020-02-01'
+		      },
+		      {
+		        title: 'All Day Event',
+		        start: '2020-02-17'
+		      },
+		    ]
+		  });
+		  calendar.render();
+		});
+    </script>
+
+    
+
+    <!-- Optional JavaScript -->
+    <script src="{% static 'js/styles.js' %}"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    
+
+  </body>
+</html>

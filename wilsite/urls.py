@@ -22,6 +22,7 @@ urlpatterns = [
     #     RegistrationView.as_view(success_url='/profile/'),
     #     name='django_registration_register'),
     path('signin/', include('account.urls', namespace='account')),
+    path('booking/', include('booking.urls', namespace='booking')),
     path('', include('home.urls', namespace='home')),
     # path('accounts/', include('django_registration.backends.one_step.urls')),
     # path('accounts/', include('django.contrib.auth.urls')),
