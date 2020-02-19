@@ -1,30 +1,39 @@
+{% load static %}
+
 <html>
 <head>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href= "{% static 'css/reg_fin.css' %}">
+
 	<title>Wildcat Innovation Labs</title>
 </head>
 <body>
 	<div class="h-100 row align-items-center text-center">
-		<div class="col">
+		<div class="col-md-5">&nbsp;</div>
+		<div class="col-md-2">
+			<h3 class="signIn">Input Details</h3>
 			<form method="post">
-			    {% csrf_token %}
-			    <div>{{ idNo }}</div>
-			    {% for field in form %}
-				    <div>
-				    	<span>
+				<div class="idNo">{{ idNo }}</div>
+			    
+				    <div class="content">
+				    	{% csrf_token %}    
+			   		    {% for field in form %}
+				    	<span>	
 					    	<span>{{ field }}</span>
 					    	<span>{{ field.errors.as_text }}</span>
 					    </span>
-				    </div>
-				{% endfor %}
-				<div>{{ error_message }}</div>
+					  	{% endfor %}
+				    </div>	
+				<div class="message">{{ error_message }}</div>
+				<div class="col-md-5">&nbsp;</div>	
 				{% if error_message == 'Incorrect password.' %}
 					<div><a href="forgotpw">Forgot password?</a></div>
 				{% endif %}
-			    <input type="submit" value="Submit">
+			    <input type="submit" name="btnSubmit" value="Submit" class="btn btn-success">
 			</form>
 		</div>
 	</div>

@@ -3,8 +3,11 @@ from .models import Client
 from .controllers import *
 
 class IndexForm(forms.ModelForm):
-	idNo = forms.CharField(label='Your ID Number', max_length=20, widget=forms.TextInput(attrs={'placeholder' : 'ID Number'}))
+	idNo = forms.CharField(label='Your ID Number', max_length=20, 
+			widget=forms.TextInput(attrs={'class' : 'details', 'placeholder' : 'ID Number'}))
+
 	controller = IndexController
+
 	class Meta:
 		model = Client
 		fields = ["idNo"]
@@ -18,11 +21,21 @@ class IndexForm(forms.ModelForm):
 
 
 class RegistrationForm(forms.ModelForm):
-	firstName = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'placeholder' : 'First Name'})) 
-	lastName = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'placeholder' : 'Last Name'})) 
-	email = forms.CharField(label='Email Address', widget=forms.EmailInput(attrs={'placeholder' : 'Email Address'}))
-	password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder' : 'Enter Password'}), min_length=8)
-	conf_password = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'placeholder' : 'Confirm Password'}), min_length=8)
+	firstName = forms.CharField(label='First Name', 
+				widget=forms.TextInput(attrs={'class' : 'details', 'placeholder' : 'First Name'})) 
+
+	lastName = forms.CharField(label='Last Name', 
+			   widget=forms.TextInput(attrs={'class' : 'details', 'placeholder' : 'Last Name'})) 
+
+	email = forms.CharField(label='Email Address', 
+		    widget=forms.EmailInput(attrs={'class' : 'details', 'placeholder' : 'Email Address'}))
+
+	password = forms.CharField(label='Password', 
+			   widget=forms.PasswordInput(attrs={'class' : 'details', 'placeholder' : 'Enter Password'}), min_length=8)
+
+	conf_password = forms.CharField(label='Confirm Password', 
+					widget=forms.PasswordInput(attrs={'class' : 'details', 'placeholder' : 'Confirm Password'}), min_length=8)
+	
 	controller = RegistrationController
 
 	class Meta:
@@ -57,7 +70,8 @@ class RegistrationForm(forms.ModelForm):
 
 class LogInForm(forms.ModelForm):
 	# idNo = forms.CharField(label='ID Number', widget=forms.TextInput(attrs={'placeholder' : 'ID Number'}))
-	password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'placeholder' : 'Password'}))
+	password = forms.CharField(label='Password', 
+			   widget=forms.PasswordInput(attrs={'class' : 'details', 'placeholder' : 'Password'}))
 
 	# def clean_password(self):
 	# 	password = self.cleaned_data.get('password')
@@ -72,15 +86,19 @@ class LogInForm(forms.ModelForm):
 		fields = ["password"] # these are the fields in the form 
 
 class ForgetPasswordForm(forms.ModelForm):
-	verificationCode = forms.CharField(label='Enter verification code', widget=forms.TextInput(attrs={'placeholder' : 'Enter verification code'}))
+	verificationCode = forms.CharField(label='Enter verification code', 
+					   widget=forms.TextInput(attrs={'class' : 'details', 'placeholder' : 'Enter verification code'}))
 
 	class Meta:
 		model = Client
 		fields = ["verificationCode"]
 
 class ChangePasswordForm(forms.ModelForm):
-	password = forms.CharField(label='Enter New Password', widget=forms.PasswordInput(attrs={'placeholder' : 'Enter New Password'}))
-	conf_password = forms.CharField(label='Reenter New Password', widget=forms.PasswordInput(attrs={'placeholder' : 'Reenter New Password'}))
+	password = forms.CharField(label='Enter New Password', 
+			   widget=forms.PasswordInput(attrs={'class' : 'details', 'placeholder' : 'Enter New Password'}))
+
+	conf_password = forms.CharField(label='Reenter New Password',
+				    widget=forms.PasswordInput(attrs={'class' : 'details', 'placeholder' : 'Reenter New Password'}))
 
 	def clean_conf_password(self):
 		password_confirm = self.cleaned_data.get('conf_password')
