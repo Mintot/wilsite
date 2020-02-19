@@ -1,0 +1,22 @@
+body {
+	background-color: #d3d3d3;
+}
+
+.content { 
+    position: relative; 
+    border: 1px solid #123;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    border-style: solid;
+    border-color: gold;
+    border-radius: 12px;
+  	background-color: rgba(255,204,0);
+}
+
+.signIn {
+	text-decoration: underline;
+}
+
+.field {
+
+}

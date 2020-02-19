@@ -16,6 +16,7 @@ class IndexForm(forms.ModelForm):
 		else:
 			raise forms.ValidationError('User ID does not exist.')
 
+
 class RegistrationForm(forms.ModelForm):
 	firstName = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'placeholder' : 'First Name'})) 
 	lastName = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'placeholder' : 'Last Name'})) 
