@@ -5,6 +5,16 @@ PURPOSES = (
 	('project making', 'Project Making'),
 	('group collaboration', 'Group Collaboration'),
 )
+VENUES = (
+	('conf', 'Conference Room'),
+	('conf2', 'Joined Conference Room'),
+	('coworking', 'Coworking Space'),
+)
+
+class Venue(models.Model):
+	name = models.CharField(max_length=50)
+	cap = models.IntegerField()
+	isSimultaneous = models.BooleanField(default=False)
 
 class Booking(models.Model):
 	title = models.CharField(max_length=100)
@@ -15,3 +25,5 @@ class Booking(models.Model):
 	purpose = models.CharField(max_length=30, choices=PURPOSES, default='studying')
 	attendee = Client
 	referenceNo = models.IntegerField()
+	cost = models.IntegerField()
+	venue = models.CharField(max_length=30, choices=VENUES, default='coworking')

@@ -121,6 +121,19 @@
           <!--END Book Modal-->
 
              <script>
+             	var starts = {{ startDates|safe }};
+             	var ends = {{ endDates|safe }};
+             	var event = [];
+
+             	for (index = 0, len = starts.length; index < len; ++index) {
+
+             		event.push({
+             			title: 'Reserved', 
+             			start: starts[index],
+             			end: ends[index], 
+             		});
+             	}
+             	event.push()
       document.addEventListener('DOMContentLoaded', function() {
 		  var calendarEl = document.getElementById('calendar');
 
@@ -129,20 +142,13 @@
 		    defaultView: 'dayGridMonth',
 		    defaultDate: '2020-02-07',
 		    header: {
-		      left: 'prev,next today',
+		      left: 'prev,next, today',
 		      center: 'title',
 		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
 		    },
-		    events: [
-		      {
-		        title: 'All Day Event',
-		        start: '2020-02-01'
-		      },
-		      {
-		        title: 'All Day Event',
-		        start: '2020-02-17'
-		      },
-		    ]
+
+
+		    events: event,
 		  });
 		  calendar.render();
 		});

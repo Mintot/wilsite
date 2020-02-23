@@ -1,0 +1,33 @@
+{% load static %}
+
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href='{% static "booking/css/booking.css"%}'>
+
+    <script type="text/javascript" src='{% static "booking/js/search.js"%}'></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>Attendees
+            
+              <span class="autocomplete" style="width: 300px;">
+                <input autocomplete="off" id="attInput" type="text" name="search" placeholder="Attendee"> 
+              </span></div>
+            <div id="listOfAttendees"></div>
+            <button>Next</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var us = {{ users|safe }};
+      autocomplete(document.getElementById("attInput"), us, document.getElementById("listOfAttendees"));
+    </script>
+  </body>
+</html>

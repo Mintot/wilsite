@@ -1,16 +1,9 @@
 from django import forms
 from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
 from django.utils import timezone
-from .models import Booking
+from .models import *
 
-
-PURPOSES = (
-	('studying', 'Studying'),
-	('project making', 'Project Making'),
-	('group collaboration', 'Group Collaboration'),
-)
-
-class BookingCalendarForm(forms.Form):
+class BookingCalendarForm(forms.ModelForm):
 	today = str(timezone.now())[0:10]
 	year = int(today[0:4])
 	maxDay = str(year+1)+today[4:10]
@@ -31,7 +24,6 @@ class BookingCalendarForm(forms.Form):
 		initial=today,
 	)
 	end_date = forms.DateField(
-		required=True,
 		widget=DatePicker(
 			options={
 				'minDate': today,
@@ -39,18 +31,14 @@ class BookingCalendarForm(forms.Form):
 				'daysOfWeekDisabled': [0],
 			},
 			attrs={
+				'input_toggle': True,
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
 			},
 		),
 		initial=today,
 	)
-	"""
-	In this example, the date portion of `defaultDate` is irrelevant;
-	only the time portion is used. The reason for this is that it has
-	to be passed in a valid MomentJS format. This will default the time
-	to be 14:56:00 (or 2:56pm).
-	"""
+	
 	start_time = forms.TimeField(
 		widget=TimePicker(
 			options={
@@ -82,6 +70,21 @@ class BookingCalendarForm(forms.Form):
 		),
 		initial='12:00:00'
 	)
+	def clean_end_date(self):
+		startDate = self.cleaned_data.get('start_date')
+		endDate = self.cleaned_data.get('end_date')
+		if startDate > endDate:
+			raise forms.ValidationError('Start date should be before end date')
+		return endDate
+	def clean_end_time(self):
+		startTime = self.cleaned_data.get('start_time')
+		endTime = self.cleaned_data.get('end_time')
+		if startTime >= endTime:
+			raise forms.ValidationError('Start time should be before end time')
+		return endTime
+	class Meta:
+		model = Booking
+		fields = ['venue', ]
 
 class BookingDetailsForm(forms.ModelForm):
 	# purpose = forms.CharField(max_length=30, choices = PURPOSES)
@@ -90,6 +93,12 @@ class BookingDetailsForm(forms.ModelForm):
 		fields = ['purpose']
 
 class BookingInfoForm(forms.ModelForm):
+	refNum = forms.CharField(disabled=True, label="Reference Number")
+	startDate = forms.CharField(disabled=True, label="Start Date")
+	endDate = forms.CharField(disabled=True, label="End Date")
+	startTime = forms.CharField(disabled=True, label="Start Time")
+	endTime = forms.CharField(disabled=True, label="End Time")
+	cost = forms.IntegerField(disabled=True, label="Cost")
 	class Meta:
 		model = Booking
-		fields = ['referenceNo']
+		fields = []
