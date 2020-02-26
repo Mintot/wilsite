@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('accounts/register/',
     #     RegistrationView.as_view(success_url='/profile/'),
     #     name='django_registration_register'),
+    path('', include('landingpage.urls', namespace='landingpage')), 
     path('signin/', include('account.urls', namespace='account')),
     path('booking/', include('booking.urls', namespace='booking')),
     path('', include('home.urls', namespace='home')),

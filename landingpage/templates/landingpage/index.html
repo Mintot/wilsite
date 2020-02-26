@@ -1,0 +1,627 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landingpage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/odometer-theme-default.css' %}"/>
+    <link rel="shortcut icon" href="{% static 'img/title.png' %}"/>
+    <!--font style [gotham]-->
+    <!--<link rel="https://cdn.rawgit.com/mfd/f3d96ec7f0e8f034cc22ea73b3797b59/raw/856f1dbb8d807aabceb80b6d4f94b464df461b3e/gotham.css">-->
+
+    <script src="{% static 'js/odometer.js' %}"></script>
+
+    <title>Wildcat Innovation Labs</title>
+  </head>
+
+  <style>
+
+  	@font-face {
+	font-family: floydFont;
+	src: url("{% static 'fonts/Gotham-Black.otf' %}");
+	}
+
+	body {
+		font-family: floydFont, "Times New Roman", sans-serif;
+	}
+
+	.btnViewMore {
+	font-weight: bold;
+	letter-spacing: 2px;
+	background: url("{% static 'img/up-chevron.png' %}") 10px 10px no-repeat;   
+    text-shadow: 1px 1px #fff; 
+    padding: 10px 10px 10px 36px;
+    width: 15%;
+	/*background-color:rgba(255,255,80);
+	border-color: black;*/
+	}
+
+	.btnViewMore:hover, .btnViewMore:active {
+	text-decoration: underline;
+	}
+
+	.stats {
+	background-image: url("{% static 'img/bgStats.jpg' %}");
+	padding-top: 2%;
+	padding-bottom: 1%;
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	}
+
+  </style>
+
+  <body>
+
+      <!--NAVIGATION BAR-->
+      <nav class="navbar navbar-expand-lg navbar-light nav1 sticky-top">
+
+        <img src="{% static 'img/w1.png' %}" class="w1">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+              <li class="nav-item custom-center">
+                <a class="nav-link font" href="#aboutus">ABOUT US</a>
+              </li>
+
+              <li class="nav-item custom-center">
+                <a class="nav-link font" href="#thrusts">THRUSTS</a>
+              </li>
+
+              <li class="nav-item custom-center">
+                <a class="nav-link font" href="#statistics">STATISTICS</a>
+              </li>
+
+              <li class="nav-item custom-center">
+                <a class="nav-link font" href="#incubatees">INCUBATEES</a>
+              </li>
+
+              <li class="nav-item custom-center">
+                <a class="nav-link font" href="#contactus">CONTACT US</a>
+              </li>
+
+              <li class="nav-item custom-center verticalLine">
+                <a class="nav-link">&nbsp;</a>
+              </li>
+
+              <li class="nav-item custom-center">
+                <a class="nav-link" href="#"><img src="{% static 'img/phone.png' %} " class="miniIcon"></a>
+              </li>
+
+              <li class="nav-item custom-center">
+                <a class="nav-link" href="#"><img src="{% static 'img/gmail.png' %}" class="miniIcon"></a>
+              </li>
+
+              <li class="nav-item custom-center">
+                <a class="nav-link" href="#"><img src="{% static 'img/facebook.png' %}" class="miniIcon"></a>
+              </li>
+
+              <li class="nav-item custom-center">
+                <a class="nav-link" href="#"><img src="{% static 'img/twitter.png' %}" class="miniIcon"></a>
+              </li>
+
+            </ul>
+        </div>
+      </nav>
+      <!--END OF NAVIGATION BAR-->
+
+      <!--VIDEO BACKGROUND--->
+      <header>
+          <div class="overlay"></div>
+          <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+            <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
+          </video>
+      </header>
+      <!--END VIDEO BACKGROUND-->
+
+      <!--ABOUT US-->
+      <section id="aboutus">
+      <div class="container">
+            <div id="carouselAboutUs" class="carousel slide" data-ride="carousel">
+              
+              <div class="carousel-inner carInner">
+
+                <div class="carousel-item active">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <img src="{% static 'img/vidAboutUs.PNG' %}" class="d-block w-100 carVid" alt="Engr. Ralph Laviste" data-toggle="modal" href="#sirRalph">
+                    </div>
+                    <div class="col-md-4 c1">
+                      <h2>Engr. Ralph Laviste</h2>
+                      <h5>Head, Wildcat Innovation Labs</h5>
+                      <p class="c2">"Loren Ipsum Loren Ipsum Loren Ipsum Loren Ipsum Loren ipsumLoren Ipsum Loren Ipsum"</p>
+                    </div>
+                  </div>
+                </div>
+
+          <!--Mr. Laviste Modal--->
+              <div class="modal fade" id="sirRalph" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Engr. Laviste</h4>
+                    </div>
+                    <div class="modal-body">
+                        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" class="vidSize">
+                          <source src="{% static 'vid/vid.mp4' %}" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--END Mr. Laviste Modal-->
+
+                <div class="carousel-item">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <img src="{% static 'img/vidAboutUs.PNG' %}" class="d-block w-100 carVid" alt="Engr. Ralph Laviste" data-toggle="modal" href="#sirRalph">
+                    </div>
+                    <div class="col-md-4 c1">
+                      <h2>Engr. Ralph Laviste</h2>
+                      <h5>Head, Wildcat Innovation Labs</h5>
+                      <p class="c2">"Loren Ipsum Loren Ipsum Loren Ipsum Loren Ipsum Loren ipsumLoren Ipsum Loren Ipsum"</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="carousel-item">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <img src="{% static 'img/vidAboutUs.PNG' %}" class="d-block w-100 carVid" alt="Engr. Ralph Laviste" data-toggle="modal" href="#sirRalph">
+                    </div>
+                    <div class="col-md-4 c1">
+                      <h2>Engr. Ralph Laviste</h2>
+                      <h5>Head, Wildcat Innovation Labs</h5>
+                      <p class="c2">"Loren Ipsum Loren Ipsum Loren Ipsum Loren Ipsum Loren ipsumLoren Ipsum Loren Ipsum"</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <a class="carousel-control-prev" href="#carouselAboutUs" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselAboutUs" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>  
+      </div>
+      </section>
+      <!--END ABOUT US-->
+
+      <!--THRUSTS-->
+      <section id="thrusts">
+      <div class="container-fluid thrusts text-center">
+        <!--1st Row-->
+        <div class="row">
+          <div class="col-md-4 incu1">
+            <h1 class="thrusts2">THRUSTS</h1>
+          </div>
+        </div>
+
+        <!--2nd row-->
+        <div class="row">
+          <div class="col-md-3">
+            <div>
+              <img class="ec" src="{% static 'img/01electronics.PNG' %}" alt="Electronics" data-toggle="modal" href="#elecModal">
+            </div>
+          </div>
+
+          <!--Electronics Modal--->
+              <div class="modal fade" id="elecModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Electronics</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>is the application of scientific theories and principles in the design, production, installation, testing, service, use, and control of electrical and electronic parts, equipment and systems.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--End Electronics Modal-->
+
+          <div class="col-md-3">
+            <div>
+              <img class="ge" src="{% static 'img/02green energy.PNG' %}" alt="Green Energy" data-toggle="modal" href="#greenEnergyModal">
+            </div>
+          </div>
+
+          <!--Green Energy Modal--->
+              <div class="modal fade" id="greenEnergyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Green Energy</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>comes from natural sources such as sunlight, wind, rain, tides, plants, algae and geothermal heat. These energy resources are renewable, meaning they're naturally replenished.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--End Green Energy Modal-->
+
+
+          <div class="col-md-3">
+            <div>
+              <img class="gb" src="{% static 'img/03green building.PNG' %}" alt="Green Building" data-toggle="modal" href="#greenBuildingModal">
+            </div>
+          </div>
+
+          <!--Green Building Modal--->
+              <div class="modal fade" id="greenBuildingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Green Building</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>also known as Green Construction, is the implementation of design in structures, buildings and commercial spaces that are environmentally accountable and resource-efficient throughout the building’s life cycle, i.e., from planning to design, construction, operation, maintenance, renovation and demolition.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--End Green Building Modal-->
+
+          <div class="col-md-3">
+            <div>
+              <img class="fi" src="{% static 'img/04food innovation.PNG' %}" alt="Food Innovation" data-toggle="modal" href="#foodInnovationModal">
+            </div>
+          </div>
+        </div>
+
+        <!--Food Innovation Modal--->
+              <div class="modal fade" id="foodInnovationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Food Innovation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Developing new food and drink products is a complex process - requiring knowledge of ingredients, processing techniques, packaging materials, legislation and consumer demands and preferences.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--End Food Innovation Modal-->
+
+          <!--3rd row-->
+        <div class="row">
+          <div class="col-md-3">
+            <div>
+              <img class="ai" src="{% static 'img/05artificial intelligence.PNG' %}" alt="Artifical Intelligence" data-toggle="modal" href="#artificialIntelligenceModal">
+              </div>
+          </div>
+
+          <!--Artifical Intelligence Modal--->
+              <div class="modal fade" id="artificialIntelligenceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Artificial Intelligence</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>the theory and development of computer systems able to perform tasks that normally require human intelligence, such as visual perception, speech recognition, decision-making, and translation between languages.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--End Artificial Intelligence Modal-->
+
+          <div class="col-md-3">
+            <div>
+              <img class="ml" src="{% static 'img/06machine learning.PNG' %}" alt="Machine Learning" data-toggle="modal" href="#machineLearningModal">
+              </div>
+          </div>
+
+          <!--Machine Learning Modal--->
+              <div class="modal fade" id="machineLearningModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Machine Learning</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--End Machine Learning Modal-->
+
+          <div class="col-md-3">
+            <div>
+              <img class="da" src="{% static 'img/07data analytics.PNG' %}" alt="Data Analytics" data-toggle="modal" href="#dataAnalyticsModal">
+              </div>
+          </div>
+
+          <!--Data Analytics Modal--->
+              <div class="modal fade" id="dataAnalyticsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Data Analytics</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>is the science of analyzing raw data in order to make conclusions about that information. ... This information can then be used to optimize processes to increase the overall efficiency of a business or system.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--End Data Analytics Modal-->
+
+          <div class="col-md-3">
+            <div>
+              <img class="robo" src="{% static 'img/09robotics.PNG' %}" alt="Robotics" data-toggle="modal" href="#roboticsModal">
+              </div>
+          </div>
+
+          <!--Robotics Modal--->
+              <div class="modal fade" id="roboticsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Robotics</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>the branch of technology that deals with the design, construction, operation, and application of robots.
+</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <!--End Robotics Modal-->
+
+        </div>
+      </div>
+      </section>
+      <!--END THRUSTS-->
+
+      <!--STATISTICS-->
+      <section id="statistics">
+      <div class="container-fluid text-center stats">
+        <div class="row">
+          <div class="col-md-12 stats1">
+              <h1 class="wilStats">WILDCAT INNOVATION LABS</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+              <h5 class="wilBTN">BY THE NUMBERS</h5>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+              <p class="wilPar"> OUR TBI HAVE RAISED A TOTAL OF P1.8M SINCE 2019, THAT'S AN AVERAGE FUNDING P100K PER COMPANY. ALMOST 10% OF ALL CIT-U TBI COMPANIES ARE VALUED OVER 500K.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+              <h2 id="cf" class="cf1 odometer">0</h2>
+              <h5 class="cf">COMPANIES FUNDED</h5>  
+          </div>
+
+          <div class="col-md-4">
+              <h2 id="tfr" class="tfr1 odometer">0M</h2>
+              <h5 class="tfr">TOTAL FUNDS RAISED</h5>
+          </div>
+
+          <div class="col-md-4">
+              <h2 id="af" class="af1 odometer">0K</h2>
+              <h5 class="af">AVERAGE FUNDING</h5>
+          </div>
+        </div>
+      </div>
+      </section>
+      <!--END STATISTICS-->
+
+      <!--INCUBATEES-->
+      <section id="incubatees">
+      <div class="container-fluid incubatees text-center">
+        <!--1st Row-->
+        <div class="row">
+          <div class="col-md-4 incu1">
+            <h1 class="incu2">INCUBATEES</h1>
+          </div>
+        </div>
+
+        <!--2nd row-->
+        <div class="row">
+
+          <div class="col-md-4">
+            <div class="card">
+              <img class="card-img-top" src="{% static 'img/founder1.PNG' %}" alt="Card image cap">
+                <div class="card-body">
+                   <p class="card-text">Fullname</p>
+                   <p class="card-text1">Position Title, Company</p>
+                </div>
+              </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card">
+              <img class="card-img-top" src="{% static 'img/founder2.PNG' %}" alt="Card image cap">
+                <div class="card-body">
+                   <p class="card-text">Fullname</p>
+                   <p class="card-text1">Position Title, Company</p>
+                </div>
+              </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card">
+              <img class="card-img-top" src="{% static 'img/founder3.PNG' %}" alt="Card image cap">
+                <div class="card-body">
+                   <p class="card-text">Fullname</p>
+                   <p class="card-text1">Position Title, Company</p>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <!--3rd row-->
+        <div class="row lastRowIncu">
+
+          <div class="col-md-4">
+            <div class="card">
+              <img class="card-img-top" src="{% static 'img/founder1.PNG' %}" alt="Card image cap">
+                <div class="card-body">
+                   <p class="card-text">Fullname</p>
+                   <p class="card-text1">Position Title, Company</p>
+                </div>
+              </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card">
+              <img class="card-img-top" src="{% static 'img/founder2.PNG' %}" alt="Card image cap">
+                <div class="card-body">
+                   <p class="card-text">Fullname</p>
+                   <p class="card-text1">Position Title, Company</p>
+                </div>
+              </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card">
+              <img class="card-img-top" src="{% static 'img/founder3.PNG' %}" alt="Card image cap">
+                <div class="card-body">
+                   <p class="card-text">Fullname</p>
+                   <p class="card-text1">Position Title, Company</p>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <!--4th Row [Button]-->
+        <div class="row btnRowViewMore">
+          <div class="col-md-12">
+            <!--<img src="img/up-chevron.png"/>-->
+            <button type="submit" class="btn btn-lg btnViewMore">VIEW MORE</button>
+          </div>
+        </div>
+      </div>
+      </section>
+      <!--END OF INCUBATEES-->
+
+     <!--CONTACT US AND NEWSLETTER-->
+     <section id="contactus">
+      <div class="container-fluid">
+        <div class="row contactNews">
+          <div class="col-md-7">
+            <h1 class="contact">CONTACT</h1>
+            <p class="shortDescriptionTBI"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis diam a nulla semper gravida. Aenean facilisis finibus viverra. Curabitur eu lacus finibus, sodales nibh id, sodales ligula. Nam vulputate eleifend sapien, nec cursus elit imperdiet at. Aliquam ornare nunc at dapibus tristique. Sed non sapien massa. Morbi congue enim vitae finibus lobortis. Suspendisse ut tempus massa, nec lobortis enim. Praesent rhoncus est vitae rutrum faucibus. Donec dapibus convallis urna in fringilla. Vestibulum ultrices massa in augue vulputate consequat. </p>
+
+          <ul class="list-group">
+              <li class="list-group-item listGroup"><img src="{% static 'img/phone.png' %}" class="miniIconListGroup">+63 32 261-7741 LOC. 199</li>
+              <li class="list-group-item listGroup"><img src="{% static 'img/gmail.png' %}" class="miniIconListGroup">WILDCATINNOVATIONLABS@CIT.EDU</li>
+              <li class="list-group-item listGroup"><img src="{%static 'img/facebook.png' %}" class="miniIconListGroup">@CITUWILDCATINNOVLABS</li>
+              <li class="list-group-item listGroup"><img src="{% static 'img/twitter.png' %}" class="miniIconListGroup">@WILDCATINNOVLAB</li>
+          </ul>
+          </div>
+
+          <div class="col-md-5">
+            <form class="formNewsletter">
+
+              <div class="form-group">
+                <input type="text" class="form-control form-control-lg" type="text" id="fullName" placeholder="FULLNAME" required>
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control form-control-lg" type="text" id="contactNumber" placeholder="CONTACT NUMBER"required>
+              </div>
+
+              <div class="form-group">
+                <input type="email" class="form-control form-control-lg" type="text" id="email" placeholder="EMAIL" required>
+              </div>
+
+              <div class="form-group">
+                <textarea name="message" class="form-control" tabindex="4" placeholder="MESSAGE" rows="10" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg mx-auto d-block">SUBMIT</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      </section>
+      <!--END OF CONTACT US AND NEWSLETTER-->
+
+      <!--FOOTER-->
+      <footer class="page-footer font-small footer">
+          <div class="footer-copyright text-center py-3">
+            © 2020 Copyright: CIT-U WILDCAT INNOVATION LABS
+          </div>
+      </footer>
+      <!--END FOOTER-->
+
+    <!-- Optional JavaScript -->
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+<!-- ang purpose ani nga script kay para ig click sa navbar di mo blink kundi mo slide -->
+<script>
+   $(".scroll").on('click', function(e) {
+     e.preventDefault();
+     var target = $(this).attr('href');
+     $('html, body').animate({
+       scrollTop: ($(target).offset().top)
+     }, 1000);
+  });
+</script>
+
+  </body>
+</html>

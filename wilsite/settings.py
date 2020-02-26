@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'home',
     'account',
     'booking',
+    'landingpage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -135,6 +136,9 @@ USE_TZ = True
 STATIC_TMP = '/static'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/images/'
+
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
