@@ -8,6 +8,6 @@ class ClientAdmin(UserAdmin):
 	model = Client
 	# add_form = RegForm
 	# form = SignInForm
-	list_display = ['username', 'first_name', 'last_name', 'email', ]
+	list_display = ['username', 'first_name', 'last_name', 'email', 'balance']
 
 admin.site.register(Client, ClientAdmin)

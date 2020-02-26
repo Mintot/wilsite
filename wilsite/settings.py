@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'account',
     'booking',
     'landingpage',
+    'tempus_dominus',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

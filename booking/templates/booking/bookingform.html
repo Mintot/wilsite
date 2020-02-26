@@ -36,8 +36,9 @@
 	<span>Welcome, {{ user.first_name }} </span>
 	<a href="/signin/logout">Logout</a>
 	</form>
-
-  	<button type="submit" class="btn btn-info" name="btnBook" value="Reserve" data-toggle="modal" href="#book">Reserve</button>
+	<form action="reserve" target="_blank">
+  		<button type="submit" class="btn btn-info" name="btnBook" value="Reserve" data-toggle="modal" href="#book">Reserve</button>
+  	</form>
 
   	<div id='calendar'></div>
 
@@ -51,11 +52,29 @@
                     <div class="modal-body">
                         <form id="regForm" action="">
 						  <!-- One "tab" for each step in the form: -->
-						  <div class="tab">Date & Time:
-						    <p><input type="date" placeholder="Start Date..." oninput="this.className = ''" name="startDate"></p>
-						    <p><input type="date" placeholder="End Date..." oninput="this.className = ''" name="endDate"></p>
-						    <p><input type="time" placeholder="Start Time..." oninput="this.className = ''" name="endDate"></p>
-						    <p><input type="time" placeholder="End Time..." oninput="this.className = ''" name="endDate"></p>
+						  <div class="tab">
+						    <div class="container">
+							    <div class='col-md-5'>
+							        <div class="form-group">
+							           <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+							                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
+							                <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+							                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
+							    <div class='col-md-5'>
+							        <div class="form-group">
+							           <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+							                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
+							                <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+							                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
+							</div>
 						  </div>
 						  <div class="tab">Booking Info:
 						    <p>Purpose: <select id="cars" name="purpose" placeholder="Choose Purpose" oninput="this.className = ''">
@@ -66,8 +85,8 @@
 										</select>
 							</p>
 						    	
-						    <p>Attendees: <input type="text" placeholder="Add Guests" name="search" oninput="this.className = ''" class="fa fa-search">
-      									  <button type="submit"><i class="fa fa-search"></i></button>
+						   <!--  <p>Attendees: <input type="text" placeholder="Add Guests" name="search" oninput="this.className = ''" class="fa fa-search">
+      									  <button type="submit"><i class="fa fa-search"></i></button> -->
 						   </p>
 
 						  </div>
@@ -102,6 +121,19 @@
           <!--END Book Modal-->
 
              <script>
+             	var starts = {{ startDates|safe }};
+             	var ends = {{ endDates|safe }};
+             	var event = [];
+
+             	for (index = 0, len = starts.length; index < len; ++index) {
+
+             		event.push({
+             			title: 'Reserved', 
+             			start: starts[index],
+             			end: ends[index], 
+             		});
+             	}
+             	event.push()
       document.addEventListener('DOMContentLoaded', function() {
 		  var calendarEl = document.getElementById('calendar');
 
@@ -110,20 +142,13 @@
 		    defaultView: 'dayGridMonth',
 		    defaultDate: '2020-02-07',
 		    header: {
-		      left: 'prev,next today',
+		      left: 'prev,next, today',
 		      center: 'title',
 		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
 		    },
-		    events: [
-		      {
-		        title: 'All Day Event',
-		        start: '2020-02-01'
-		      },
-		      {
-		        title: 'All Day Event',
-		        start: '2020-02-17'
-		      },
-		    ]
+
+
+		    events: event,
 		  });
 		  calendar.render();
 		});
@@ -137,8 +162,24 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker7').datetimepicker();
+        $('#datetimepicker8').datetimepicker({
+            useCurrent: false
+        });
+        $("#datetimepicker7").on("change.datetimepicker", function (e) {
+            $('#datetimepicker8').datetimepicker('minDate', e.date);
+        });
+        $("#datetimepicker8").on("change.datetimepicker", function (e) {
+            $('#datetimepicker7').datetimepicker('maxDate', e.date);
+        });
+    });
+	</script>
 
   </body>
 </html>
