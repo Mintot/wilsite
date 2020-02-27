@@ -23,7 +23,7 @@ class Booking(models.Model):
 	startTime = models.TimeField()
 	endTime = models.TimeField()
 	purpose = models.CharField(max_length=30, choices=PURPOSES, default='studying')
-	attendee = Client
+	attendee = models.CharField(max_length=30, default='none')
 	referenceNo = models.IntegerField()
 	cost = models.IntegerField()
 	venue = models.CharField(max_length=30, choices=VENUES, default='coworking')

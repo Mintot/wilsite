@@ -40,7 +40,12 @@
   		<button type="submit" class="btn btn-info" name="btnBook" value="Reserve" data-toggle="modal" href="#book">Reserve</button>
   	</form>
 
+  	<h1>Coworking</h1>
   	<div id='calendar'></div>
+  	<h1>Conf Room</h1>
+  	<div id='calendar2'></div>
+  	<h1>Joined Conf Room</h1>
+  	<div id='calendar3'></div>
 
   	<!--Book Modal--->
               <div class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -123,17 +128,109 @@
              <script>
              	var starts = {{ startDates|safe }};
              	var ends = {{ endDates|safe }};
+             	var venues = {{ venues|safe }}
              	var event = [];
+             	var event2 = [];
+             	var event3 = [];
+             	var dictCowork = {};
+             	var dictConf = {};
 
              	for (index = 0, len = starts.length; index < len; ++index) {
-
-             		event.push({
-             			title: 'Reserved', 
-             			start: starts[index],
-             			end: ends[index], 
-             		});
+             		if (venues[index] == 'coworking') {
+             			var now = starts[index];
+             			do {
+             				var num = parseInt(dictCowork[now]);
+	             			if (isNaN(num)) {
+	             				dictCowork[now] = 1;
+	             			} else {
+	             				dictCowork[now] = num + 1;
+	             			}
+	             			var hrs = parseInt(now.substring(11, 13));
+	             			var min = now.charAt(14);
+	             			if (min == '3') {
+	             				if (hrs < 9) {
+		             				now = now.substring(0, 12) + (hrs + 1).toString() + ':00:00';
+	             				} else {
+		             				now = now.substring(0, 11) + (hrs + 1).toString() + ':00:00';
+		             			}
+	             			} else {
+	             				now = now.substring(0, 14) + '30:00';
+	             			}
+	             		} while (now != ends[index]);
+	             	} else {
+	            		var now = starts[index];
+	            		do {
+	            			var num = parseInt(dictConf[now]);
+		           			if (isNaN(num)) {
+		          				dictConf[now] = 1;
+		           			} else {
+		           				dictConf[now] = num + 1;
+		           			}
+		           			if (venues[index] == 'conf2') {
+		           				dictConf[now]++;
+		           			}
+		           			var hrs = parseInt(now.substring(11, 13));
+		           			var min = now.charAt(14);
+		           			if (min == '3') {
+		           				if (hrs < 9) {
+			           				now = now.substring(0, 12) + (hrs + 1).toString() + ':00:00';
+		           				} else {
+			           				now = now.substring(0, 11) + (hrs + 1).toString() + ':00:00';
+			           			}
+		           			} else {
+		           				now = now.substring(0, 14) + '30:00';
+		           			}
+		           		} while (now != ends[index]);
+		           	}
              	}
-             	event.push()
+             	for (var key in dictCowork) {
+             		var value = dictCowork[key];
+             		var now = key;
+	       			var hrs = parseInt(now.substring(11, 13));
+	            	var min = now.charAt(14);
+	            	if (min == '3') {
+	            		if (hrs < 9) {
+	             			now = now.substring(0, 12) + (hrs + 1).toString() + ':00:00';
+             			} else {
+	             			now = now.substring(0, 11) + (hrs + 1).toString() + ':00:00';
+		             	}
+	             	} else {
+	             		now = now.substring(0, 14) + '30:00';
+	             	}
+	             	event.push({
+	             		title: 'Seats: ' + (20 - value).toString(),
+	             		start: key,
+	             		end: now,
+	             	});
+             	}
+             	for (var key in dictConf) {
+             		var value = dictConf[key];
+             		var now = key;
+	       			var hrs = parseInt(now.substring(11, 13));
+	            	var min = now.charAt(14);
+	            	if (min == '3') {
+	            		if (hrs < 9) {
+	             			now = now.substring(0, 12) + (hrs + 1).toString() + ':00:00';
+             			} else {
+	             			now = now.substring(0, 11) + (hrs + 1).toString() + ':00:00';
+		             	}
+	             	} else {
+	             		now = now.substring(0, 14) + '30:00';
+	             	}
+	             	event3.push({
+	             		title: 'Reserved',
+	             		start: key,
+	             		end: now,
+	             	});
+	             	if (value == '2') {
+		             	event2.push({
+		             		title: 'Reserved',
+		             		start: key,
+		             		end: now,
+		             	});
+	             	}
+             	}
+             	// event.push()
       document.addEventListener('DOMContentLoaded', function() {
 		  var calendarEl = document.getElementById('calendar');
 
@@ -151,6 +248,39 @@
 		    events: event,
 		  });
 		  calendar.render();
+		  var calendarEl2 = document.getElementById('calendar2');
+
+		  var calendar2 = new FullCalendar.Calendar(calendarEl2, {
+		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+		    defaultView: 'dayGridMonth',
+		    defaultDate: '2020-02-07',
+		    header: {
+		      left: 'prev,next, today',
+		      center: 'title',
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+		    },
+
+
+		    events: event2,
+		  });
+		  calendar2.render();
+
+		  var calendarEl3 = document.getElementById('calendar3');
+
+		  var calendar3 = new FullCalendar.Calendar(calendarEl3, {
+		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+		    defaultView: 'dayGridMonth',
+		    defaultDate: '2020-02-07',
+		    header: {
+		      left: 'prev,next, today',
+		      center: 'title',
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+		    },
+
+
+		    events: event3,
+		  });
+		  calendar3.render();
 		});
     </script>
 

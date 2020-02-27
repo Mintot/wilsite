@@ -17,6 +17,7 @@ class BookingView(View):
 		endDates = [b.endDate for b in bookings]
 		startTimes = [b.startTime for b in bookings]
 		endTimes = [b.endTime for b in bookings]
+		allVenues = [b.venue for b in bookings]
 		allStarts = []
 		allEnds = []
 		i = 0;
@@ -25,7 +26,7 @@ class BookingView(View):
 			allEnds.append(str(endDates[i]) + ' ' + str(endTimes[i]))
 			i = i + 1
 		if user.is_authenticated:
-			return render(request = request, template_name = self.template_name, context={'user' : user, 'startDates' : allStarts, 'endDates': allEnds})
+			return render(request = request, template_name = self.template_name, context={'user' : user, 'startDates' : allStarts, 'endDates': allEnds, 'venues': allVenues, })
 		return redirect('account:Index')
 
 class BookingCalendarView(View):
@@ -73,6 +74,7 @@ class BookingDetailsView(View):
 		form = self.form_class(request.POST)
 		if form.is_valid():
 			purpose = form.cleaned_data['purpose']
+			request.session['purpose'] = purpose
 		return redirect('booking:BookingInfo')
 
 class BookingInfoView(View):
@@ -93,7 +95,6 @@ class BookingInfoView(View):
 		return render(request, self.template_name, context={'form': form})
 	def post(self, request):
 		form = self.form_class(request.POST)
-		print('HUHTODG')
 		venue = request.session.get('venue')
 		startDate = request.session.get('startDate')
 		endDate = request.session.get('endDate')
@@ -101,7 +102,9 @@ class BookingInfoView(View):
 		endTime = request.session.get('endTime')
 		cost = request.session.get('cost')
 		refNum = request.session.get('refNum')
-		booking = Booking(referenceNo=refNum, cost=cost, venue=venue, startTime=startTime, endDate=endDate, startDate=startDate, endTime=endTime,)
+		purpose = request.session.get('purpose')
+		attendee = self.request.user.username
+		booking = Booking(referenceNo=refNum, cost=cost, venue=venue, startTime=startTime, endDate=endDate, startDate=startDate, endTime=endTime, purpose=purpose, attendee=attendee, )
 		booking.save()
 		print('SUCCESS')
 		return redirect('home:Homepage')
