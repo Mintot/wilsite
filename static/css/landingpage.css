@@ -1,4 +1,4 @@
-	
+
 
 html {
 	scroll-behavior: smooth;
@@ -124,7 +124,7 @@ textarea {
 }
 
 .card {	
-	width: 50rem;
+	width: 100%;
 	height: auto;	
 	margin-top: 3%;
 }
