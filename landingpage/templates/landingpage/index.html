@@ -28,26 +28,24 @@
 	       src: url("{% static 'fonts/Gotham-Black.otf' %}");
 	   }
 
-	body {
+  	body {
 		    font-family: floydFont, "Times New Roman", sans-serif;
 	   }
 
-	.btnViewMore {
+	 .btnViewMore {
 	     font-weight: bold;
 	     letter-spacing: 2px;
 	     background: url("{% static 'img/up-chevron.png' %}") 10px 10px no-repeat;   
        text-shadow: 1px 1px #fff; 
        padding: 10px 10px 10px 36px;
        width: 15%;
-	/*background-color:rgba(255,255,80);
-	border-color: black;*/
-	}
+  	}
 
-	.btnViewMore:hover, .btnViewMore:active {
+	 .btnViewMore:hover, .btnViewMore:active {
 	     text-decoration: underline;
-	}
+	   }
 
-	.stats {
+	 .stats {
 	     background-image: url("{% static 'img/bgStats.jpg' %}");
 	     padding-top: 2%;
 	     padding-bottom: 1%;
@@ -55,7 +53,7 @@
 	     background-position: center;
 	     background-repeat: no-repeat;
 	     background-size: cover;
-	}
+	   }
 
   </style>
 
@@ -93,7 +91,11 @@
                 <a class="nav-link font" href="#contactus"><span style="font-family: floydFont">CONTACT US</span></a>
               </li>
 
-              <li class="nav-item custom-center verticalLine">
+              <li class="nav-item custom-center">
+                <button type="submit" name="btnSubmit" class="btn btn-primary">Log-In</button>
+              </li>
+
+              <!--<li class="nav-item custom-center verticalLine">
                 <a class="nav-link">&nbsp;</a>
               </li>
 
@@ -111,7 +113,7 @@
 
               <li class="nav-item custom-center">
                 <a class="nav-link" href="#"><img src="{% static 'img/twitter.png' %}" class="miniIcon"></a>
-              </li>
+              </li>-->
 
             </ul>
         </div>
@@ -468,77 +470,75 @@
       <div class="container-fluid incubatees text-center">
         <!--1st Row-->
         <div class="row">
-          <div class="col-md-4 incu1">
+          <div class="col-md-5 incu1">
             <h1 class="incu2">INCUBATEES</h1>
           </div>
         </div>
 
         <!--2nd row-->
-        <div class="row">
 
-          <div class="col-md-4">
-            <div class="card">
+        <div class="container-fluid">
+
+          <div class="row">
+
+            <div class="col-md-4 card">
               <img class="card-img-top" src="{% static 'img/founder1.PNG' %}" alt="Card image cap">
                 <div class="card-body">
                    <p class="card-text">Fullname</p>
                    <p class="card-text1">Position Title, Company</p>
                 </div>
               </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card">
+  
+            <div class="col-md-4 card">
               <img class="card-img-top" src="{% static 'img/founder2.PNG' %}" alt="Card image cap">
                 <div class="card-body">
                    <p class="card-text">Fullname</p>
                    <p class="card-text1">Position Title, Company</p>
                 </div>
               </div>
-          </div>
 
-          <div class="col-md-4">
-            <div class="card">
+            <div class="col-md-4 card">
               <img class="card-img-top" src="{% static 'img/founder3.PNG' %}" alt="Card image cap">
                 <div class="card-body">
                    <p class="card-text">Fullname</p>
                    <p class="card-text1">Position Title, Company</p>
                 </div>
               </div>
+
           </div>
         </div>
 
         <!--3rd row-->
+
+        <div class="container-fluid">
+
         <div class="row lastRowIncu">
 
-          <div class="col-md-4">
-            <div class="card">
+            <div class="col-md-4 col-sm-12 card">
               <img class="card-img-top" src="{% static 'img/founder1.PNG' %}" alt="Card image cap">
                 <div class="card-body">
                    <p class="card-text">Fullname</p>
                    <p class="card-text1">Position Title, Company</p>
                 </div>
               </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card">
+          
+            <div class="col-md-4 card">
               <img class="card-img-top" src="{% static 'img/founder2.PNG' %}" alt="Card image cap">
                 <div class="card-body">
                    <p class="card-text">Fullname</p>
                    <p class="card-text1">Position Title, Company</p>
                 </div>
               </div>
-          </div>
 
-          <div class="col-md-4">
-            <div class="card">
+            <div class="col-md-4 card">
               <img class="card-img-top" src="{% static 'img/founder3.PNG' %}" alt="Card image cap">
                 <div class="card-body">
                    <p class="card-text">Fullname</p>
                    <p class="card-text1">Position Title, Company</p>
                 </div>
               </div>
-          </div>
+
+        </div>
         </div>
 
         <!--4th Row [Button]-->
