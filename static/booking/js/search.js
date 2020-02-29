@@ -1,11 +1,15 @@
-function autocomplete(inp, arr, list) {
+function autocomplete(inp, arr, list, txt, ids, self) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
   var currentFocus;
   var added = [];
+  added.push(self);
+  txt.value = self+", ";
+  ids.value = self.split("[")[1].split("]")[0] + ", ";
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
       var a, b, i, val = this.value;
+      console.log(added)
       /*close any already open lists of autocompleted values*/
       closeAllLists();
       if (!val) { return false;}
@@ -31,6 +35,8 @@ function autocomplete(inp, arr, list) {
               b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
               name = this.getElementsByTagName("input")[0].value;
+              txt.value = txt.value + name + ", "
+              ids.value = ids.value + name.split('[')[1].substring(0, name.split('[')[1].length-1) + ", "
               inp.value = this.getElementsByTagName("input")[0].value;
               att = document.createElement("DIV");
               att.setAttribute("id", this.getElementsByTagName("input")[0].value);
@@ -38,8 +44,32 @@ function autocomplete(inp, arr, list) {
               attRem.innerHTML = "Remove";
               attRem.addEventListener("click", function(e) {
                 e.preventDefault();
-                arr.push(this.parentNode.getElementsByTagName("span")[0]);
-                console.log(this.parentNode.getElementsByTagName("span")[0].value + " added");
+                console.log(name + "2");
+                var currTxt = txt.value.split(',');
+                var currIds = ids.value.split(',');
+                console.log(currTxt[0] + " vs " + name);
+                var newTxt = "", newIds = "";
+                console.log(currTxt);
+                const rem = this.parentNode.id;
+                var i;
+                for (i = 0; i < currTxt.length; i++) {
+                  str = currTxt[i].trim();
+                  strId = currIds[i].trim();
+                  console.log(str + " v s " + rem);
+                  if (str == rem) {
+
+                  } else if (str.trim().length > 0){
+                    newTxt = newTxt + str + ", ";
+                    newIds = newIds + strId + ", ";
+                  }
+                }
+                txt.value = newTxt;
+                ids.value = newIds;
+                name = this.parentNode.getElementsByTagName("span")[0].value;
+                console.log(this.parentNode.id + "1");
+                const index = added.indexOf(this.parentNode.id);
+                added.splice(index, 1);
+                console.log(this.parentNode.id + " added");
                 list.removeChild(this.parentNode);
               });
               att.appendChild(attRem);
