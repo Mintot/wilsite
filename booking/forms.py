@@ -8,6 +8,8 @@ class BookingCalendarForm(forms.ModelForm):
 	year = int(today[0:4])
 	maxDay = str(year+1)+today[4:10]
 
+	# widget=forms.PasswordInput(attrs={'class' : 'details', 'placeholder' : 'Password'}))
+
 	start_date = forms.DateField(
 		widget=DatePicker(
 			options={
@@ -19,6 +21,7 @@ class BookingCalendarForm(forms.ModelForm):
 				'input_toggle': True,
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
+				'class' : 'sDate',
 			},
 		),
 		initial=today,
@@ -34,6 +37,7 @@ class BookingCalendarForm(forms.ModelForm):
 				'input_toggle': True,
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
+				'class' : 'sDate',
 			},
 		),
 		initial=today,
@@ -51,6 +55,7 @@ class BookingCalendarForm(forms.ModelForm):
 				'input_group': True,
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
+				'class' : 'sDate',
 			},
 		),
 	)
@@ -66,6 +71,7 @@ class BookingCalendarForm(forms.ModelForm):
 				'input_group': True,
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
+				'class' : 'sDate',
 			}
 		),
 		initial='12:00:00'
