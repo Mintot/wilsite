@@ -54,8 +54,13 @@
               <span class="autocomplete" style="width: 300px;">
                 <input autocomplete="off" id="attInput" type="text" name="search" placeholder="Attendee"> 
               </span></div>
-            <div id="listOfAttendees"></div>
-            <button>Next</button>
+            <div id="listOfAttendees" name="attendees">
+              <button disabled="true">Remove</button>
+              <span>{{ self }}</span>
+            </div>
+            <input type="text" id="names" name="names" style="visibility:visible;"> 
+            <input type="text" id="ids" name="ids" style="visibility:visible;">
+            <button id="next">Next</button>
           </form>
         </div>
         
@@ -63,7 +68,8 @@
     </div>
     <script type="text/javascript">
       var us = {{ users|safe }};
-      autocomplete(document.getElementById("attInput"), us, document.getElementById("listOfAttendees"));
+      var self = "{{ self }}";
+      autocomplete(document.getElementById("attInput"), us, document.getElementById("listOfAttendees"), document.getElementById("names"), document.getElementById("ids"), self);
     </script>
   </body>
 

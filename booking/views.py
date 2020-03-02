@@ -18,15 +18,27 @@ class BookingView(View):
 		startTimes = [b.startTime for b in bookings]
 		endTimes = [b.endTime for b in bookings]
 		allVenues = [b.venue for b in bookings]
+		allUsers = [b.attendee for b in bookings]
 		allStarts = []
 		allEnds = []
 		i = 0;
 		while i < len(bookings):
+			# if (startDates[i] != endDates[i]):
+			# 	curr = startDates[i]
+			# 	finished = False
+			# 	while !finished:
+			# 		allStarts.append(str(curr) + ' ' + str(startTimes[i]))
+			# 		allEnds.append(str(curr) + ' ' + str(endTimes[i]))
+			# 		month = int(curr.substring(0, 2))
+			# 		day = int(curr.substring(3, 5))
+			# 		# if (day == 28)
+
+			# else:
 			allStarts.append(str(startDates[i]) + ' ' + str(startTimes[i]))
 			allEnds.append(str(endDates[i]) + ' ' + str(endTimes[i]))
 			i = i + 1
 		if user.is_authenticated:
-			return render(request = request, template_name = self.template_name, context={'user' : user, 'startDates' : allStarts, 'endDates': allEnds, 'venues': allVenues, })
+			return render(request = request, template_name = self.template_name, context={'user' : user, 'id': user.username, 'startDates' : allStarts, 'endDates': allEnds, 'venues': allVenues, 'users': allUsers, })
 		return redirect('account:Index')
 
 class BookingCalendarView(View):
@@ -40,7 +52,8 @@ class BookingCalendarView(View):
 	def post(self, request):
 		form = self.form_class(request.POST)
 		if form.is_valid():
-			venue = form.cleaned_data['venue']
+			print("valid")
+			venue = form.real_venue()
 			startDate = form.cleaned_data['start_date']
 			endDate = form.cleaned_data['end_date']
 			startTime = form.cleaned_data['start_time']
@@ -64,24 +77,31 @@ class BookingDetailsView(View):
 	form_class = BookingDetailsForm
 	template_name = 'booking/bookdet.html'
 	def get(self, request):
+		user = self.request.user
 		form = self.form_class(None)
 		users = list(Client.objects.all().exclude(first_name=""))
 		str_users = []
 		for u in users:
-			str_users.append(str(u))
-		return render(request, self.template_name, context={'form': form, 'users':str_users})
+			str_users.append(str(u) + ' [' + u.username + ']')
+		return render(request, self.template_name, context={'form': form, 'users':str_users, 'self': str(user)+' ['+user.username+']', })
 	def post(self, request):
 		form = self.form_class(request.POST)
 		if form.is_valid():
+			print(request.POST.get('names'))
+			attendees = request.POST.get('names')
+			attendees_id = request.POST.get('ids')
 			purpose = form.cleaned_data['purpose']
 			request.session['purpose'] = purpose
+			request.session['attendees'] = attendees
+			request.session['attendees_id'] = attendees_id
 		return redirect('booking:BookingInfo')
 
 class BookingInfoView(View):
 	form_class = BookingInfoForm
 	template_name = 'booking/bookcal.html'
 	def get(self, request):
-		cost = request.session.get('totTime') * 20
+		attendees_id = request.session.get('attendees_id')
+		cost = request.session.get('totTime') * 20 * (len(attendees_id.split(", "))-1)
 		request.session['cost'] = cost
 		form = self.form_class(
 			initial={
@@ -91,6 +111,9 @@ class BookingInfoView(View):
 			'endDate': request.session.get('endDate'),
 			'startTime': request.session.get('startTime'),
 			'endTime': request.session.get('endTime'),
+			'purpose': request.session.get('purpose'),
+			'attendees': request.session.get('attendees'),
+			'venue': request.session.get('venue'),
 			})
 		return render(request, self.template_name, context={'form': form})
 	def post(self, request):
@@ -103,8 +126,10 @@ class BookingInfoView(View):
 		cost = request.session.get('cost')
 		refNum = request.session.get('refNum')
 		purpose = request.session.get('purpose')
-		attendee = self.request.user.username
-		booking = Booking(referenceNo=refNum, cost=cost, venue=venue, startTime=startTime, endDate=endDate, startDate=startDate, endTime=endTime, purpose=purpose, attendee=attendee, )
-		booking.save()
+		attendees_id = request.session.get('attendees_id')
+		for at_id in attendees_id.split(", "):
+			if at_id.strip() != "":
+				booking = Booking(referenceNo=refNum, cost=cost, venue=venue, startTime=startTime, endDate=endDate, startDate=startDate, endTime=endTime, purpose=purpose, attendee=at_id, )
+				booking.save()
 		print('SUCCESS')
 		return redirect('home:Homepage')

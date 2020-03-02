@@ -1,5 +1,5 @@
 from django import forms
-from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
+from tempus_dominus.widgets import DatePicker, TimePicker
 from django.utils import timezone
 from .models import *
 
@@ -7,6 +7,7 @@ class BookingCalendarForm(forms.ModelForm):
 	today = str(timezone.now())[0:10]
 	year = int(today[0:4])
 	maxDay = str(year+1)+today[4:10]
+<<<<<<< HEAD
 
 	# widget=forms.PasswordInput(attrs={'class' : 'details', 'placeholder' : 'Password'}))
 
@@ -40,10 +41,41 @@ class BookingCalendarForm(forms.ModelForm):
 				'class' : 'sDate',
 			},
 		),
+=======
+	print(today)
+	start_date = forms.CharField(
+		# widget=DatePicker(
+		# 	options={
+		# 		'minDate': today,
+		# 		'maxDate': maxDay,
+		# 		'daysOfWeekDisabled': [0],
+		# 	},
+		# 	attrs={
+		# 		'input_toggle': True,
+		# 		'append': 'fa fa-calendar',
+		# 		'icon_toggle': True,
+		# 	},
+		# ),
+		initial=today,
+	)
+	end_date = forms.CharField(
+		# widget=DatePicker(
+		# 	options={
+		# 		'minDate': today,
+		# 		'maxDate': maxDay,
+		# 		'daysOfWeekDisabled': [0],
+		# 	},
+		# 	attrs={
+		# 		'input_toggle': True,
+		# 		'append': 'fa fa-calendar',
+		# 		'icon_toggle': True,
+		# 	},
+		# ),
+>>>>>>> 730d4ea169c4b6f3c37a4e6076f75de30a69fa82
 		initial=today,
 	)
 	
-	start_time = forms.TimeField(
+	start_time = forms.CharField(
 		widget=TimePicker(
 			options={
 				'enabledHours': [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
@@ -58,6 +90,7 @@ class BookingCalendarForm(forms.ModelForm):
 				'class' : 'sDate',
 			},
 		),
+		initial='08:00:00'
 	)
 	end_time = forms.TimeField(
 		widget=TimePicker(
@@ -82,6 +115,13 @@ class BookingCalendarForm(forms.ModelForm):
 		if startDate > endDate:
 			raise forms.ValidationError('Start date should be before end date')
 		return endDate
+	def real_venue(self):
+		venue = self.cleaned_data.get('venue')
+		if venue == 'coworking':
+			return 'Coworking Space'
+		if venue == 'conf':
+			return 'Conference Room'
+		return 'Joined Conference Room'
 	def clean_end_time(self):
 		startTime = self.cleaned_data.get('start_time')
 		endTime = self.cleaned_data.get('end_time')
@@ -100,10 +140,13 @@ class BookingDetailsForm(forms.ModelForm):
 
 class BookingInfoForm(forms.ModelForm):
 	refNum = forms.CharField(disabled=True, label="Reference Number")
+	venue = forms.CharField(disabled=True, label="Venue")
 	startDate = forms.CharField(disabled=True, label="Start Date")
 	endDate = forms.CharField(disabled=True, label="End Date")
 	startTime = forms.CharField(disabled=True, label="Start Time")
 	endTime = forms.CharField(disabled=True, label="End Time")
+	purpose = forms.CharField(disabled=True, label="Purpose")
+	attendees = forms.CharField(disabled=True, label="Attendees")
 	cost = forms.IntegerField(disabled=True, label="Cost")
 	class Meta:
 		model = Booking

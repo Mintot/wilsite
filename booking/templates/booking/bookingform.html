@@ -267,14 +267,23 @@ end accordion -->
              <script>
              	var starts = {{ startDates|safe }};
              	var ends = {{ endDates|safe }};
-             	var venues = {{ venues|safe }}
+             	var venues = {{ venues|safe }};
+             	var attendees = {{ users|safe }};
+             	var userId = "{{ id }}";
              	var event = [];
              	var event2 = [];
              	var event3 = [];
              	var dictCowork = {};
              	var dictConf = {};
+             	var dictSelfCowork = {};
+             	var dictSelfConf = {};
 
              	for (index = 0, len = starts.length; index < len; ++index) {
+             		var att = attendees[index];
+             		// console.log('Event: ' + starts[index]);
+	             	// console.log('Attendee' + att);
+	             	// console.log('User' + userId);
+	             	// console.log(att==userId);
              		if (venues[index] == 'coworking') {
              			var now = starts[index];
              			do {
@@ -284,6 +293,7 @@ end accordion -->
 	             			} else {
 	             				dictCowork[now] = num + 1;
 	             			}
+		           			dictSelfCowork[now] = dictSelfCowork[now] || att == userId;
 	             			var hrs = parseInt(now.substring(11, 13));
 	             			var min = now.charAt(14);
 	             			if (min == '3') {
@@ -308,6 +318,8 @@ end accordion -->
 		           			if (venues[index] == 'conf2') {
 		           				dictConf[now]++;
 		           			}
+		           			dictSelfConf[now] = dictSelfConf[now] || att == userId;
+		           			console.log(now+" is "+(att==userId));
 		           			var hrs = parseInt(now.substring(11, 13));
 		           			var min = now.charAt(14);
 		           			if (min == '3') {
@@ -324,6 +336,7 @@ end accordion -->
              	}
              	for (var key in dictCowork) {
              		var value = dictCowork[key];
+             		var colAttr = dictSelfCowork[key];
              		var now = key;
 	       			var hrs = parseInt(now.substring(11, 13));
 	            	var min = now.charAt(14);
@@ -336,14 +349,22 @@ end accordion -->
 	             	} else {
 	             		now = now.substring(0, 14) + '30:00';
 	             	}
+	             	var color = "#626bff";
+	             	if (colAttr){
+	             		color = "#fecc00";
+
+	             	}
+	             	console.log(color);
 	             	event.push({
 	             		title: 'Seats: ' + (20 - value).toString(),
 	             		start: key,
 	             		end: now,
+	             		backgroundColor: color,
 	             	});
              	}
              	for (var key in dictConf) {
              		var value = dictConf[key];
+             		var colAttr = dictSelfConf[key];
              		var now = key;
 	       			var hrs = parseInt(now.substring(11, 13));
 	            	var min = now.charAt(14);
@@ -356,16 +377,24 @@ end accordion -->
 	             	} else {
 	             		now = now.substring(0, 14) + '30:00';
 	             	}
+	             	var color = "#626bff";
+	             	if (colAttr){
+	             		color = "#fecc00";
+
+	             	}
+	             	console.log(now + ":" + color);
 	             	event3.push({
 	             		title: 'Reserved',
 	             		start: key,
 	             		end: now,
+	             		backgroundColor: color,
 	             	});
 	             	if (value == '2') {
 		             	event2.push({
 		             		title: 'Reserved',
 		             		start: key,
 		             		end: now,
+		             		backgroundColor: color,
 		             	});
 	             	}
              	}
