@@ -7,7 +7,6 @@ class BookingCalendarForm(forms.ModelForm):
 	today = str(timezone.now())[0:10]
 	year = int(today[0:4])
 	maxDay = str(year+1)+today[4:10]
-<<<<<<< HEAD
 
 	# widget=forms.PasswordInput(attrs={'class' : 'details', 'placeholder' : 'Password'}))
 
@@ -39,41 +38,11 @@ class BookingCalendarForm(forms.ModelForm):
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
 				'class' : 'sDate',
-			},
-		),
-=======
+			}
+,		),
+		initial=today,
+	)
 	print(today)
-	start_date = forms.CharField(
-		# widget=DatePicker(
-		# 	options={
-		# 		'minDate': today,
-		# 		'maxDate': maxDay,
-		# 		'daysOfWeekDisabled': [0],
-		# 	},
-		# 	attrs={
-		# 		'input_toggle': True,
-		# 		'append': 'fa fa-calendar',
-		# 		'icon_toggle': True,
-		# 	},
-		# ),
-		initial=today,
-	)
-	end_date = forms.CharField(
-		# widget=DatePicker(
-		# 	options={
-		# 		'minDate': today,
-		# 		'maxDate': maxDay,
-		# 		'daysOfWeekDisabled': [0],
-		# 	},
-		# 	attrs={
-		# 		'input_toggle': True,
-		# 		'append': 'fa fa-calendar',
-		# 		'icon_toggle': True,
-		# 	},
-		# ),
->>>>>>> 730d4ea169c4b6f3c37a4e6076f75de30a69fa82
-		initial=today,
-	)
 	
 	start_time = forms.CharField(
 		widget=TimePicker(
