@@ -19,6 +19,7 @@ class BookingCalendarForm(forms.ModelForm):
 				'input_toggle': True,
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
+				'class' : 'sDate',
 			},
 		),
 		initial=today,
@@ -35,11 +36,13 @@ class BookingCalendarForm(forms.ModelForm):
 				'input_toggle': True,
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
-			},
-		),
+				'class' : 'sDate',
+			}
+,		),
 		initial=today,
 	)
-	
+	print(today)
+
 	start_time = forms.TimeField(
 		required=True,
 		widget=TimePicker(
@@ -52,6 +55,7 @@ class BookingCalendarForm(forms.ModelForm):
 				'input_toggle': True,
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
+				'class' : 'sDate',
 			},
 		)
 	)
@@ -67,8 +71,10 @@ class BookingCalendarForm(forms.ModelForm):
 				'input_toggle': True,
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
+				'class' : 'sDate',
 			},
-		)
+		),
+		initial='12:00:00'
 	)
 	def clean_end_date(self):
 		startDate = self.cleaned_data.get('start_date')

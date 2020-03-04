@@ -10,7 +10,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <link rel="shortcut icon" href="{% static 'img/title.png' %}"/>
     <link rel="stylesheet" type="text/css" href= "{% static 'css/style.css' %}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="{% static 'fullcalendar/packages/core/main.css' %}">
@@ -27,27 +29,160 @@
     <script src="{% static 'fullcalendar/packages/timegrid/main.js' %}"></script>
  
 
-    <title>Booking</title>
+    <title>Booking - Wildcat Innovation Labs</title>
   </head>
 
-  <body>
+<style>
+	.bg-custom-1 {
+  		background-color: #85144b;
+	}
 
-  	<form action="/" method="get">
+	.bg-custom-2 {
+		background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+	}
+
+	.btnReserve {
+		margin-top: 20px;
+		margin-right: 10px;
+		margin-bottom: 20px;
+	}
+
+	.joinedConf {
+		margin-bottom: 30px;
+	}
+
+	.cal1, .cal2, .cal3 {
+		font-size: 42px;
+	}
+
+</style>
+
+  <body>
+  		<!--NAVBAR with dropdrown button -->
+		 <nav class="navbar navbar-dark bg-dark navbar-expand-sm d-flex justify-content-end">
+		  <!--<a class="navbar-brand" href="#">
+		  </a>-->
+		    <ul class="navbar-nav">
+		    	<form action="/" method="get">
+		        <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
+		          <span> Hi, {{ user.first_name }} </span> &nbsp;&nbsp;
+		          <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+		          <a class="dropdown-item" href="#">Dashboard</a>
+		          <a class="dropdown-item" href="#">Profile</a>
+		          <a class="dropdown-item" href="#">Reserve</a>
+		          <a class="dropdown-item" href="#">Booking Details</a>
+		          <a class="dropdown-item" href="/signin/logout">Log Out</a>
+		          </form>   
+		      </li>   
+		    </ul>
+		  </div>
+		</nav>
+		<!--end navbar with dropdown button-->
+
+  	<!--<form action="/" method="get">
 	<span>Welcome, {{ user.first_name }} </span>
 	<a href="/signin/logout">Logout</a>
-	</form>
-	<form action="reserve" target="_blank">
-  		<button type="submit" class="btn btn-info" name="btnBook" value="Reserve" data-toggle="modal" href="#book">Reserve</button>
-  	</form>
+	</form>-->
 
-  	<h1>Coworking</h1>
+	<form action="reserve" target="_blank">
+	  	<div class="d-flex flex-row-reverse">
+	 		<button type="submit" class="btn btn-primary d-flex justify-content-end btnReserve" name="btnBook" value="Reserve" data-toggle="modal" href="#book">Reserve</button>
+		</div>
+	</form>
+
+  	<!--<h1>Coworking</h1>
   	<div id='calendar'></div>
   	<h1>Conference Room A</h1>
   	<div id='calendar2'></div>
   	<h1>Conference Room B</h1>
   	<div id='calendar3'></div>
   	<h1>Joined Conf Room</h1>
-  	<div id='calendar4'></div>
+  	<div id='calendar4'></div>-->
+
+  	<div class="container">
+	<div class="nav nav-pills">
+		<a href="#coworking" class="nav-link active" data-toggle="pill">Co-Working Space</a>
+		<a href="#conferenceroom" class="nav-link" data-toggle="pill">Conference Room</a>
+	</div>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="coworking">
+			<div id="calendar"></div>
+		</div>
+
+		<div class="tab-pane" id="conferenceroom">
+			<div class="nav nav-pills">
+				<a href="#confA" class="nav-link active" data-toggle="pill">Conference Room A</a>
+				<a href="#confB" class="nav-link" data-toggle="pill">Conference Room B</a>
+				<a href="#confAB" class="nav-link" data-toggle="pill">Conference Room A & B</a>
+			</div>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="confA">
+					<div id="calendar2"></div>
+				</div>
+
+				<div class="tab-pane" id="confB">
+					<div id="calendar2"></div>
+				</div>
+
+				<div class="tab-pane" id="confAB">
+					<div id="calendar3"></div>
+				</div>
+			</div>
+
+		</div>
+	</div> 
+</div>
+
+
+<!-- start accordion 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bd-example" data-example-id="">
+					<div id="accordion" role="tablist" aria-multiselectable="true">
+  
+					  <div class="card">
+					    <div class="card-header" role="tab" id="headingOne">
+					      <div class="mb-0">
+					        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+					          <i aria-hidden="true"></i>
+					            <h3 class="fa fa-calendar cal1">&nbsp;Co-Working</h3>
+					        </a>
+					        
+					      </div>
+					    </div>
+
+					    <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="false" style="">
+					      <div class="card-block" id="calendar"></div>
+					    </div>
+  					  </div>
+
+  					  <div class="card joinedConf">
+					    <div class="card-header" role="tab" id="headingTwo">
+					      <div class="mb-0">
+					        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+					          <i aria-hidden="true"></i>
+					            <h3 class="fa fa-calendar cal2">&nbsp;Conference Room</h3>
+					        </a>
+					        
+					      </div>
+					    </div>
+
+					    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false" style="">
+					      <div class="card-block" id="calendar2"></div>
+					    </div>
+  					  </div>
+					</div>
+            	</div>
+        	</div>
+		</div>
+	</div>
+end accordion -->
 
   	<!--Book Modal--->
               <div class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -126,6 +261,7 @@
                 </div>
               </div>
           <!--END Book Modal-->
+
 
              <script>
              	var starts = {{ startDates|safe }};
@@ -422,7 +558,9 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+
     <script type="text/javascript">
+
     $(function () {
         $('#datetimepicker7').datetimepicker();
         $('#datetimepicker8').datetimepicker({
