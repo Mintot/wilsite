@@ -55,6 +55,15 @@
 		font-size: 42px;
 	}
 
+	.coWork, .confRoom {
+		margin-right: 5px;
+		margin-bottom: 7px;
+	}
+
+	.confRoomA, .confRoomB, .confRoomAB {
+		margin-bottom: 25px;
+	}
+
 </style>
 
   <body>
@@ -104,8 +113,8 @@
 
   	<div class="container">
 	<div class="nav nav-pills">
-		<a href="#coworking" class="nav-link active" data-toggle="pill">Co-Working Space</a>
-		<a href="#conferenceroom" class="nav-link" data-toggle="pill">Conference Room</a>
+		<a href="#coworking" class="btn btn-info nav-link active coWork" data-toggle="pill">Co-Working Space</a>
+		<a href="#conferenceroom" class="btn btn-info nav-link confRoom" data-toggle="pill">Conference Room</a>
 	</div>
 
 	<div class="tab-content">
@@ -115,21 +124,21 @@
 
 		<div class="tab-pane" id="conferenceroom">
 			<div class="nav nav-pills">
-				<a href="#confA" class="nav-link active" data-toggle="pill">Conference Room A</a>
-				<a href="#confB" class="nav-link" data-toggle="pill">Conference Room B</a>
-				<a href="#confAB" class="nav-link" data-toggle="pill">Conference Room A & B</a>
+				<a href="#confA" class="btn btn-warning nav-link active mx-auto confRoomA" data-toggle="pill">Conference Room A</a>
+				<a href="#confB" class="btn btn-warning nav-link mx-auto confRoomB" data-toggle="pill">Conference Room B</a>
+				<a href="#confAB" class="btn btn-warning nav-link mx-auto confRoomAB" data-toggle="pill">Conference Room A & B</a>
 			</div>
 
 			<div class="tab-content">
-				<div class="tab-pane active" id="confA">
+				<div class="tab-pane" id="confA">
 					<div id="calendar2"></div>
 				</div>
 
-				<div class="tab-pane" id="confB">
+				<div class="tab-pane active" id="confB">
 					<div id="calendar2"></div>
 				</div>
 
-				<div class="tab-pane" id="confAB">
+				<div class="tab-pane active" id="confAB">
 					<div id="calendar3"></div>
 				</div>
 			</div>
@@ -403,29 +412,30 @@ end accordion -->
 		  var calendarEl = document.getElementById('calendar');
 
 		  var calendar = new FullCalendar.Calendar(calendarEl, {
-		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 		    defaultView: 'dayGridMonth',
 		    defaultDate: '2020-02-07',
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		    },
 
 
 		    events: event,
 		  });
 		  calendar.render();
+
 		  var calendarEl2 = document.getElementById('calendar2');
 
 		  var calendar2 = new FullCalendar.Calendar(calendarEl2, {
-		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 		    defaultView: 'dayGridMonth',
 		    defaultDate: '2020-02-07',
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay, listWeek'
 		    },
 
 
@@ -436,13 +446,13 @@ end accordion -->
 		  var calendarEl3 = document.getElementById('calendar3');
 
 		  var calendar3 = new FullCalendar.Calendar(calendarEl3, {
-		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 		    defaultView: 'dayGridMonth',
 		    defaultDate: '2020-02-07',
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay, listWeek'
 		    },
 
 
