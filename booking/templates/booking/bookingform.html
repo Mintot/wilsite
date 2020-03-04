@@ -104,12 +104,12 @@
 
   	<!--<h1>Coworking</h1>
   	<div id='calendar'></div>
-
-  	<h1>Conf Room</h1>
+  	<h1>Conference Room A</h1>
   	<div id='calendar2'></div>
-
+  	<h1>Conference Room B</h1>
+  	<div id='calendar3'></div>
   	<h1>Joined Conf Room</h1>
-  	<div id='calendar3'></div>-->
+  	<div id='calendar4'></div>-->
 
   	<div class="container">
 	<div class="nav nav-pills">
@@ -134,12 +134,12 @@
 					<div id="calendar2"></div>
 				</div>
 
-				<div class="tab-pane active" id="confB">
-					<div id="calendar2"></div>
+				<div class="tab-pane" id="confB">
+					<div id="calendar3"></div>
 				</div>
 
-				<div class="tab-pane active" id="confAB">
-					<div id="calendar3"></div>
+				<div class="tab-pane" id="confAB">
+					<div id="calendar4"></div>
 				</div>
 			</div>
 
@@ -192,7 +192,6 @@
 		</div>
 	</div>
 end accordion -->
-
 
   	<!--Book Modal--->
               <div class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -282,10 +281,12 @@ end accordion -->
              	var event = [];
              	var event2 = [];
              	var event3 = [];
+             	var event4 = [];
              	var dictCowork = {};
              	var dictConf = {};
              	var dictSelfCowork = {};
              	var dictSelfConf = {};
+             	var dictVenConf = {};
 
              	for (index = 0, len = starts.length; index < len; ++index) {
              		var att = attendees[index];
@@ -293,55 +294,79 @@ end accordion -->
 	             	// console.log('Attendee' + att);
 	             	// console.log('User' + userId);
 	             	// console.log(att==userId);
-             		if (venues[index] == 'coworking') {
-             			var now = starts[index];
-             			do {
-             				var num = parseInt(dictCowork[now]);
-	             			if (isNaN(num)) {
-	             				dictCowork[now] = 1;
+         			var now = starts[index];
+         			var nowDay = starts[index].substring(0, 10);
+		   	    	var nxtday = nowDay;
+         			var endDay = ends[index].substring(0, 10);
+         			do {
+		   	     		nowDay = nxtday;
+         				var nowTime = starts[index].substring(11, 19);
+         				var endTime = ends[index].substring(11, 19);
+         				do {
+	       	 				var now = nowDay + " " + nowTime;
+	       	 				var num;
+	       	 				dictVenConf[now] = venues[index];
+	             			if (venues[index] == 'Coworking Space') {
+	             				num = parseInt(dictCowork[now]);
 	             			} else {
-	             				dictCowork[now] = num + 1;
+	             				num = parseInt(dictConf[now]);
 	             			}
-		           			dictSelfCowork[now] = dictSelfCowork[now] || att == userId;
-	             			var hrs = parseInt(now.substring(11, 13));
-	             			var min = now.charAt(14);
-	             			if (min == '3') {
-	             				if (hrs < 9) {
-		             				now = now.substring(0, 12) + (hrs + 1).toString() + ':00:00';
-	             				} else {
-		             				now = now.substring(0, 11) + (hrs + 1).toString() + ':00:00';
-		             			}
-	             			} else {
-	             				now = now.substring(0, 14) + '30:00';
-	             			}
-	             		} while (now != ends[index]);
-	             	} else {
-	            		var now = starts[index];
-	            		do {
-	            			var num = parseInt(dictConf[now]);
-		           			if (isNaN(num)) {
-		          				dictConf[now] = 1;
-		           			} else {
-		           				dictConf[now] = num + 1;
-		           			}
-		           			if (venues[index] == 'conf2') {
-		           				dictConf[now]++;
-		           			}
-		           			dictSelfConf[now] = dictSelfConf[now] || att == userId;
-		           			console.log(now+" is "+(att==userId));
-		           			var hrs = parseInt(now.substring(11, 13));
-		           			var min = now.charAt(14);
+	             			
+		            		if (isNaN(num)) {
+		            			if (venues[index] == 'Coworking Space') {
+			            			dictCowork[now] = 1;
+			            		} else {
+			            			dictConf[now] = 1;
+			             		}
+		            		} else {
+		            			if (venues[index] == 'Coworking Space') {
+			           				dictCowork[now] = num + 1;
+			           			} else {
+			           				dictConf[now] = num + 1;
+			            		}
+		            		}
+		            		if (venues[index] == 'Coworking Space') {
+				       			dictSelfCowork[now] = dictSelfCowork[now] || att ==userId;
+			         		} else {
+			           			dictSelfConf[now] = dictSelfConf[now] || att == userId;
+			           		}
+		           			var hrs = parseInt(nowTime.substring(0, 2));
+		           			var min = nowTime.charAt(3);
 		           			if (min == '3') {
 		           				if (hrs < 9) {
-			           				now = now.substring(0, 12) + (hrs + 1).toString() + ':00:00';
+			           				nowTime = "0" + (hrs + 1).toString() + ':00:00';
 		           				} else {
-			           				now = now.substring(0, 11) + (hrs + 1).toString() + ':00:00';
-			           			}
-		           			} else {
-		           				now = now.substring(0, 14) + '30:00';
-		           			}
-		           		} while (now != ends[index]);
-		           	}
+		             				nowTime = (hrs + 1).toString() + ':00:00';
+		             			}
+		             		} else {
+		             			nowTime = nowTime.substring(0, 3) + '30:00';
+		             		}
+		           			console.log(now);
+		          		} while (nowTime != endTime);
+		           		var year = nowDay.substring(0, 4);
+		           		var month = nowDay.substring(5, 7);
+		           		var day = nowDay.substring(8, 10);
+		           		console.log(year + '-' + month + '-' + day);
+		           		if ((day == '28' && month == '2' && parseInt(year)%4 == 0) || (day == '29' && month == '2')) {
+	            			nxtday = year + '-03-01';
+		           		} else if ((day == '30' && (month == '4' || month == '6' || month == '9' || month == '11')) || day == '31') {
+	             			if (month != '12') {
+	 	          				if (parseInt(month) >= 9) {
+		             				nxtday = year + '-' + (parseInt(month) + 1).toString() + '-01';
+			          			} else {
+		            				nxtday = year + '-0' + (parseInt(month) + 1).toString() + '-01';
+		             			}
+	             			} else {
+	             				nxtday = (parseInt(year) + 1).toString() + '-01-01';
+	             			}
+	             		} else{
+		             		if (parseInt(day) >= 9) {
+		             			nxtday = year + '-' + month + '-' +  (parseInt(day) + 1).toString();
+			             	} else {
+			             		nxtday = year + '-' + month + '-0' + (parseInt(day) + 1).toString();
+			           		}
+		             	}
+	             	} while (nowDay != endDay);	
              	}
              	for (var key in dictCowork) {
              		var value = dictCowork[key];
@@ -364,16 +389,23 @@ end accordion -->
 
 	             	}
 	             	console.log(color);
-	             	event.push({
-	             		title: 'Seats: ' + (20 - value).toString(),
-	             		start: key,
-	             		end: now,
-	             		backgroundColor: color,
-	             	});
+	             	var d = new Date();
+	             	d.setFullYear(parseInt(now.substring(0, 4)));
+	             	d.setMonth(parseInt(now.substring(5, 7)));
+	             	d.setDate(parseInt(now.substring(8, 10)));
+	             	if (d.getDay() != 3) {
+		             	event.push({
+		             		title: 'Seats: ' + (20 - value).toString(),
+		             		start: key,
+		             		end: now,
+		             		backgroundColor: color,
+		             	});
+		            }
              	}
              	for (var key in dictConf) {
              		var value = dictConf[key];
              		var colAttr = dictSelfConf[key];
+             		var ven = dictVenConf[key];
              		var now = key;
 	       			var hrs = parseInt(now.substring(11, 13));
 	            	var min = now.charAt(14);
@@ -392,21 +424,67 @@ end accordion -->
 
 	             	}
 	             	console.log(now + ":" + color);
-	             	event3.push({
-	             		title: 'Reserved',
-	             		start: key,
-	             		end: now,
-	             		backgroundColor: color,
-	             	});
-	             	if (value == '2') {
-		             	event2.push({
-		             		title: 'Reserved',
-		             		start: key,
-		             		end: now,
-		             		backgroundColor: color,
-		             	});
-	             	}
+	             	var d = new Date();
+	             	d.setFullYear(parseInt(now.substring(0, 4)));
+	             	d.setMonth(parseInt(now.substring(5, 7)));
+	             	d.setDate(parseInt(now.substring(8, 10)));
+	             	console.log(d.getDay())
+	             	if (d.getDay() != 3) {
+		             	if (ven == "Conference Room A") {
+			             	event2.push({
+			             		title: 'Reserved',
+			             		start: key,
+			             		end: now,
+			             		backgroundColor: color,
+			             	});
+			             	event4.push({
+			             		title: 'Reserved',
+			             		start: key,
+			             		end: now,
+			             		backgroundColor: color,
+			             	});
+		             	}
+		             	else if (ven == "Conference Room B") {
+			             	event3.push({
+			             		title: 'Reserved',
+			             		start: key,
+			             		end: now,
+			             		backgroundColor: color,
+			             	});
+			             	event4.push({
+			             		title: 'Reserved',
+			             		start: key,
+			             		end: now,
+			             		backgroundColor: color,
+			             	});
+		             	} else if (ven == "Joined Conference Room") {
+		             		event4.push({
+			             		title: 'Reserved',
+			             		start: key,
+			             		end: now,
+			             		backgroundColor: color,
+			             	});
+			             	event2.push({
+			             		title: 'Reserved',
+			             		start: key,
+			             		end: now,
+			             		backgroundColor: color,
+			             	});
+			             	event3.push({
+			             		title: 'Reserved',
+			             		start: key,
+			             		end: now,
+			             		backgroundColor: color,
+			             	});
+			            }
+			        }
              	}
+        var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+
+		today = yyyy + '-' + mm + '-' + dd;
              	// event.push()
       document.addEventListener('DOMContentLoaded', function() {
 		  var calendarEl = document.getElementById('calendar');
@@ -414,7 +492,7 @@ end accordion -->
 		  var calendar = new FullCalendar.Calendar(calendarEl, {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 		    defaultView: 'dayGridMonth',
-		    defaultDate: '2020-02-07',
+		    defaultDate: today,
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
@@ -431,7 +509,7 @@ end accordion -->
 		  var calendar2 = new FullCalendar.Calendar(calendarEl2, {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 		    defaultView: 'dayGridMonth',
-		    defaultDate: '2020-02-07',
+		    defaultDate: today,
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
@@ -444,11 +522,10 @@ end accordion -->
 		  calendar2.render();
 
 		  var calendarEl3 = document.getElementById('calendar3');
-
 		  var calendar3 = new FullCalendar.Calendar(calendarEl3, {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 		    defaultView: 'dayGridMonth',
-		    defaultDate: '2020-02-07',
+		    defaultDate: today,
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
@@ -459,6 +536,23 @@ end accordion -->
 		    events: event3,
 		  });
 		  calendar3.render();
+
+		  var calendarEl4 = document.getElementById('calendar4');
+
+		  var calendar4 = new FullCalendar.Calendar(calendarEl4, {
+		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+		    defaultView: 'dayGridMonth',
+		    defaultDate: today,
+		    header: {
+		      left: 'prev,next, today',
+		      center: 'title',
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+		    },
+
+
+		    events: event4,
+		  });
+		  calendar4.render();
 		});
     </script>
 
