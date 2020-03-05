@@ -1,0 +1,337 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'img/title.png' %}"/>
+
+
+    <title>Profile - Wildcat Innovation Labs</title>
+  </head>
+
+  <style>
+		  	body {
+			  background: #F1F3FA;
+			}
+
+			/* Profile container */
+			.profile {
+			  margin: 20px 0;
+			}
+
+			/* Profile sidebar */
+			.profile-sidebar {
+			  padding: 20px 0 10px 0;
+			  background: #fff;
+			}
+
+			.profile-userpic img {
+			  float: none;
+			  margin: 0 auto;
+			  width: 50%;
+			  height: 50%;
+			  -webkit-border-radius: 50% !important;
+			  -moz-border-radius: 50% !important;
+			  border-radius: 50% !important;
+			}
+
+			.profile-usertitle {
+			  text-align: center;
+			  margin-top: 20px;
+			}
+
+			.profile-usertitle-name {
+			  color: #5a7391;
+			  font-size: 16px;
+			  font-weight: 600;
+			  margin-bottom: 7px;
+			}
+
+			.profile-usertitle-job {
+			  text-transform: uppercase;
+			  color: #5b9bd1;
+			  font-size: 12px;
+			  font-weight: 600;
+			  margin-bottom: 15px;
+			}
+
+			.profile-userbuttons {
+			  text-align: center;
+			  margin-top: 10px;
+			}
+
+			.profile-userbuttons .btn {
+			  text-transform: uppercase;
+			  font-size: 11px;
+			  font-weight: 600;
+			  padding: 6px 15px;
+			  margin-right: 5px;
+			}
+
+			.profile-userbuttons .btn:last-child {
+			  margin-right: 0px;
+			}
+			    
+			.profile-usermenu {
+			  margin-top: 30px;
+			}
+
+			.profile-usermenu ul li {
+			  border-bottom: 1px solid #f0f4f7;
+			}
+
+			.profile-usermenu ul li:last-child {
+			  border-bottom: none;
+			}
+
+			.profile-usermenu ul li a {
+			  color: #93a3b5;
+			  font-size: 14px;
+			  font-weight: 400;
+			}
+
+			.profile-usermenu ul li a i {
+			  margin-right: 8px;
+			  font-size: 14px;
+			}
+
+			.profile-usermenu ul li a:hover {
+			  background-color: #fafcfd;
+			  color: #5b9bd1;
+			}
+
+			.profile-usermenu ul li.active {
+			  border-bottom: none;
+			}
+
+			.profile-usermenu ul li.active a {
+			  color: #5b9bd1;
+			  background-color: #f6f9fb;
+			  border-left: 2px solid #5b9bd1;
+			  margin-left: -2px;
+			}
+
+			/* Profile Content */
+			.profile-content {
+			  padding: 20px;
+			  background: #fff;
+			  min-height: 460px;
+			}
+
+			a, button, code, div, img, input, label, li, p, pre, select, span, svg, table, td, textarea, th, ul {
+			    -webkit-border-radius: 0!important;
+			    -moz-border-radius: 0!important;
+			    border-radius: 0!important;
+			}
+			.dashboard-stat, .portlet {
+			    -webkit-border-radius: 4px;
+			    -moz-border-radius: 4px;
+			    -ms-border-radius: 4px;
+			    -o-border-radius: 4px;
+			}
+			.portlet {
+			    margin-top: 0;
+			    margin-bottom: 25px;
+			    padding: 0;
+			    border-radius: 4px;
+			}
+			.portlet.bordered {
+			    border-left: 2px solid #e6e9ec!important;
+			}
+			.portlet.light {
+			    padding: 12px 20px 15px;
+			    background-color: #fff;
+			}
+			.portlet.light.bordered {
+			    border: 1px solid #e7ecf1!important;
+			}
+			.list-separated {
+			    margin-top: 10px;
+			    margin-bottom: 15px;
+			}
+			.profile-stat {
+			    padding-bottom: 20px;
+			    border-bottom: 1px solid #f0f4f7;
+			}
+			.profile-stat-title {
+			    color: #7f90a4;
+			    font-size: 25px;
+			    text-align: center;
+			}
+			.uppercase {
+			    text-transform: uppercase!important;
+			}
+
+			.profile-stat-text {
+			    color: #5b9bd1;
+			    font-size: 10px;
+			    font-weight: 600;
+			    text-align: center;
+			}
+			.profile-desc-title {
+			    color: #7f90a4;
+			    font-size: 17px;
+			    font-weight: 600;
+			}
+			.profile-desc-text {
+			    color: #7e8c9e;
+			    font-size: 14px;
+			}
+			.margin-top-20 {
+			    margin-top: 20px!important;
+			}
+			[class*=" fa-"]:not(.fa-stack), [class*=" glyphicon-"], [class*=" icon-"], [class^=fa-]:not(.fa-stack), [class^=glyphicon-], [class^=icon-] {
+			    display: inline-block;
+			    line-height: 14px;
+			    -webkit-font-smoothing: antialiased;
+			}
+			.profile-desc-link i {
+			    width: 22px;
+			    font-size: 19px;
+			    color: #abb6c4;
+			    margin-right: 5px;
+			}
+
+  </style>
+
+  <body>
+  	
+  	<!--NAVBAR with dropdrown button -->
+		 <nav class="navbar navbar-dark bg-dark navbar-expand-sm d-flex justify-content-end">
+		  <!--<a class="navbar-brand" href="#">
+		  </a>-->
+		    <ul class="navbar-nav">
+		    	<form action="/" method="get">
+		        <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
+		          <span> Hi, {{ user.first_name }} </span> &nbsp;&nbsp;
+		          <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+		          <a class="dropdown-item" href="#">Dashboard</a>
+		          <a class="dropdown-item" href="/profilepage/">Profile</a>
+		          <a class="dropdown-item" href="/booking/">Reserve</a>
+		          <a class="dropdown-item" href="#">Booking Details</a>
+		          <a class="dropdown-item" href="/signin/logout">Log Out</a>
+		          </form>   
+		      </li>   
+		    </ul>
+		  </div>
+		</nav>
+		<!--end navbar with dropdown button-->
+
+		<!--profile page-->
+			<div class="container">
+    			<div class="row profile">
+					<div class="col-md-3">
+						<div class="profile-sidebar">
+							<!-- SIDEBAR USERPIC -->
+								<div class="profile-userpic">
+									<img src="https://gravatar.com/avatar/31b64e4876d603ce78e04102c67d6144?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-bdcd44a3bfb9a5fd01eb8b86f9e033fa1a9897c3a15b33adfc2649a002dab1b6.png" class="img-responsive" alt="">
+								</div>
+				<!-- END SIDEBAR USERPIC -->
+				<!-- SIDEBAR USER TITLE -->
+								<div class="profile-usertitle">
+									<div class="profile-usertitle-name">
+										<form action="/" method="get"> {{ user.first_name }} {{ user.last_name }}</form>
+									</div>
+									<div class="profile-usertitle-job">
+										Developer
+									</div>
+								</div>
+				<!-- END SIDEBAR USER TITLE -->
+				
+				<!-- SIDEBAR MENU -->
+								<div class="profile-usermenu">
+									<ul class="nav">
+										<li class="active">
+											<a href="#">
+											<i class="glyphicon glyphicon-home"></i>
+											Overview </a>
+										</li>
+										<li>
+											<a href="#">
+											<i class="glyphicon glyphicon-user"></i>
+											Account Settings </a>
+										</li>
+										<li>
+											<a href="#" target="_blank">
+											<i class="glyphicon glyphicon-ok"></i>
+											Tasks </a>
+										</li>
+										<li>
+											<a href="#">
+											<i class="glyphicon glyphicon-flag"></i>
+											Help </a>
+										</li>
+									</ul>
+								</div>
+				<!-- END MENU -->
+			   
+           <div class="portlet light bordered">
+                                                <!-- STAT 
+                                                <div class="row list-separated profile-stat">
+                                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                                        <div class="uppercase profile-stat-title"> 37 </div>
+                                                        <div class="uppercase profile-stat-text"> Projects </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                                        <div class="uppercase profile-stat-title"> 51 </div>
+                                                        <div class="uppercase profile-stat-text"> Tasks </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                                        <div class="uppercase profile-stat-title"> 61 </div>
+                                                        <div class="uppercase profile-stat-text"> Uploads </div>
+                                                    </div>
+                                                </div>
+                                                		END STAT -->
+                                                 <div>
+                                                    <h4 class="profile-desc-title">
+                                                    	<form action="/" method="get">
+                                                    		About {{user.first_name}}
+                                                    	</form>
+                                                    </h4>
+                                                    <span class="profile-desc-text"> Lorem ipsum dolor sit amet diam nonummy nibh dolore. </span>
+                                                    <div class="margin-top-20 profile-desc-link">
+                                                        <i class="fa fa-globe"></i>
+                                                        <a href="#">Personal Site</a>
+                                                    </div>
+                                                    <div class="margin-top-20 profile-desc-link">
+                                                        <i class="fa fa-twitter"></i>
+                                                        <a href="#">Twitter</a>
+                                                    </div>
+                                                    <div class="margin-top-20 profile-desc-link">
+                                                        <i class="fa fa-facebook"></i>
+                                                        <a href="#">Facebook</a>
+ </div></div></div>                           
+			</div>
+		</div>
+		<div class="col-md-9">
+            <div class="profile-content">
+			   Some user related content goes here...
+            </div>
+		</div>
+	</div>
+</div>
+		<!--end of profile page-->
+
+  </body>
+
+    <!-- Optional JavaScript -->
+    
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  </body>
+</html>

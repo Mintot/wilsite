@@ -64,6 +64,14 @@
 		margin-bottom: 25px;
 	}
 
+	.c2, .c3, .c4 {
+		margin-bottom: 50px;
+	}
+
+	#calendar {
+		max-width: 100%;
+	}
+
 </style>
 
   <body>
@@ -80,8 +88,8 @@
 		        </a>
 		        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 		          <a class="dropdown-item" href="#">Dashboard</a>
-		          <a class="dropdown-item" href="#">Profile</a>
-		          <a class="dropdown-item" href="#">Reserve</a>
+		          <a class="dropdown-item" href="/profilepage/">Profile</a>
+		          <a class="dropdown-item" href="/booking/">Reserve</a>
 		          <a class="dropdown-item" href="#">Booking Details</a>
 		          <a class="dropdown-item" href="/signin/logout">Log Out</a>
 		          </form>   
@@ -130,16 +138,16 @@
 			</div>
 
 			<div class="tab-content">
-				<div class="tab-pane" id="confA">
-					<div id="calendar2"></div>
+				<div class="tab-pane active" id="confA">
+					<div id="calendar2" class="c2"></div>
 				</div>
 
 				<div class="tab-pane" id="confB">
-					<div id="calendar3"></div>
+					<div id="calendar3" class="c3"></div>
 				</div>
 
 				<div class="tab-pane" id="confAB">
-					<div id="calendar4"></div>
+					<div id="calendar4" class="c4"></div>
 				</div>
 			</div>
 
@@ -513,7 +521,7 @@ end accordion -->
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay, listWeek'
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		    },
 
 
@@ -529,7 +537,7 @@ end accordion -->
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay, listWeek'
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		    },
 
 
@@ -540,13 +548,13 @@ end accordion -->
 		  var calendarEl4 = document.getElementById('calendar4');
 
 		  var calendar4 = new FullCalendar.Calendar(calendarEl4, {
-		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 		    defaultView: 'dayGridMonth',
 		    defaultDate: today,
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		    },
 
 
