@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('landingpage.urls', namespace='landingpage')), 
     path('signin/', include('account.urls', namespace='account')),
     path('booking/', include('booking.urls', namespace='booking')),
+    path('profilepage/', include('profilepage.urls', namespace='profilepage')),
     path('', include('home.urls', namespace='home')),
     # path('accounts/', include('django_registration.backends.one_step.urls')),
     # path('accounts/', include('django.contrib.auth.urls')),
