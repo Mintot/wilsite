@@ -287,6 +287,7 @@ end accordion -->
              	var dictSelfCowork = {};
              	var dictSelfConf = {};
              	var dictVenConf = {};
+             	var cowCap = {{ cowCap }};
 
              	for (index = 0, len = starts.length; index < len; ++index) {
              		var att = attendees[index];
@@ -395,7 +396,7 @@ end accordion -->
 	             	d.setDate(parseInt(now.substring(8, 10)));
 	             	if (d.getDay() != 3) {
 		             	event.push({
-		             		title: 'Seats: ' + (20 - value).toString(),
+		             		title: 'Seats: ' + (cowCap - value).toString(),
 		             		start: key,
 		             		end: now,
 		             		backgroundColor: color,

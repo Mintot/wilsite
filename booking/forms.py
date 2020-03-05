@@ -144,7 +144,7 @@ class BookingCalendarForm(forms.ModelForm):
 							stop = True
 						start = start + timedelta(days=1)
 				for timeslot in timeslots:
-					if timeslots[timeslot] >= 20:
+					if timeslots[timeslot] >= Venue.objects.get(name="Coworking Space").cap:
 						raise forms.ValidationError('The coworking space in ' + timeslot + ' is already full')
 			else:
 				confStartDate = finConf[0].startDate
