@@ -462,6 +462,38 @@
 		      right: 'timeGridDay,timeGridWeek,dayGridMonth'
 		    },
 
+		   	dateClick: function(info) {
+		   		alert('You have clicked ' + info.dateStr);
+		   		$.ajax({
+		   			url: 'ajax/book',
+		   			data: {
+		   				'from': info.dateStr,
+		   				'to': info.dateStr,
+		   			},
+		   			dataType: 'json',
+		   			sucess: function(data) {
+		   				alert('kruu')
+		   				window.open("/booking/reserve")
+		   			}
+		   		});
+		   		window.open("/booking/reserve")
+    		},
+
+    		select: function(info) {
+		   		$.ajax({
+		   			url: 'ajax/book',
+		   			data: {
+		   				'from': info.startStr,
+		   				'to': info.endStr,
+		   			},
+		   			dataType: 'json',
+		   			sucess: function(data) {
+		   				alert('kruu')
+		   				window.open("/booking/reserve")
+		   			}
+		   		});
+		   		window.open("/booking/reserve")
+    		},
 		    minTime: '08:00:00',
         	maxTime: '24:00:00',
         	height: 'parent',
@@ -471,20 +503,6 @@
         	fixedWeekCount: false,
         	longPressDelay: 2000, //1000 = 1 sec
         	selectLongPressDelay: 2000, //1000 = 1 sec
-
-        	//para ma click na ang mga dates
-			select: function (jsEvent, view) {
-			    $("#calendar").fullCalendar('addEventSource', [{
-			    	start: start,
-			    	end: end,
-			        rendering: 'background',
-			        block: true,
-			    }, ]);
-			    $("#calendar").fullCalendar("unselect");
-			},
-			selectOverlap: function(event) {
-			    return ! event.block;
-			},
 
 		   	//dateClick: function(info) {
       			//alert('clicked ' + info.dateStr);
