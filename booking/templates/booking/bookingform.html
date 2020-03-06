@@ -22,13 +22,18 @@
     <link href="{% static 'fullcalendar/packages/list/main.css' %}" rel='stylesheet' />
     <link href="{% static 'fullcalendar/packages/timegrid/main.css' %}" rel='stylesheet' />
 
-
-
     <script src="{% static 'fullcalendar/packages/core/main.js' %}"></script>
+
     <script src="{% static 'fullcalendar/packages/interaction/main.js' %}"></script>
+
     <script src="{% static 'fullcalendar/packages/daygrid/main.js' %}"></script>
+
     <script src="{% static 'fullcalendar/packages/list/main.js' %}"></script>
+
     <script src="{% static 'fullcalendar/packages/timegrid/main.js' %}"></script>
+
+	<script src="{% static 'fullcalendar/packages/moment/main.min.js' %}"></script>
+	<script src="{% static 'fullcalendar/packages/moment/main.js' %}"></script>    
  
 
     <title>Booking - Wildcat Innovation Labs</title>
@@ -143,7 +148,7 @@
 
 
 
-  	<!--Book Modal--->
+  	<!--Book Modal
               <div class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -152,7 +157,7 @@
                     </div>
                     <div class="modal-body">
                         <form id="regForm" action="">
-						  <!-- One "tab" for each step in the form: -->
+						   One "tab" for each step in the form: 
 						  <div class="tab">
 						    <div class="container">
 							    <div class='col-md-5'>
@@ -186,8 +191,8 @@
 										</select>
 							</p>
 						    	
-						   <!--  <p>Attendees: <input type="text" placeholder="Add Guests" name="search" oninput="this.className = ''" class="fa fa-search">
-      									  <button type="submit"><i class="fa fa-search"></i></button> -->
+						     <p>Attendees: <input type="text" placeholder="Add Guests" name="search" oninput="this.className = ''" class="fa fa-search">
+      									  <button type="submit"><i class="fa fa-search"></i></button> 
 						   </p>
 
 						  </div>
@@ -205,7 +210,7 @@
 						      <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
 						    </div>
 						  </div>
-						  <!-- Circles which indicates the steps of the form: -->
+						   Circles which indicates the steps of the form:
 						  <div style="text-align:center;margin-top:40px;">
 						    <span class="step"></span>
 						    <span class="step"></span>
@@ -219,25 +224,25 @@
                   </div>
                 </div>
               </div>
-          <!--END Book Modal-->
+          END Book Modal-->
 
 
              <script>
-             	var starts = {{ startDates|safe }};
+             	var starts = {{ startDates|safe }}; //safe if array ang ge store
              	var ends = {{ endDates|safe }};
              	var venues = {{ venues|safe }};
              	var attendees = {{ users|safe }};
              	var userId = "{{ id }}";
-             	var event = [];
-             	var event2 = [];
-             	var event3 = [];
-             	var event4 = [];
-             	var dictCowork = {};
-             	var dictConf = {};
-             	var dictSelfCowork = {};
-             	var dictSelfConf = {};
-             	var dictVenConf = {};
-             	var cowCap = {{ cowCap }};
+             	var event = []; //cowork
+             	var event2 = []; //confA
+             	var event3 = []; //confB
+             	var event4 = []; //confAB
+             	var dictCowork = {}; //store coworking datas
+             	var dictConf = {}; //store conf datas
+             	var dictSelfCowork = {}; //store and data if ang user mismo moy ga book sa coworking space
+             	var dictSelfConf = {}; //store and data if ang user mismo moy ga book sa conference
+             	var dictVenConf = {}; //store sa data sa timeslot og sa venue
+             	var cowCap = {{ cowCap }}; //store sa data sa coworking capacity, (gikan sa django nga admin)
 
              	for (index = 0, len = starts.length; index < len; ++index) {
              		var att = attendees[index];
@@ -337,8 +342,12 @@
 	             	var color = "#626bff";
 	             	if (colAttr){
 	             		color = "#fecc00";
-
 	             	}
+
+	             	if (value == cowCap) {
+	             		color = "#FF0000";
+	             	}
+
 	             	console.log(color);
 	             	var d = new Date();
 	             	d.setFullYear(parseInt(now.substring(0, 4)));
@@ -445,30 +454,50 @@
 
 		  var calendar = new FullCalendar.Calendar(calendarEl, {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-		    defaultView: 'dayGridMonth',
+		    defaultView: 'timeGridDay',
 		    defaultDate: today,
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+		      right: 'timeGridDay,timeGridWeek,dayGridMonth'
 		    },
 
-		   dateClick: function(info) {
-      			alert('clicked ' + info.dateStr);
-    		},
-
-    		select: function(info) {
-      			alert('selected ' + info.startStr + ' to ' + info.endStr);
-    		},
-
 		    minTime: '08:00:00',
-        	maxTime: '23:00:00',
+        	maxTime: '24:00:00',
         	height: 'parent',
         	selectable: true,
         	unselectAuto: true,
+        	showNonCurrentDates: false,
+        	fixedWeekCount: false,
         	longPressDelay: 2000, //1000 = 1 sec
+        	selectLongPressDelay: 2000, //1000 = 1 sec
 
-		    events: event,
+        	//para ma click na ang mga dates
+			select: function (jsEvent, view) {
+			    $("#calendar").fullCalendar('addEventSource', [{
+			    	start: start,
+			    	end: end,
+			        rendering: 'background',
+			        block: true,
+			    }, ]);
+			    $("#calendar").fullCalendar("unselect");
+			},
+			selectOverlap: function(event) {
+			    return ! event.block;
+			},
+
+		   	//dateClick: function(info) {
+      			//alert('clicked ' + info.dateStr);
+      		//	window.location.href = "/booking/reserve";
+    		//},
+
+    		//select: function(info) {
+      		//	alert('selected ' + info.startStr + ' to ' + info.endStr);
+      			//window.location.href = "/booking/reserve";
+    		//},
+
+		    events: event,   
+
 		  });
 		  calendar.updateSize();
 		  calendar.render();
@@ -477,13 +506,23 @@
 
 		  var calendar2 = new FullCalendar.Calendar(calendarEl2, {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-		    defaultView: 'dayGridMonth',
+		    defaultView: 'timeGridDay',
 		    defaultDate: today,
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+		      right: 'timeGridDay,timeGridWeek,dayGridMonth'
 		    },
+
+		    dateClick: function(info) {
+      			//alert('clicked ' + info.dateStr);
+      			window.location.href = "/booking/reserve";
+    		},
+
+    		select: function(info) {
+      			//alert('selected ' + info.startStr + ' to ' + info.endStr);
+      			window.location.href = "/booking/reserve";
+    		},
 
 		    minTime: '08:00:00',
         	maxTime: '23:00:00',
@@ -491,6 +530,7 @@
         	selectable: true,
         	unselectAuto: true,
         	longPressDelay: 2000, //1000 = 1 sec
+        	selectLongPressDelay: 2000, //1000 = 1 sec
 
 		    events: event2,
 		  });
@@ -500,13 +540,23 @@
 		  var calendarEl3 = document.getElementById('calendar3');
 		  var calendar3 = new FullCalendar.Calendar(calendarEl3, {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-		    defaultView: 'dayGridMonth',
+		    defaultView: 'timeGridDay',
 		    defaultDate: today,
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+		      right: 'timeGridDay,timeGridWeek,dayGridMonth'
 		    },
+
+		    dateClick: function(info) {
+      			//alert('clicked ' + info.dateStr);
+      			window.location.href = "/booking/reserve";
+    		},
+
+    		select: function(info) {
+      			//alert('selected ' + info.startStr + ' to ' + info.endStr);
+      			window.location.href = "/booking/reserve";
+    		},
 
 		    minTime: '08:00:00',
         	maxTime: '23:00:00',
@@ -514,6 +564,7 @@
         	selectable: true,
         	unselectAuto: true,
         	longPressDelay: 2000, //1000 = 1 sec
+        	selectLongPressDelay: 2000, //1000 = 1 sec
 
 		    events: event3,
 		  });
@@ -524,13 +575,23 @@
 
 		  var calendar4 = new FullCalendar.Calendar(calendarEl4, {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-		    defaultView: 'dayGridMonth',
+		    defaultView: 'timeGridDay',
 		    defaultDate: today,
 		    header: {
 		      left: 'prev,next, today',
 		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+		      right: 'timeGridDay,timeGridWeek,dayGridMonth'
 		    },
+
+		    dateClick: function(info) {
+      			//alert('clicked ' + info.dateStr);
+      			window.location.href = "/booking/reserve";
+    		},
+
+    		select: function(info) {
+      			//alert('selected ' + info.startStr + ' to ' + info.endStr);
+      			window.location.href = "/booking/reserve";
+    		},
 
 		    minTime: '08:00:00',
         	maxTime: '23:00:00',
@@ -538,17 +599,14 @@
         	selectable: true,
         	unselectAuto: true,
         	longPressDelay: 2000, //1000 = 1 sec
-        	
+        	selectLongPressDelay: 2000, //1000 = 1 sec
 
 		    events: event4,
 		  });
 		  calendar4.updateSize();
 		  calendar4.render();
 		});
-
     </script>
-
-    
 
     <!-- Optional JavaScript -->
     <script src="{% static 'js/styles.js' %}"></script>
