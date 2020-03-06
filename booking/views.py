@@ -22,24 +22,14 @@ class BookingView(View):
 		allUsers = [b.attendee for b in bookings]
 		allStarts = []
 		allEnds = []
+		cowCap = Venue.objects.get(name="Coworking Space").cap
 		i = 0;
 		while i < len(bookings):
-			# if (startDates[i] != endDates[i]):
-			# 	curr = startDates[i]
-			# 	finished = False
-			# 	while !finished:
-			# 		allStarts.append(str(curr) + ' ' + str(startTimes[i]))
-			# 		allEnds.append(str(curr) + ' ' + str(endTimes[i]))
-			# 		month = int(curr.substring(0, 2))
-			# 		day = int(curr.substring(3, 5))
-			# 		# if (day == 28)
-
-			# else:
 			allStarts.append(str(startDates[i]) + ' ' + str(startTimes[i]))
 			allEnds.append(str(endDates[i]) + ' ' + str(endTimes[i]))
 			i = i + 1
 		if user.is_authenticated:
-			return render(request = request, template_name = self.template_name, context={'user' : user, 'id': user.username, 'startDates' : allStarts, 'endDates': allEnds, 'venues': allVenues, 'users': allUsers, })
+			return render(request = request, template_name = self.template_name, context={'user' : user, 'id': user.username, 'startDates' : allStarts, 'endDates': allEnds, 'venues': allVenues, 'users': allUsers, 'cowCap': cowCap, })
 		return redirect('account:Index')
 
 class BookingCalendarView(View):
