@@ -453,12 +453,37 @@
 		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		    },
 
-		   dateClick: function(info) {
-      			alert('clicked ' + info.dateStr);
+		   	dateClick: function(info) {
+		   		alert('You have clicked ' + info.dateStr);
+		   		$.ajax({
+		   			url: 'ajax/book',
+		   			data: {
+		   				'from': info.dateStr,
+		   				'to': info.dateStr,
+		   			},
+		   			dataType: 'json',
+		   			sucess: function(data) {
+		   				alert('kruu')
+		   				window.open("/booking/reserve")
+		   			}
+		   		});
+		   		window.open("/booking/reserve")
     		},
 
     		select: function(info) {
-      			alert('selected ' + info.startStr + ' to ' + info.endStr);
+		   		$.ajax({
+		   			url: 'ajax/book',
+		   			data: {
+		   				'from': info.startStr,
+		   				'to': info.endStr,
+		   			},
+		   			dataType: 'json',
+		   			sucess: function(data) {
+		   				alert('kruu')
+		   				window.open("/booking/reserve")
+		   			}
+		   		});
+		   		window.open("/booking/reserve")
     		},
 
 		    minTime: '08:00:00',

@@ -5,12 +5,12 @@ from .forms import *
 from .models import Booking, Client
 from random import randint
 from django import forms
+from django.http import JsonResponse
 import datetime
 
 # Create your views here.
 class BookingView(View):
 	template_name = 'booking/bookingform.html'
-
 	def get(self, request):
 		user = self.request.user
 		bookings = Booking.objects.all()
@@ -36,7 +36,15 @@ class BookingCalendarView(View):
 	form_class = BookingCalendarForm
 	template_name = 'booking/bookcal.html'
 	def get(self, request):
-		form = self.form_class(None)
+		form = self.form_class(
+			# fr=request.session.get('init_from'), to=request.session.get('init_to'),
+			initial= {
+			'start_date': request.session.get('init_from'),
+			'end_date': request.session.get('init_to'),
+			'start_time': datetime.datetime(2020, 12, 12, 9, 30, 0),
+			# 'start_time': datetime.datetime(2020, 1, 1, int(request.session.get('init_from_time').split(":")[0]), int(request.session.get('init_from_time').split(":")[1]), 0),
+			# 'end_time': datetime.datetime(2020, 1, 1, int(request.session.get('init_to_time').split(":")[0]), int(request.session.get('init_to_time').split(":")[1]), 0),
+			})
 		refNum = randint(100000, 999999)
 		request.session['refNum'] = refNum
 		return render(request, template_name=self.template_name, context={'form' : form})
@@ -211,3 +219,29 @@ class BookingInfoView(View):
 			'venue': request.session.get('venue'),
 			}
 		return render(request, self.template_name, context={'form': form})
+
+def review_book(request):
+	fr_day = request.GET.get('from', None)
+	to_day = request.GET.get('to', None)
+	fr_time = "08:00:00"
+	to_time = "08:00:00"
+	if fr_day.count("T") == 1:
+		fr_time = fr_day.split("T")[1].split("+")[0]
+		fr_day = fr_day.split("T")[0]
+		to_time = to_day.split("T")[1].split("+")[0]
+		to_day = to_day.split("T")[0]
+	request.session['init_from'] = fr_day
+	request.session['init_to'] = to_day
+	request.session['init_from_time'] = fr_time
+	request.session['init_to_time'] = to_time
+	print(fr_day)
+	print(fr_time)
+	print(to_day)
+	print(to_time)
+	data = {
+		'from': fr_day,
+		'to': to_day,
+		'from_time': fr_time,
+		'to_time': to_time,
+	}
+	return JsonResponse(data)

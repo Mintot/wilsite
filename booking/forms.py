@@ -8,6 +8,12 @@ class BookingCalendarForm(forms.ModelForm):
 	today = str(timezone.now())[0:10]
 	year = int(today[0:4])
 	maxDay = str(year+1)+today[4:8]+'28'
+	init_st = today
+	init_en = today
+	# def __init__(self, *args, **kwargs):
+	# 	self.init_st = kwargs.pop('fr')
+	# 	self.init_en = kwargs.pop('to')
+	# 	super().__init__(*args, **kwargs)
 	start_date = forms.DateField(
 		widget=DatePicker(
 			options={
@@ -37,8 +43,8 @@ class BookingCalendarForm(forms.ModelForm):
 				'append': 'fa fa-calendar',
 				'icon_toggle': True,
 				'class' : 'sDate',
-			}
-,		),
+			},
+		),
 		initial=today,
 	)
 	print(today)
@@ -57,7 +63,8 @@ class BookingCalendarForm(forms.ModelForm):
 				'icon_toggle': True,
 				'class' : 'sDate',
 			},
-		)
+		),
+		initial=datetime(2020, 4, 3, 12, 0, 0),
 	)
 	end_time = forms.TimeField(
 		required=True,
