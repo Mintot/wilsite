@@ -22,8 +22,10 @@
     <link href="{% static 'fullcalendar/packages/list/main.css' %}" rel='stylesheet' />
     <link href="{% static 'fullcalendar/packages/timegrid/main.css' %}" rel='stylesheet' />
 
-    <script src="{% static 'fullcalendar/packages/core/main.js' %}"></script>
 
+
+    <script src="{% static 'fullcalendar/packages/core/main.js' %}"></script>
+    <script src="{% static 'fullcalendar/packages/interaction/main.js' %}"></script>
     <script src="{% static 'fullcalendar/packages/daygrid/main.js' %}"></script>
     <script src="{% static 'fullcalendar/packages/list/main.js' %}"></script>
     <script src="{% static 'fullcalendar/packages/timegrid/main.js' %}"></script>
@@ -45,23 +47,6 @@
 		margin-top: 20px;
 		margin-right: 10px;
 		margin-bottom: 20px;
-	}
-
-	.joinedConf {
-		margin-bottom: 30px;
-	}
-
-	.cal1, .cal2, .cal3 {
-		font-size: 42px;
-	}
-
-	.coWork, .confRoom {
-		margin-right: 5px;
-		margin-bottom: 7px;
-	}
-
-	.confRoomA, .confRoomB, .confRoomAB {
-		margin-bottom: 25px;
 	}
 
 	.c2, .c3, .c4 {
@@ -110,6 +95,43 @@
 		</div>
 	</form>
 
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs" role="tablist">
+	  <li class="nav-item">
+	    <a class="nav-link active" href="#coworkingspace" role="tab" data-toggle="tab">CoWorking Space</a>
+	  </li>
+
+	  <li class="nav-item dropdown">
+	    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Conference Rooms</a>
+	    <div class="dropdown-menu">
+	      <a class="dropdown-item" href="#conferenceroomA" data-toggle="tab">Conference Room A</a>
+	      <a class="dropdown-item" href="#conferenceroomB" data-toggle="tab">Conference Room B</a>
+	      <a class="dropdown-item" href="#conferenceroomAB" data-toggle="tab">Joined Conference Room</a>
+	    </div>
+	  </li>
+
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content">
+	  <div role="tabpanel" class="tab-pane active" id="coworkingspace">
+	    <div id="calendar"></div>
+	  </div>
+	  <div role="tabpanel" class="tab-pane" id="conferenceroomA">
+	  	<h4>Conference Room A</h4>
+	    <div id="calendar2" class="c2"></div>
+	  </div>
+	  <div role="tabpanel" class="tab-pane" id="conferenceroomB">
+	  	<h4>Conference Room B</h4>
+	    <div id="calendar3" class="c3"></div>
+	  </div>
+	  <div role="tabpanel" class="tab-pane" id="conferenceroomAB">
+	  	<h4>Joined Conference Room</h4>
+	    <div id="calendar4" class="c4"></div>
+	  </div>
+	</div>
+
+
   	<!--<h1>Coworking</h1>
   	<div id='calendar'></div>
   	<h1>Conference Room A</h1>
@@ -119,87 +141,7 @@
   	<h1>Joined Conf Room</h1>
   	<div id='calendar4'></div>-->
 
-  	<div class="container">
-	<div class="nav nav-pills">
-		<a href="#coworking" class="btn btn-info nav-link active coWork" data-toggle="pill">Co-Working Space</a>
-		<a href="#conferenceroom" class="btn btn-info nav-link confRoom" data-toggle="pill">Conference Room</a>
-	</div>
 
-	<div class="tab-content">
-		<div class="tab-pane active" id="coworking">
-			<div id="calendar"></div>
-		</div>
-
-		<div class="tab-pane" id="conferenceroom">
-			<div class="nav nav-pills">
-				<a href="#confA" class="btn btn-warning nav-link active mx-auto confRoomA" data-toggle="pill">Conference Room A</a>
-				<a href="#confB" class="btn btn-warning nav-link mx-auto confRoomB" data-toggle="pill">Conference Room B</a>
-				<a href="#confAB" class="btn btn-warning nav-link mx-auto confRoomAB" data-toggle="pill">Conference Room A & B</a>
-			</div>
-
-			<div class="tab-content">
-				<div class="tab-pane active" id="confA">
-					<div id="calendar2" class="c2"></div>
-				</div>
-
-				<div class="tab-pane" id="confB">
-					<div id="calendar3" class="c3"></div>
-				</div>
-
-				<div class="tab-pane" id="confAB">
-					<div id="calendar4" class="c4"></div>
-				</div>
-			</div>
-
-		</div>
-	</div> 
-</div>
-
-
-<!-- start accordion 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="bd-example" data-example-id="">
-					<div id="accordion" role="tablist" aria-multiselectable="true">
-  
-					  <div class="card">
-					    <div class="card-header" role="tab" id="headingOne">
-					      <div class="mb-0">
-					        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
-					          <i aria-hidden="true"></i>
-					            <h3 class="fa fa-calendar cal1">&nbsp;Co-Working</h3>
-					        </a>
-					        
-					      </div>
-					    </div>
-
-					    <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="false" style="">
-					      <div class="card-block" id="calendar"></div>
-					    </div>
-  					  </div>
-
-  					  <div class="card joinedConf">
-					    <div class="card-header" role="tab" id="headingTwo">
-					      <div class="mb-0">
-					        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
-					          <i aria-hidden="true"></i>
-					            <h3 class="fa fa-calendar cal2">&nbsp;Conference Room</h3>
-					        </a>
-					        
-					      </div>
-					    </div>
-
-					    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="false" style="">
-					      <div class="card-block" id="calendar2"></div>
-					    </div>
-  					  </div>
-					</div>
-            	</div>
-        	</div>
-		</div>
-	</div>
-end accordion -->
 
   	<!--Book Modal--->
               <div class="modal fade" id="book" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -409,6 +351,8 @@ end accordion -->
 		             		backgroundColor: color,
 		             	});
 		            }
+
+		            
              	}
              	for (var key in dictConf) {
              		var value = dictConf[key];
@@ -495,6 +439,7 @@ end accordion -->
 		today = yyyy + '-' + mm + '-' + dd;
              	// event.push()
       document.addEventListener('DOMContentLoaded', function() {
+
 		  var calendarEl = document.getElementById('calendar');
 
 		  var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -507,9 +452,24 @@ end accordion -->
 		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		    },
 
+		   dateClick: function(info) {
+      			alert('clicked ' + info.dateStr);
+    		},
+
+    		select: function(info) {
+      			alert('selected ' + info.startStr + ' to ' + info.endStr);
+    		},
+
+		    minTime: '08:00:00',
+        	maxTime: '23:00:00',
+        	height: 'parent',
+        	selectable: true,
+        	unselectAuto: true,
+        	longPressDelay: 2000, //1000 = 1 sec
 
 		    events: event,
 		  });
+		  calendar.updateSize();
 		  calendar.render();
 
 		  var calendarEl2 = document.getElementById('calendar2');
@@ -524,9 +484,16 @@ end accordion -->
 		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		    },
 
+		    minTime: '08:00:00',
+        	maxTime: '23:00:00',
+        	height: 'parent',
+        	selectable: true,
+        	unselectAuto: true,
+        	longPressDelay: 2000, //1000 = 1 sec
 
 		    events: event2,
 		  });
+		  calendar2.updateSize();
 		  calendar2.render();
 
 		  var calendarEl3 = document.getElementById('calendar3');
@@ -540,9 +507,16 @@ end accordion -->
 		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		    },
 
+		    minTime: '08:00:00',
+        	maxTime: '23:00:00',
+        	height: 'parent',
+        	selectable: true,
+        	unselectAuto: true,
+        	longPressDelay: 2000, //1000 = 1 sec
 
 		    events: event3,
 		  });
+		  calendar3.updateSize();
 		  calendar3.render();
 
 		  var calendarEl4 = document.getElementById('calendar4');
@@ -557,11 +531,20 @@ end accordion -->
 		      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 		    },
 
+		    minTime: '08:00:00',
+        	maxTime: '23:00:00',
+        	height: 'parent',
+        	selectable: true,
+        	unselectAuto: true,
+        	longPressDelay: 2000, //1000 = 1 sec
+        	
 
 		    events: event4,
 		  });
+		  calendar4.updateSize();
 		  calendar4.render();
 		});
+
     </script>
 
     
@@ -591,6 +574,15 @@ end accordion -->
             $('#datetimepicker7').datetimepicker('maxDate', e.date);
         });
     });
+
+    // drop down js
+    $('.nav-tabs').on('shown.bs.tab', 'a', function (e) {
+    if (e.relatedTarget) {
+        $(e.relatedTarget).removeClass('active');
+    }
+	})
+	// end dropdown js
+
 	</script>
 
   </body>
