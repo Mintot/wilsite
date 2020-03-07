@@ -1,0 +1,367 @@
+
+
+html {
+	scroll-behavior: smooth;
+	width: 100%;
+}
+
+/*@font-face {
+	font-family: floydFont;
+	src: url("fonts/Gotham-Black.otf");
+}
+
+body {
+	font-family: floydFont, "Times New Roman", sans-serif;
+}*/
+
+.nav1 {
+	background-color:rgba(255,204,0);
+	width: 100%;
+}
+
+.w1 {
+	height: 75px;
+	width: 200px;
+}
+
+.custom-center {
+    margin: auto;
+}
+
+.miniIcon {
+	height: 30px;
+	width: 30px;
+	margin-left: -13px;
+}
+
+.verticalLine {
+  	border-left: 2px solid black;
+  	height: 50px;
+  	margin-left: -3px;
+  	margin-right: -10px;
+}
+
+.font {
+	font-family: Gotham, "Times New Roman", sans-serif;
+	color: black;
+	font-weight: 1000;
+	margin-top: 4.2px;
+}
+
+a.font:hover, a.font:active {
+	text-decoration: underline;
+}
+
+.contactNews {
+	background-color:rgba(255,204,0);
+}
+
+.contact {
+	font-size: 72px;
+	color: #ffffff;
+	letter-spacing: 3px;
+	margin-left: 30px;
+	margin-top: 12px;
+}
+
+.shortDescriptionTBI {
+	margin-left: 35px;
+	font-weight: 1000;
+	margin-right: 20px;
+}
+
+.listGroup {
+	border: none;
+	background-color:rgba(255,204,0);
+	padding-bottom: 2%;
+	color: black;
+	font-weight: 1000;
+	letter-spacing: 1.5px;
+}
+
+.miniIconListGroup {
+	width: 5%;
+	height: auto;
+	margin-left: 3.5%;
+	margin-right: 3%;
+}
+
+.formNewsletter {
+	margin-top: 12%;
+	margin-bottom: 3%;
+}
+
+textarea {
+  height: 100%;
+}
+
+.footer {
+	background-color: #9c7b16; 
+	font-weight: bold;
+}
+
+.incubatees, .thrusts {
+	background-color:rgba(211,211,211);
+}
+
+.incu1 {
+	margin-top: 2.5%;
+	background-color:rgba(255,204,0);
+}
+
+.incu2, .thrusts2 {
+	letter-spacing: 3px;
+	font-size: 48px;
+	font-weight: bold;
+	margin-left: 7%;
+	margin-top: 12px;
+}
+
+.card-img-top {
+	width: 100%;
+	height: auto;
+	padding-top: 10px;
+}
+
+.card {	
+	width: 100%;
+	height: auto;	
+	margin-top: 3%;
+}
+
+.card-body {
+	width: 100%;
+	height: auto;
+}
+
+.card-text {
+	font-weight: bold;
+	width: 100%;
+}
+
+.card-text1 {
+	margin-top: -15px;
+	width: 100%;
+}
+
+.lastRowIncu {
+	padding-bottom: 50px;
+}
+
+.btnRowViewMore {
+	padding-bottom: 30px;
+}
+
+/*.btnViewMore {
+	font-weight: bold;
+	letter-spacing: 2px;
+	background: url("img/up-chevron.png") 10px 10px no-repeat;   
+    text-shadow: 1px 1px #fff; 
+    padding: 10px 10px 10px 36px;
+    width: 15%;
+	background-color:rgba(255,255,80);
+	border-color: black;
+}
+
+.btnViewMore:hover, .btnViewMore:active {
+	text-decoration: underline;
+}*/
+
+
+
+/*.stats {
+	background-image: url("img/bgStats.jpg");
+	padding-top: 2%;
+	padding-bottom: 1%;
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}*/
+
+.stats1 {
+	letter-spacing: 5px;
+	width: 100%;
+}
+
+.wilStats {
+	font-weight: bold;
+	font-size: 400%;
+	color: #ffffff;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+
+}
+
+.wilBTN {
+	/**color: rgb(97,97,114);**/
+	color: #ffffff;
+	letter-spacing: 2px;
+	font-weight: bold;
+	margin-top: -2px;
+	margin-bottom: 5px;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.wilPar {
+	/**color: rgb(57,62,68);**/
+	color: #ffffff;
+	margin-top: 2%;
+	margin-left: 12%;
+	margin-right: 12%;
+	font-size: 120%;
+	margin-bottom: 3%;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.cf, .tfr, .af {
+	/**color: rgb(97,97,114);**/
+	color: #ffffff;
+	font-size: 90%;
+	font-weight: bold;
+	letter-spacing: 1.8px;
+	margin-bottom: 2%;
+	margin-top: -2%;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.cf1, .tfr1, .af1 {
+	/**color: rgb(57, 62, 68);**/
+	color: rgb(255,204,0);
+	font-size: 500%;
+	font-weight: bolder;
+}
+
+.ec, .ge, .gb, .fi, .ai, .ml, .da, .robo {
+	margin-top: 16%;
+}
+
+.ec, .ai {
+	width: 70%;
+	height: auto;
+}
+
+/**
+.ec:hover, .ec:active,
+.ge:hover, .ge:active,
+.gb:hover, .gb:active,
+.fi:hover, .fi:active,
+.ai:hover, .ai:active, 
+.ml:hover, .ml:active, 
+.da:hover, .da:active, 
+.robo:hover, .robo:active {
+	width: 70%;
+	height: auto;
+	background-color: #ffffff;
+} **/
+
+.ge {
+	width: 50%;
+	height: auto;
+}
+
+.gb {
+	width: 57%;
+	height: auto;
+}
+
+.fi {
+	width: 62.4%;
+	height: auto;
+}
+
+.ml {
+	width: 63%;
+	height: auto;
+	padding-top: 6.2%;
+}
+
+.da {
+	width: 60%;
+	height: auto;
+	padding-top: 2%;
+}
+
+.robo {
+	width: 70%;
+	height: auto;
+	padding-top: -10%;
+}
+
+.thrusts {
+	padding-bottom: 50px;
+}
+
+.carVid {
+	width: 50%;
+	height: auto;
+}
+
+.c1 {
+	padding-top: 5%;
+	width: auto;
+	height: auto;
+}
+
+.c2 {
+	padding-top: 5%;
+}
+
+.carInner {
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
+
+header {
+  position: relative;
+  background-color: black;
+  height: 75vh;
+  min-height: 40rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+header video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+header .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+@media (pointer: coarse) and (hover: none) {
+  header {
+    background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+  }		
+  header video {
+    display: none;
+  }
+}
+
+.vidSize {
+	height: auto;
+	width: 100%;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: gray;
+    border-color: #285e8e; /*set the color you want here*/
+}
