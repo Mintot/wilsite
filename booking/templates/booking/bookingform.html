@@ -120,9 +120,9 @@
 	<a href="/signin/logout">Logout</a>
 	</form>-->
 
-	<form action="reserve" target="_blank">
+	<form action="bookdetails" target="_blank">
 	  	<div class="d-flex flex-row-reverse">
-	 		<button type="submit" class="btn btn-primary d-flex justify-content-end btnReserve" name="btnBook" value="Reserve" data-toggle="modal" href="#book">Reserve</button>
+	 		<button type="submit" class="btn btn-primary d-flex justify-content-end btnReserve" id="reserve" name="btnBook" value="Reserve" data-toggle="modal">Reserve</button>
 		</div>
 	</form>
 
@@ -269,6 +269,9 @@
              	var dictSelfConf = {}; //store and data if ang user mismo moy ga book sa conference
              	var dictVenConf = {}; //store sa data sa timeslot og sa venue
              	var cowCap = {{ cowCap }}; //store sa data sa coworking capacity, (gikan sa django nga admin)
+             	var selCoworkFrom = [];
+             	var selCoworkTo = [];
+             	var venue = "Coworking Space";
 
              	for (index = 0, len = starts.length; index < len; ++index) {
              		var att = attendees[index];
@@ -476,69 +479,77 @@
              	// event.push()
       document.addEventListener('DOMContentLoaded', function() {
       	$('#calendar').fullCalendar({
-    defaultDate: '2014-11-10',
-    header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-    },
-    defaultView: 'month',
-    events: [{
-        start: '2014-11-12T13:00:00',
-        end: '2014-11-12T16:00:00',
-    }, ],
-    selectable: true,
-    
-    select: function (start, end, jsEvent, view) {
-    		
-        $("#calendar").fullCalendar('addEventSource', [{
-            start: start,
-            end: end,
-            rendering: 'background',
-            block: true,
-        }, ]);
-        $("#calendar").fullCalendar("unselect");
-    },
-    selectOverlap: function(event) {
-        return ! event.block;
-    }
-});
+		    defaultDate: '2014-11-10',
+		    header: {
+		        left: 'prev,next today',
+		        center: 'title',
+		        right: 'month,agendaWeek,agendaDay'
+		    },
+		    defaultView: 'month',
+		    events: [{
+		        start: '2014-11-12T13:00:00',
+		        end: '2014-11-12T16:00:00',
+		    }, ],
+		    selectable: true,
+		    
+		    select: function (start, end, jsEvent, view) {
+		    	// selCowork.push(start.format("MM DD YYYY HH:MM:ss"));
+		    	selCoworkFrom.push(start.format("YYYY-MM-DD HH:mm"));
+		    	selCoworkTo.push(end.format("YYYY-MM-DD HH:mm"));
+		    	console.log(selCoworkFrom);
+		    	console.log(selCoworkTo);
+		        $("#calendar").fullCalendar('addEventSource', [{
+		            start: start,
+		            end: end,
+		            rendering: 'background',
+		            block: true,
+		        }, ]);
+		        $("#calendar").fullCalendar("unselect");
+		    },
 
-		  // var calendarEl = document.getElementById('calendar');
+		    unselect: function (jsEvent, view) {
+		    	console.log("UNSELECT");
+		    },
+		    selectOverlap: function(event) {
+		        return ! event.block;
+		    }
+		});
 
-		  // var calendar = new FullCalendar.Calendar(calendarEl, {
-		  //   plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-		  //   defaultView: 'timeGridDay',
-		  //   defaultDate: today,
-		  //   header: {
-		  //     left: 'prev,next, today',
-		  //     center: 'title',
-		  //     right: 'timeGridDay,timeGridWeek,dayGridMonth'
-		  //   },
+		  var calendarEl = document.getElementById('calendar');
 
-		  //   minTime: '08:00:00',
-    //     	maxTime: '24:00:00',
-    //     	height: 'parent',
-    //     	selectable: true,
-    //     	unselectAuto: true,
-    //     	showNonCurrentDates: false,
-    //     	fixedWeekCount: false,
-    //     	longPressDelay: 2000, //1000 = 1 sec
-    //     	selectLongPressDelay: 2000, //1000 = 1 sec	
+		  var calendar = new FullCalendar.Calendar(calendarEl, {
+		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+		    defaultView: 'timeGridDay',
+		    defaultDate: today,
+		    header: {
+		      left: 'prev,next, today',
+		      center: 'title',
+		      right: 'timeGridDay,timeGridWeek,dayGridMonth'
+		    },
 
-		  //  	//dateClick: function(info) {
-    //   			//alert('clicked ' + info.dateStr);
-    //   		//	window.location.href = "/booking/reserve";
-    // 		//},
+		    minTime: '08:00:00',
+        	maxTime: '24:00:00',
+        	height: 'parent',
+        	selectable: true,
+        	unselectAuto: true,
+        	showNonCurrentDates: false,
+        	fixedWeekCount: false,
+        	longPressDelay: 2000, //1000 = 1 sec
+        	selectLongPressDelay: 2000, //1000 = 1 sec	
 
-    // 		//select: function(info) {
-    //   		//	alert('selected ' + info.startStr + ' to ' + info.endStr);
-    //   			//window.location.href = "/booking/reserve";
-    // 		//},
+		   	//dateClick: function(info) {
+      			//alert('clicked ' + info.dateStr);
+      		//	window.location.href = "/booking/reserve";
+    		//},
 
-		  //   events: event,   
+    		//select: function(info) {
+      		//	alert('selected ' + info.startStr + ' to ' + info.endStr);
+      			//window.location.href = "/booking/reserve";
+    		//},
 
-		  // });
+		    events: event,   
+
+		  });
 		  calendar.updateSize();
 		  calendar.render();
 
@@ -646,6 +657,24 @@
 		  calendar4.updateSize();
 		  calendar4.render();
 		});
+
+		document.getElementById("reserve").addEventListener("click", function() {
+			alert(selCoworkFrom.toString());
+			$.ajax({
+		   		url: 'ajax/book',
+		   		data: {
+		   			'venue': venue,
+		   			'from': selCoworkFrom.toString(),
+		   			'to': selCoworkTo.toString(),
+		   		},
+		   		dataType: 'json',
+		   		sucess: function(data) {
+		   			alert('kruu')
+		   			// window.open("/booking/reserve")
+		   		}
+			});
+		   	// window.open("/booking/reserve");
+		})
     </script>
 
     <!-- Optional JavaScript -->
