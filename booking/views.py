@@ -177,14 +177,17 @@ class BookingDetailsView(View):
 			# weekEnd = int(endDate.strftime("%w"))
 			# if weekEnd < weekStart:
 				# weekEnd = 6 + weekEnd
-			totDays = 1
+			# totDays = 1
+			print(startDate)
+			print(endDate)
+			print(startTime)
 			print(endTime)
-			totTime = int(endTime.split(":")[0])-int(startTime.split(":")[1])
-			totMin = int(endTime.split(":")[1])-int(startTime.split(":")[1])
-			if totMin == -30:
-				totTime -= 0.5
-			elif totMin == 30:
-				totTime += 0.5
+			# totTime = int(endTime.split(":")[0])-int(startTime.split(":")[1])
+			# totMin = int(endTime.split(":")[1])-int(startTime.split(":")[1])
+			# if totMin == -30:
+			# 	totTime -= 0.5
+			# elif totMin == 30:
+			# 	totTime += 0.5
 			venBook = Booking.objects.filter(venue=venue)
 			bookingLeft = venBook.filter(startDate__lte=startDate).filter(endDate__gte=startDate)
 			bookingRight= venBook.filter(endDate__gte=endDate).filter(startDate__lte=endDate)
@@ -229,10 +232,10 @@ class BookingDetailsView(View):
 							minCap = venCap-timeslots[timeslot]
 						if (minComp > venComp-comps[timeslot]):
 							minComp = venComp-comps[timeslot]
-			request.session['space'] = minCap
-			request.session['comps'] = minComp
-			request.session['totDays'] = totDays
-			request.session['totTime'] = totTime
+		request.session['space'] = minCap
+		request.session['comps'] = minComp
+		# request.session['totDays'] = totDays
+		print(len(startDays))
 		attendees = request.POST.get('names')
 		attendees_id = request.POST.get('ids')
 		print('WARNING! ' + str(len(attendees.split(","))-1))
@@ -259,7 +262,11 @@ class BookingInfoView(View):
 	template_name = 'booking/bookcal.html'
 	def get(self, request):
 		attendees_id = request.session.get('attendees_id')
-		cost = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost * (len(attendees_id.split(", "))-1) * request.session.get('totDays')
+		print(request.session.get('totTime'))
+		if request.session.get("venue") == "Coworking Space":
+			cost = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost * (len(attendees_id.split(", "))-1)
+		else:
+			cost = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost
 		request.session['cost'] = cost
 		form = self.form_class(
 			initial={
@@ -353,6 +360,7 @@ def review_book(request):
 	request.session['start_times'] = all_time_f
 	request.session['end_times'] = all_time_t
 	request.session['venue'] = venue
+	request.session['totTime'] = len(fr_day)/2
 	print(all_day_f)
 	print(all_day_t)
 	print(all_time_f)

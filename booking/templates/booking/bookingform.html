@@ -494,8 +494,64 @@
 		    
 		    select: function (start, end, jsEvent, view) {
 		    	// selCowork.push(start.format("MM DD YYYY HH:MM:ss"));
-		    	selCoworkFrom.push(start.format("YYYY-MM-DD HH:mm"));
-		    	selCoworkTo.push(end.format("YYYY-MM-DD HH:mm"));
+		    	var stDa = start.format("YYYY-MM-DD");
+		    	var stTi = start.format("HH:mm");
+		    	var enDa = end.format("YYYY-MM-DD");
+		    	var enTi = end.format("HH:mm");
+		    	var toDay = stDa;
+		    	var tomorrow = today;
+		    	do {
+		    		today = tomorrow;
+		    		var toTime = stTi;
+		    		var later = toTime;
+		    		do {
+		    			toTime = later;
+		    			selCoworkFrom.push(toDay + " " + toTime);
+		    			var hr = parseInt(toTime.substring(0, 2));
+		    			var min = parseInt(toTime.substring(3, 5));
+		    			if (min == 30) {
+		    				if (hr < 9) {
+		    					later = "0" + (hr + 1).toString() + ":00";
+		    				} else {
+		    					later = (hr + 1).toString() + ":00";
+		    				}
+		    			} else {
+		    				if (hr <= 9) {
+			    				later = "0" + hr + ":30";
+			    			} else {
+			    				later = hr + ":30";
+			    			}
+		    			}
+		    			selCoworkTo.push(toDay + " " + later);
+		    			console.log(toTime);
+		    		} while(later != enTi);
+		    		var yr = parseInt(toDay.substring(0, 5));
+		    		var mo = parseInt(toDay.substring(6, 8));
+		    		var da = parseInt(toDay.substring(10, 12));
+		    		if ((yr % 4 == 0 && mo == 2 && da == 29) || mo == 2 && da == 28) {
+		    			tomorrow = yr + "-03-01";
+		    		} else if (da == 30 && (mo == 4 || mo == 6 || mo == 7 || mo == 9 | mo == 11)) {
+		    			tomorrow = yr.toString() + "-";
+		    			if (mo < 9) {
+		    				tomorrow = tomorrow + "0" + (mo + 1).toString() + "-01";
+		    			} else {
+		    				tomorrow = tomorrow + (mo + 1).toString() + "-01";
+		    			}
+		    		} else if (da == 31) {
+		    			if (mo == 12) {
+		    				tomorrow = (yr + 1).toString() + "-";
+		    			} else {
+		    				tomorrow = yr + "-";
+		    			}
+		    			if (mo < 9) {
+		    				tomorrow = tomorrow + "0" + (mo + 1).toString() + "-01";
+		    			} else {
+		    				tomorrow = tomorrow + (mo + 1).toString() + "-01";
+		    			}
+		    		} else {
+		    			tomorrow = yr + "-" + mo + "-" + (da + 1).toString;
+		    		}
+		    	} while(toDay != enDa);
 		    	console.log(selCoworkFrom);
 		    	console.log(selCoworkTo);
 		        $("#calendar").fullCalendar('addEventSource', [{
