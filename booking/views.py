@@ -265,10 +265,10 @@ class BookingInfoView(View):
 			initial={
 			'refNum': request.session.get('refNum'), 
 			'cost': cost,
-			'startDate': request.session.get('startDate'),
-			'endDate': request.session.get('endDate'),
-			'startTime': request.session.get('startTime'),
-			'endTime': request.session.get('endTime'),
+			'startDate': str(request.session.get('start_days'))[1:len(str(request.session.get('start_days')))-1],
+			'endDate': request.session.get('end_days'),
+			'startTime': request.session.get('start_times'),
+			'endTime': request.session.get('end_times'),
 			'purpose': request.session.get('purpose'),
 			'attendees': request.session.get('attendees'),
 			'venue': request.session.get('venue'),
@@ -281,18 +281,25 @@ class BookingInfoView(View):
 			user.balance = user.balance - request.session.get('cost')
 			user.save()
 			venue = request.session.get('venue')
-			startDate = request.session.get('startDate')
-			endDate = request.session.get('endDate')
-			startTime = request.session.get('startTime')
-			endTime = request.session.get('endTime')
+			startDate = str(request.session.get('start_days'))[1:len(str(request.session.get('start_days')))-1].split(", ")
+			endDate = str(request.session.get('end_days'))[1:len(str(request.session.get('end_days')))-1].split(", ")
+			startTime = str(request.session.get('start_times'))[1:len(str(request.session.get('start_times')))-1].split(", ")
+			endTime = str(request.session.get('end_times'))[1:len(str(request.session.get('end_times')))-1].split(", ")
 			cost = form.cleaned_data['cost']
 			refNum = request.session.get('refNum')
 			purpose = request.session.get('purpose')
 			attendees_id = request.session.get('attendees_id')
-			for at_id in attendees_id.split(", "):
-				if at_id.strip() != "":
-					booking = Booking(referenceNo=refNum, cost=cost, venue=venue, startTime=startTime, endDate=endDate, startDate=startDate, endTime=endTime, purpose=purpose, attendee=at_id, )
-					booking.save()
+			i = 0
+			while i < len(startDate):
+				start_day = startDate[i][1:len(startDate[i])-1]
+				end_day = endDate[i][1:len(endDate[i])-1]
+				start_time = startTime[i][1:len(startTime[i])-1]
+				end_time = endTime[i][1:len(endTime[i])-1]
+				i = i + 1
+				for at_id in attendees_id.split(", "):
+					if at_id.strip() != "":
+						booking = Booking(referenceNo=refNum, cost=cost, venue=venue, startTime=start_time, endDate=end_day, startDate=start_day, endTime=end_time, purpose=purpose, attendee=at_id, )
+						booking.save()
 			print('SUCCESS')
 			return redirect('home:Homepage')
 		attendees_id = request.session.get('attendees_id')
@@ -301,10 +308,10 @@ class BookingInfoView(View):
 		form.initial={
 			'refNum': request.session.get('refNum'), 
 			'cost': cost,
-			'startDate': request.session.get('startDate'),
-			'endDate': request.session.get('endDate'),
-			'startTime': request.session.get('startTime'),
-			'endTime': request.session.get('endTime'),
+			'startDate': request.session.get('start_days'),
+			'endDate': request.session.get('end_days'),
+			'startTime': request.session.get('start_times'),
+			'endTime': request.session.get('end_times'),
 			'purpose': request.session.get('purpose'),
 			'attendees': request.session.get('attendees'),
 			'venue': request.session.get('venue'),
