@@ -479,21 +479,41 @@
              	// event.push()
       document.addEventListener('DOMContentLoaded', function() {
       	$('#calendar').fullCalendar({
-		    defaultDate: '2014-11-10',
+      		plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+		    defaultView: 'agendaDay',
+		    defaultDate: today,
+		    // header: {
+		    //   left: 'prev,next, today',
+		    //   center: 'title',
+		    //   right: 'timeGridDay,timeGridWeek,dayGridMonth'
+		    // },
+
+		    minTime: '08:00:00',
+        	maxTime: '24:00:00',
+        	height: 'parent',
+        	selectable: true,
+        	// unselectAuto: true,
+        	showNonCurrentDates: false,
+        	fixedWeekCount: false,
+        	longPressDelay: 2000, //1000 = 1 sec
+        	selectLongPressDelay: 2000, //1000 = 1 sec	
+		    // defaultDate: '2014-11-10',
 		    header: {
 		        left: 'prev,next today',
-		        center: 'title',
-		        right: 'month,agendaWeek,agendaDay'
+		        right: 'title',
+		        center: 'month,agendaWeek,agendaDay'
 		    },
-		    defaultView: 'month',
-		    events: [{
-		        start: '2014-11-12T13:00:00',
-		        end: '2014-11-12T16:00:00',
-		    }, ],
+		    // defaultView: 'month',
+		    // events: [{
+		    //     start: '2014-11-12T13:00:00',
+		    //     end: '2014-11-12T16:00:00',
+		    // }, ],
+		    events: event,  
 		    selectable: true,
 		    
 		    select: function (start, end, jsEvent, view) {
 		    	// selCowork.push(start.format("MM DD YYYY HH:MM:ss"));
+		    	console.log(typeof start)
 		    	var stDa = start.format("YYYY-MM-DD");
 		    	var stTi = start.format("HH:mm");
 		    	var enDa = end.format("YYYY-MM-DD");
@@ -573,7 +593,7 @@
 
 		  var calendarEl = document.getElementById('calendar');
 
-		  var calendar = new FullCalendar.Calendar(calendarEl, {
+		$('#calendar').fullCalendar( {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 		    defaultView: 'timeGridDay',
 		    defaultDate: today,
@@ -604,6 +624,86 @@
     		//},
 
 		    events: event,   
+
+
+		    select: function (start, end, jsEvent, view) {
+		    	// selCowork.push(start.format("MM DD YYYY HH:MM:ss"));
+		    	console.log(typeof start);
+		    	var stDa = start.format("YYYY-MM-DD");
+		    	var stTi = start.format("HH:mm");
+		    	var enDa = end.format("YYYY-MM-DD");
+		    	var enTi = end.format("HH:mm");
+		    	var toDay = stDa;
+		    	var tomorrow = today;
+		    	do {
+		    		today = tomorrow;
+		    		var toTime = stTi;
+		    		var later = toTime;
+		    		do {
+		    			toTime = later;
+		    			selCoworkFrom.push(toDay + " " + toTime);
+		    			var hr = parseInt(toTime.substring(0, 2));
+		    			var min = parseInt(toTime.substring(3, 5));
+		    			if (min == 30) {
+		    				if (hr < 9) {
+		    					later = "0" + (hr + 1).toString() + ":00";
+		    				} else {
+		    					later = (hr + 1).toString() + ":00";
+		    				}
+		    			} else {
+		    				if (hr <= 9) {
+			    				later = "0" + hr + ":30";
+			    			} else {
+			    				later = hr + ":30";
+			    			}
+		    			}
+		    			selCoworkTo.push(toDay + " " + later);
+		    			console.log(toTime);
+		    		} while(later != enTi);
+		    		var yr = parseInt(toDay.substring(0, 5));
+		    		var mo = parseInt(toDay.substring(6, 8));
+		    		var da = parseInt(toDay.substring(10, 12));
+		    		if ((yr % 4 == 0 && mo == 2 && da == 29) || mo == 2 && da == 28) {
+		    			tomorrow = yr + "-03-01";
+		    		} else if (da == 30 && (mo == 4 || mo == 6 || mo == 7 || mo == 9 | mo == 11)) {
+		    			tomorrow = yr.toString() + "-";
+		    			if (mo < 9) {
+		    				tomorrow = tomorrow + "0" + (mo + 1).toString() + "-01";
+		    			} else {
+		    				tomorrow = tomorrow + (mo + 1).toString() + "-01";
+		    			}
+		    		} else if (da == 31) {
+		    			if (mo == 12) {
+		    				tomorrow = (yr + 1).toString() + "-";
+		    			} else {
+		    				tomorrow = yr + "-";
+		    			}
+		    			if (mo < 9) {
+		    				tomorrow = tomorrow + "0" + (mo + 1).toString() + "-01";
+		    			} else {
+		    				tomorrow = tomorrow + (mo + 1).toString() + "-01";
+		    			}
+		    		} else {
+		    			tomorrow = yr + "-" + mo + "-" + (da + 1).toString;
+		    		}
+		    	} while(toDay != enDa);
+		    	console.log(selCoworkFrom);
+		    	console.log(selCoworkTo);
+		        $("#calendar").fullCalendar('addEventSource', [{
+		            start: start,
+		            end: end,
+		            rendering: 'background',
+		            block: true,
+		        }, ]);
+		        $("#calendar").fullCalendar("unselect");
+		    },
+
+		    unselect: function (jsEvent, view) {
+		    	console.log("UNSELECT");
+		    },
+		    selectOverlap: function(event) {
+		        return ! event.block;
+		    }
 
 		  });
 		  calendar.updateSize();
@@ -731,6 +831,7 @@
 			});
 		   	// window.open("/booking/reserve");
 		})
+
     </script>
 
     <!-- Optional JavaScript -->
