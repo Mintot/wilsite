@@ -1,6 +1,7 @@
 from django.db import models
 from account.models import Client
 from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime import datetime
 PURPOSES = (
 	('Studying', 'Studying'),
 	('Project Making', 'Project Making'),
@@ -24,6 +25,7 @@ class Venue(models.Model):
 
 class Booking(models.Model):
 	title = models.CharField(max_length=100, blank=True)
+	book_date = models.DateTimeField(default=datetime.today()) 
 	startDate = models.DateField()
 	endDate = models.DateField()
 	startTime = models.TimeField()

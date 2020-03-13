@@ -498,6 +498,9 @@
 		    events: event,  
 		    selectable: true,
 		    
+		    dayClick: function(date, jsEvent, view) {
+
+		    },
 		    select: function(start, end, jsEvent, view){
 		    	select(start, end, jsEvent, view, "Coworking Space", "#calendar");
 		    },
@@ -506,7 +509,11 @@
 		    	console.log("UNSELECT");
 		    },
 		    selectOverlap: function(event) {
-		        return ! event.block;
+		        // return ! event.block;s
+		    },
+
+		    eventClick: function(info) {
+		    	alert('Event: ' + typeof info.event);
 		    }
 		});
       	$('#calendar2').fullCalendar({
@@ -599,7 +606,7 @@
 		    	console.log("UNSELECT");
 		    },
 		    selectOverlap: function(event) {
-		        return ! event.block;
+		        // return ! event.block;
 		    }
 		});
 
@@ -797,9 +804,9 @@
 		            start: start,
 		            end: end,
 		            rendering: 'background',
-		            block: true,
+		            // block: true,
 		        }, ]);
-		        $(cal).fullCalendar("unselect");
+		        // $(cal).fullCalendar("unselect");
 		    }
     </script>
 

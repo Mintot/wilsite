@@ -5,7 +5,7 @@ from .models import *
 # Register your models here.
 class BookingAdmin(admin.ModelAdmin):
 	model = Booking
-	list_display = ['startDate', 'endDate', 'startTime', 'endTime', ]
+	list_display = ['startDate', 'endDate', 'startTime', 'endTime', 'book_date']
 class VenueAdmin(admin.ModelAdmin):
 	model = Venue
 	list_display = ['name', 'cap', 'isSimultaneous', ]
