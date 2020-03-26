@@ -13,16 +13,16 @@ pip install -r requirements.txt
 ### Database
 You would also need to have [XAMPP](https://www.apachefriends.org/download.html) for the database.
 After installing XAMPP, do the following tasks:
-> Before Starting MySQL, click the "Config" button and choose "my.ini".
-> Under [mysqld], add the following line, typically at line 45:
+* Before Starting MySQL, click the "Config" button and choose "my.ini".
+* Under [mysqld], add the following line, typically at line 45:
 ```text
 skip-grant-tables
 ```
-> Save the file.
-> Start MySQL in XAMPP.
-> Go to [the database admin](localhost/phpmyadmin).
-> Go to Import tab.
-> Click "Choose file" and choose "db.sql" found in this application.
+* Save the file.
+* Start MySQL in XAMPP.
+* Go to [the database admin](localhost/phpmyadmin).
+* Go to Import tab.
+* Click "Choose file" and choose "db.sql" found in this application.
 ### Server
 In order to run the application in Django, do the following in your command prompt:
 ```bash
@@ -31,13 +31,13 @@ python manage.py runserver localhost:8080
 ```
 ### Adding Custom Users
 To add users including yourselves:
-> Go back to [the database admin](localhost/phpmyadmin).
-> Under "db", select "account_client".
-> Go to "Insert" tab.
-> Only fill the "Username" field. It can be any string as you'd like.
-> Navigate yourself to the bottommost part of the page and click "Go" (the one beside "Reset").
-> Now go back to [your site](localhost:8080/signin), place your username, fill up more fields, and click "Submit".
-> Now you can go to booking via [this site](localhost:8080/booking).
+* Go back to [the database admin](localhost/phpmyadmin).
+* Under "db", select "account_client".
+* Go to "Insert" tab.
+* Only fill the "Username" field. It can be any string as you'd like.
+* Navigate yourself to the bottommost part of the page and click "Go" (the one beside "Reset").
+* Now go back to [your site](localhost:8080/signin), place your username, fill up more fields, and click "Submit".
+* Now you can go to booking via [this site](localhost:8080/booking).
 
 ## Contact Us
 Should you have concerns, we are reachable via the following:
