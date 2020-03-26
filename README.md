@@ -27,7 +27,7 @@ skip-grant-tables
 In order to run the application in Django, do the following in your command prompt:
 ```bash
 python manage.py migrate
-python manage.py runserver localhost:8080
+python manage.py runserver
 ```
 ### Adding Custom Users
 To add users including yourselves:
@@ -36,8 +36,8 @@ To add users including yourselves:
 * Go to "Insert" tab.
 * Only fill the "Username" field. It can be any string as you'd like.
 * Navigate yourself to the bottommost part of the page and click "Go" (the one beside "Reset").
-* Now go back to [your site](localhost:8080/signin), place your username, fill up more fields, and click "Submit".
-* Now you can go to booking via [this site](localhost:8080/booking).
+* Now go back to "[your site]/signin", place your username, fill up more fields, and click "Submit".
+* Now you can go to booking via "[your site]/booking".
 
 ## Contact Us
 Should you have concerns, we are reachable via the following:
