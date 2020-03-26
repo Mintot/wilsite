@@ -15,12 +15,10 @@ VENUES = (
 )
 
 class Venue(models.Model):
-	min_name = models.CharField(max_length=20, default="none")
 	name = models.CharField(max_length=50)
 	cap = models.IntegerField()
 	has_computers = models.BooleanField(default=False)
 	computers = models.IntegerField(default=0)
-	isSimultaneous = models.BooleanField(default=False)
 	cost = models.IntegerField(default=20)
 
 class Booking(models.Model):

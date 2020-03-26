@@ -8,7 +8,7 @@ class BookingAdmin(admin.ModelAdmin):
 	list_display = ['startDate', 'endDate', 'startTime', 'endTime', 'book_date']
 class VenueAdmin(admin.ModelAdmin):
 	model = Venue
-	list_display = ['name', 'cap', 'isSimultaneous', ]
+	list_display = ['name', 'cap', ]
 
 admin.site.register(Booking, BookingAdmin)
 admin.site.register(Venue, VenueAdmin)

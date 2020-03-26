@@ -93,8 +93,11 @@ EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db',
+        'OPTIONS': {
+            'read_default_file': os.path.join(BASE_DIR, 'my.ini'),
+        },
     }
 }
 

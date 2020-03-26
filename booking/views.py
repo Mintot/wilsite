@@ -151,6 +151,8 @@ class BookingDetailsView(View):
 			str_users.append(str(u) + ' [' + u.username + ']')
 		return render(request, self.template_name, context={'form': form, 'users':str_users, 'self': str(user)+' ['+user.username+']', })
 	def post(self, request):
+		refNum = randint(100000, 999999)
+		request.session['refNum'] = refNum
 		venue = request.session.get('venue')
 		venCap = Venue.objects.get(name=venue).cap
 		minCap = Venue.objects.get(name=venue).cap

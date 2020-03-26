@@ -61,6 +61,8 @@ class RegistrationView(View):
 			result = controller.saveUserAndLogin(request, idNo, password, firstName, lastName, email)
 			if result:
 				return redirect('home:Homepage')
+			print("FALSE")
+		print("INVALID")
 		return render(request, self.template_name, {'form' : form})
 
 
@@ -80,9 +82,14 @@ class LoginView(View):
 		if form.is_valid():
 			idNo = request.session['idNo']
 			password = request.POST['password']
-			user = authenticate(username=idNo, password=password)
-			if user is not None:
+			user = Client.objects.get(username=idNo)
+			print(idNo + " | ")
+			print(Client.objects.get(username=idNo).password)
+			print(Client.objects.get(username=idNo).check_password(password))
+			# user = authenticate(request=request, username=idNo, password=Client.objects.get(username=idNo).password)
+			if user.check_password(password):
 				login(request, user)
+				print(request.user.username + " @Login")
 				return redirect('home:Homepage')
 		return render(request=request, template_name=self.template_name, context={'form' : form, 'idNo' : idNo,  'error_message' : 'Incorrect password.'})
 
