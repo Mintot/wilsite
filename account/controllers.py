@@ -34,9 +34,8 @@ class RegistrationController():
 		user.set_password(password)
 		print(idNo + " | " + user.password)
 		user.save()
-		# user = authenticate(request=request, username=idNo, password=password)
+		user = authenticate(username=idNo, password=password)
 		if user is not None:
 			login(request, user)
 			return True
-		print("User is NONE with id " + idNo + " and pass " + password)
 		return False

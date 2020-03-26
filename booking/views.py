@@ -8,12 +8,14 @@ from django import forms
 from django.http import JsonResponse
 import datetime
 
-# Create your views here.
+# This view holds the calendar and caters to booking.
 class BookingView(View):
 	template_name = 'booking/bookingform.html'
 	def get(self, request):
 		user = self.request.user
-		bookings = Booking.objects.all()
+		if user.is_authenticated == False:					# A user has to log in to access this view.
+			return redirect('account:Index')
+		bookings = Booking.objects.all()					# This gets all the bookings in the database to render to the classroom.
 		startDates = [b.startDate for b in bookings]
 		endDates = [b.endDate for b in bookings]
 		startTimes = [b.startTime for b in bookings]
@@ -22,120 +24,15 @@ class BookingView(View):
 		allUsers = [b.attendee for b in bookings]
 		allStarts = []
 		allEnds = []
-		cowCap = Venue.objects.get(name="Coworking Space").cap
+		cowCap = Venue.objects.get(name="Coworking Space").cap  		#Initial calendar view's capacity
 		i = 0;
-		while i < len(bookings):
+		while i < len(bookings): 							# Stores all the date-time pairs to a separate array.
 			allStarts.append(str(startDates[i]) + ' ' + str(startTimes[i]))
 			allEnds.append(str(endDates[i]) + ' ' + str(endTimes[i]))
 			i = i + 1
-		if user.is_authenticated:
-			return render(request = request, template_name = self.template_name, context={'user' : user, 'id': user.username, 'startDates' : allStarts, 'endDates': allEnds, 'venues': allVenues, 'users': allUsers, 'cowCap': cowCap, })
-		return redirect('account:Index')
+		return render(request = request, template_name = self.template_name, context={'user' : user, 'id': user.username, 'startDates' : allStarts, 'endDates': allEnds, 'venues': allVenues, 'users': allUsers, 'cowCap': cowCap, })
 
-class BookingCalendarView(View):
-	form_class = BookingCalendarForm
-	template_name = 'booking/bookcal.html'
-	def get(self, request):
-		form = self.form_class(
-			# fr=request.session.get('init_from'), to=request.session.get('init_to'),
-			initial= {
-			'start_date': request.session.get('init_from'),
-			'end_date': request.session.get('init_to'),
-			'start_time': datetime.datetime(2020, 12, 12, 9, 30, 0),
-			# 'start_time': datetime.datetime(2020, 1, 1, int(request.session.get('init_from_time').split(":")[0]), int(request.session.get('init_from_time').split(":")[1]), 0),
-			# 'end_time': datetime.datetime(2020, 1, 1, int(request.session.get('init_to_time').split(":")[0]), int(request.session.get('init_to_time').split(":")[1]), 0),
-			})
-		refNum = randint(100000, 999999)
-		request.session['refNum'] = refNum
-		return render(request, template_name=self.template_name, context={'form' : form})
-	def post(self, request):
-		form = self.form_class(request.POST)
-		if form.is_valid():
-			venue = form.cleaned_data['venue']
-			venCap = Venue.objects.get(name=venue).cap
-			minCap = Venue.objects.get(name=venue).cap
-			venComp = Venue.objects.get(name=venue).computers
-			minComp = Venue.objects.get(name=venue).computers
-			startDays = form.cleaned_data['start_days']
-			endDays = form.cleaned_data['end_days']
-			startTimes = form.cleaned_data['start_times']
-			endTimes = form.cleaned_data['end_times']
-			totTimes = 0
-			i = 0
-			print(str(startDays))
-			while i < str(startDays):
-				startDate = startDays[i]
-				endDate = endDays[i]
-				startTime = startTimes[i]
-				endTime = endTimes[i]
-				i = i + 1
-				weekStart = int(startDate.strftime("%w"))
-				weekEnd = int(endDate.strftime("%w"))
-				if weekEnd < weekStart:
-					weekEnd = 6 + weekEnd
-				totDays = weekEnd - weekStart + 1
-				totTime = (int(endTime.strftime("%H"))-int(startTime.strftime("%H")))
-				totMin = (int(endTime.strftime("%M"))-int(startTime.strftime("%M")))
-				if totMin == -30:
-					totTime -= 0.5
-				elif totMin == 30:
-					totTime += 0.5
-				venBook = Booking.objects.filter(venue=venue)
-				bookingLeft = venBook.filter(startDate__lte=startDate).filter(endDate__gte=startDate)
-				bookingRight= venBook.filter(endDate__gte=endDate).filter(startDate__lte=endDate)
-				bookingMid= venBook.filter(startDate__gte=startDate).filter(endDate__lte=endDate)
-				
-				conf = bookingRight | bookingLeft | bookingMid
-				confLeft = conf.filter(startTime__lte=startTime).filter(endTime__gte=startTime)
-				confRight= conf.filter(endTime__gte=endTime).filter(startTime__lte=endTime)
-				confMid= conf.filter(startTime__gte=startTime).filter(endTime__lte=endTime)
-				finConf = confRight | confLeft | confMid
-				print("CONFLICT FOUND ON: " + str(finConf))
-				if len(finConf) > 0:
-					if venue == 'Coworking Space':
-						timeslots = {}
-						comps = {}
-						for b in finConf:
-							start = b.startDate
-							end = b.endDate
-							stop = False
-							while stop == False:
-								stTime = b.startTime
-								enTime = b.endTime
-								while stTime != enTime:
-									timesl = str(start) + " " + str(stTime)
-									print("Evaluating " + str(stTime))
-									exist = timeslots.get(timesl)
-									cpExist = comps.get(timesl)
-									print(exist)
-									if exist == None:
-										timeslots[timesl] = len(b.attendee.split(","))
-										comps[timesl] = b.computers
-									else:
-										timeslots[timesl] = exist + len(b.attendee.split(","))
-										comps[timesl] = cpExist + b.computers
-									print("cap on " + str(timesl) + " is " + str(timeslots[timesl]))
-									stTime = (datetime.datetime(2020, 3, 3).combine(start, time(int(stTime.strftime('%H')), int(stTime.strftime('%M')))) + timedelta(minutes=30)).time()
-								if str(start) == str(end):
-									stop = True
-								start = start + timedelta(days=1)
-						for timeslot in timeslots:
-							if (minCap > venCap-timeslots[timeslot]):
-								minCap = venCap-timeslots[timeslot]
-							if (minComp > venComp-comps[timeslot]):
-								minComp = venComp-comps[timeslot]
-			request.session['space'] = minCap
-			request.session['comps'] = minComp
-			request.session['totDays'] = totDays
-			request.session['totTime'] = totTime
-			request.session['venue'] = venue
-			request.session['startDate'] = str(startDate)
-			request.session['endDate'] = str(endDate)
-			request.session['startTime'] = str(startTime)
-			request.session['endTime'] = str(endTime)
-			return redirect('booking:BookingDetails')
-		return render(request=request, template_name=self.template_name, context={'form' : form})
-
+# This view is seen after the user has selected timeslots from the above view.
 class BookingDetailsView(View):
 	form_class = BookingDetailsForm
 	template_name = 'booking/bookdet.html'
@@ -143,16 +40,14 @@ class BookingDetailsView(View):
 		str_users = []
 		user = self.request.user
 		form = self.form_class(cap=request.session.get('space'), pcCap=request.session.get('comps'))
-		is_cowork = request.session.get('venue') == "Coworking Space"
-		if is_cowork == False:
+		venue = request.session.get('venue')
+		if Venue.objects.get(name=venue).has_computers == 0:  			# Hides the computer field
 			form.fields['computers'].widget = forms.HiddenInput()
 		users = list(Client.objects.all().exclude(first_name=""))
-		for u in users:
+		for u in users:													# Puts all registered users in the possible list of co-bookee
 			str_users.append(str(u) + ' [' + u.username + ']')
 		return render(request, self.template_name, context={'form': form, 'users':str_users, 'self': str(user)+' ['+user.username+']', })
 	def post(self, request):
-		refNum = randint(100000, 999999)
-		request.session['refNum'] = refNum
 		venue = request.session.get('venue')
 		venCap = Venue.objects.get(name=venue).cap
 		minCap = Venue.objects.get(name=venue).cap
@@ -169,78 +64,41 @@ class BookingDetailsView(View):
 		endDays = endDays[1:len(endDays)-1]
 		startTimes = startTimes[1:len(startTimes)-1]
 		startDays = startDays[1:len(startDays)-1]
+		# The following statements are used to check avaliability of the facility and computers for every timeslot.
 		while i < len(startDays):
 			startDate = startDays[i][1:len(startDays[i])-1]
 			endDate = endDays[i][1:len(endDays[i])-1]
 			startTime = startTimes[i][1:len(startTimes[i])-1]
 			endTime = endTimes[i][1:len(endTimes[i])-1]
 			i = i + 1
-			# weekStart = int(startDate.strftime("%w"))
-			# weekEnd = int(endDate.strftime("%w"))
-			# if weekEnd < weekStart:
-				# weekEnd = 6 + weekEnd
-			# totDays = 1
-			print(startDate)
-			print(endDate)
-			print(startTime)
-			print(endTime)
-			# totTime = int(endTime.split(":")[0])-int(startTime.split(":")[1])
-			# totMin = int(endTime.split(":")[1])-int(startTime.split(":")[1])
-			# if totMin == -30:
-			# 	totTime -= 0.5
-			# elif totMin == 30:
-			# 	totTime += 0.5
 			venBook = Booking.objects.filter(venue=venue)
-			bookingLeft = venBook.filter(startDate__lte=startDate).filter(endDate__gte=startDate)
-			bookingRight= venBook.filter(endDate__gte=endDate).filter(startDate__lte=endDate)
-			bookingMid= venBook.filter(startDate__gte=startDate).filter(endDate__lte=endDate)
-			
-			conf = bookingRight | bookingLeft | bookingMid
-			confLeft = conf.filter(startTime__lte=startTime).filter(endTime__gte=startTime)
-			confRight= conf.filter(endTime__gte=endTime).filter(startTime__lte=endTime)
-			confMid= conf.filter(startTime__gte=startTime).filter(endTime__lte=endTime)
-			finConf = confRight | confLeft | confMid
-			print("CONFLICT FOUND ON: " + str(finConf))
-			if len(finConf) > 0:
-				if venue == 'Coworking Space':
-					timeslots = {}
-					comps = {}
-					for b in finConf:
-						start = b.startDate
-						end = b.endDate
-						stop = False
-						while stop == False:
-							stTime = b.startTime
-							enTime = b.endTime
-							while stTime != enTime:
-								timesl = str(start) + " " + str(stTime)
-								print("Evaluating " + str(stTime))
-								exist = timeslots.get(timesl)
-								cpExist = comps.get(timesl)
-								print(exist)
-								if exist == None:
-									timeslots[timesl] = len(b.attendee.split(","))
-									comps[timesl] = b.computers
-								else:
-									timeslots[timesl] = exist + len(b.attendee.split(","))
-									comps[timesl] = cpExist + b.computers
-								print("cap on " + str(timesl) + " is " + str(timeslots[timesl]))
-								stTime = (datetime.datetime(2020, 3, 3).combine(start, time(int(stTime.strftime('%H')), int(stTime.strftime('%M')))) + timedelta(minutes=30)).time()
-							if str(start) == str(end):
-								stop = True
-							start = start + timedelta(days=1)
-					for timeslot in timeslots:
-						if (minCap > venCap-timeslots[timeslot]):
-							minCap = venCap-timeslots[timeslot]
-						if (minComp > venComp-comps[timeslot]):
-							minComp = venComp-comps[timeslot]
+			finConf = venBook.filter(startDate__exact=startDate).filter(startTime__exact=startTime)
+			if len(finConf) > 0 and venue == 'Coworking Space': 
+				timeslots = {}
+				comps = {}
+				for b in finConf:
+					start = b.startDate
+					end = b.endDate
+					stTime = b.startTime
+					enTime = b.endTime
+					timesl = str(start) + " " + str(stTime)
+					exist = timeslots.get(timesl)
+					cpExist = comps.get(timesl)
+					if exist == None:
+						timeslots[timesl] = len(b.attendee.split(","))
+						comps[timesl] = b.computers
+					else:
+						timeslots[timesl] = exist + len(b.attendee.split(","))
+						comps[timesl] = cpExist + b.computers
+				for timeslot in timeslots:
+					if (minCap > venCap-timeslots[timeslot]):
+						minCap = venCap-timeslots[timeslot]
+					if (minComp > venComp-comps[timeslot]):
+						minComp = venComp-comps[timeslot]
 		request.session['space'] = minCap
 		request.session['comps'] = minComp
-		# request.session['totDays'] = totDays
-		print(len(startDays))
 		attendees = request.POST.get('names')
 		attendees_id = request.POST.get('ids')
-		print('WARNING! ' + str(len(attendees.split(","))-1))
 		form = self.form_class(request.POST, cap=request.session.get('space'), pcCap=request.session.get('comps'), atts=len(attendees.split(","))-1, )
 		if form.is_valid():
 			attendees = request.POST.get('names')
@@ -259,6 +117,8 @@ class BookingDetailsView(View):
 			str_users.append(str(u) + ' [' + u.username + ']')
 		return render(request, self.template_name, context={'form': form, 'users':str_users, 'self': str(user)+' ['+user.username+']', })
 
+# This view shows all the details for the user to see.
+# This also contains a button that will finalize the booking.
 class BookingInfoView(View):
 	form_class = BookingInfoForm
 	template_name = 'booking/bookcal.html'
@@ -363,10 +223,12 @@ def review_book(request):
 	request.session['end_times'] = all_time_t
 	request.session['venue'] = venue
 	request.session['totTime'] = len(fr_day)/2
-	print(all_day_f)
-	print(all_day_t)
-	print(all_time_f)
-	print(all_time_t)
+
+	refNum = randint(100000, 999999)
+	allBookRef = [b.referenceNo for b in Booking.objects.all()]
+	while refNum in allBookRef:
+		refNum = randint(100000, 999999)
+	request.session['refNum'] = refNum
 	data = {
 		'okay': True,
 	}
