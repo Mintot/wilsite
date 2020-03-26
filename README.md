@@ -20,7 +20,7 @@ skip-grant-tables
 ```
 * Save the file.
 * Start MySQL in XAMPP.
-* Go to [the database admin](localhost/phpmyadmin).
+* Go to the database admin at localhost/phpmyadmin.
 * Go to Import tab.
 * Click "Choose file" and choose "db.sql" found in this application.
 ### Server
@@ -31,7 +31,7 @@ python manage.py runserver
 ```
 ### Adding Custom Users
 To add users including yourselves:
-* Go back to [the database admin](localhost/phpmyadmin).
+* Go back to the database admin at localhost/phpmyadmin.
 * Under "db", select "account_client".
 * Go to "Insert" tab.
 * Only fill the "Username" field. It can be any string as you'd like.
