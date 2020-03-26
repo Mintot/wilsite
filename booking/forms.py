@@ -199,10 +199,14 @@ class BookingDetailsForm(forms.ModelForm):
 
 class BookingInfoForm(forms.ModelForm):
 	balance = 0
+	points = 0
+	unit_cost = 0
 	cost = 0
 	def __init__(self, *args, **kwargs):
 		self.balance = kwargs.pop('balance', 0)
 		self.cost = kwargs.pop('cost', 1)
+		self.points = kwargs.pop('points', 0)
+		self.unit_cost = kwargs.pop('unit_cost', 0)
 		super().__init__(*args, **kwargs)
 	refNum = forms.CharField(disabled=True, label="Reference Number", required=False)
 	venue = forms.CharField(disabled=True, label="Venue", required=False)
@@ -214,9 +218,11 @@ class BookingInfoForm(forms.ModelForm):
 	attendees = forms.CharField(disabled=True, label="Attendees", required=False)
 	cost = forms.IntegerField(disabled=True, label="Cost", required=False)
 	def clean_cost(self):
-		print(self.cost)
-		# if self.balance < self.cost:
-		# 	raise forms.ValidationError('You do not have enough balance. Your current balance is ' + str(self.balance) + '.')
+		credit = self.unit_cost - self.points
+		if credit < 0:
+			credit = 0
+		if self.balance - credit < self.cost - self.unit_cost:
+			raise forms.ValidationError('You do not have enough balance. Your current balance is ' + str(self.balance) + '.')
 		return self.cost
 	class Meta:
 		model = Booking

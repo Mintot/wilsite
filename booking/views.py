@@ -130,6 +130,7 @@ class BookingInfoView(View):
 		else:
 			cost = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost
 		request.session['cost'] = cost
+		request.session['unit_cost'] = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost
 		form = self.form_class(
 			initial={
 			'refNum': request.session.get('refNum'), 
@@ -145,9 +146,16 @@ class BookingInfoView(View):
 		return render(request, self.template_name, context={'form': form})
 	def post(self, request):
 		user = self.request.user
-		form = self.form_class(request.POST, balance=user.balance, cost=request.session.get('cost'))
+		form = self.form_class(request.POST, balance=user.balance, cost=request.session.get('cost'), points=user.points, unit_cost=request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost)
 		if form.is_valid():
-			user.balance = user.balance - request.session.get('cost')
+			unit_cost = request.session.get('unit_cost')
+			credit = unit_cost - user.points
+			if credit < 0:
+				credit = 0
+				user.points = user.points - unit_cost
+			else:
+				user.points = 0
+			user.balance = (user.balance - credit) - (request.session.get('cost') - unit_cost)
 			user.save()
 			venue = request.session.get('venue')
 			startDate = str(request.session.get('start_days'))[1:len(str(request.session.get('start_days')))-1].split(", ")
@@ -172,8 +180,7 @@ class BookingInfoView(View):
 			print('SUCCESS')
 			return redirect('home:Homepage')
 		attendees_id = request.session.get('attendees_id')
-		cost = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost * (len(attendees_id.split(", "))-1) * request.session.get('totDays')
-		request.session['cost'] = cost
+		cost = request.session.get('cost')
 		form.initial={
 			'refNum': request.session.get('refNum'), 
 			'cost': cost,
