@@ -41,7 +41,7 @@ To add users including yourselves:
 
 ## Contact Us
 Should you have concerns, we are reachable via the following:
-Back End Support: Jay Vince Serato - jayvince.serato@gmail.com
-Front End Support: Pinkfloyd Adonay - pinkfloyd.adonay@gmail.com
+* Back End Support: Jay Vince Serato - jayvince.serato@gmail.com
+* Front End Support: Pinkfloyd Adonay - pinkfloyd.adonay@gmail.com
 
 Happy coding!
