@@ -7,6 +7,7 @@ class Client(AbstractUser):
 	verificationCode = models.CharField(max_length=10)
 	balance = models.IntegerField(default=0)
 	points = models.IntegerField(default=0)
+	in_facility = models.BooleanField(default=False)
 
 	def getEmail(self):
 		return self.email

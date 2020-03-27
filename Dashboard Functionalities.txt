@@ -1,0 +1,39 @@
+BOOKING DASHBOARD FUNCTIONALITIES:
+RFID System
+* RFID Scanner should connect to the system.
+* All RFID scans will be logged to a separate database, noting the date and time of log and the user ID.
+* By the end of the day, all logged in users will automatically be logged out.
+* The User data should likewise be updated via the "in_facility" field.
+* All bookings within the logged period shall be considered "Completed" in "status" field.
+* The number of minutes that the user has stayed will be logged in "time_stay" field.
+* If the "time_stay" is 0 and has lapsed the date and time of booking, then the booking is tagged as "No Show".
+* Noting that the booking is per 30 minutes, if "time_stay" is 30, then it is "Completed".
+* If there are no more bookings directly after one and the user has not yet logged out of the facility, then it is "Overstayed".
+* If "time_stay" is less than 30, it is considered "Late".
+
+ADMIN PRIVILEGES
+* The admin must be able to book without date restrictions and can specify the attendees with or without cost depeding on the client.
+* The admin must be able to cancel bookings of other users and is entitled to a full refund and extra credits (to be finalized).
+
+DASHBOARD - MAIN
+* Display the current availability of facility for Coworking Space (all seats and seats with PC) and the two Conference Rooms (True or False).
+* Calculate the average customer satisfaction per day via the Review's "stars".
+* View the most recent 1- or 2-star comment, if any.
+* View the most recent 5-star comment, if any.
+* View the comparison of the current expected number of attendees as determined by the booking and the actual current number of attendees.
+* View the comparison of all completed bookings of the day and the actual length of stay.
+* View the trend of bookings over the week measured in hours of both the Coworking Space and the Conference Rooms.
+* Show the bookings by their tags (i.e. Important, Cancelled, No Show, Overstayed, All) per tab.
+
+DASHBOARD - MANAGE
+* The admin must be able to view all users with the following fields: in_facility, internet usage, points, balance, upcoming booking, and with the option to edit.\
+* The above view shall be sorted by the in_facility status of "True".
+* The admin can also update the user base through a comma-separated values (CSV) file.
+* The admin must be able to modify the rates of facilities.
+* The admin must be able to add special rates determined by the following fields: Start Date, End Date, Days of the Week, Time Start, Time End, Discount (1-100)
+* The admin must be able to add special operating times determined by the following fields: Start Date, End Date, Days of the Week, Time Start, Time End, is_closed
+* In case of overlapping times, the most recent addition will be applied.
+* The admin must also see the RFID logs with the following fields: User, In/Out, Time sorted by descending time.
+
+DASHBOARD - REPORTS
+* The admin must be able to export all data of the database in report style.

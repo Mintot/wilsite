@@ -9,6 +9,10 @@ class BookingAdmin(admin.ModelAdmin):
 class VenueAdmin(admin.ModelAdmin):
 	model = Venue
 	list_display = ['name', 'cap', ]
+class ReviewAdmin(admin.ModelAdmin):
+	model = Review
+	list_display = ['submit_date', 'stars', ]
 
 admin.site.register(Booking, BookingAdmin)
 admin.site.register(Venue, VenueAdmin)
+admin.site.register(Review, ReviewAdmin)

@@ -13,6 +13,15 @@ VENUES = (
 	('Joined Conference Room', 'Joined Conference Room'),
 	('Coworking Space', 'Coworking Space'),
 )
+STATUS = (
+	('Booked', 'Booked'),
+	('Cancelled', 'Cancelled'),
+	('Completed', 'Completed'),
+	('No Show', 'No Show'),
+	("Late", "Late"),
+	('Overstayed', 'Overstayed'),
+	('Cancelled by Admin', 'Cancelled by Admin'),
+)
 
 class Venue(models.Model):
 	name = models.CharField(max_length=50)
@@ -20,6 +29,7 @@ class Venue(models.Model):
 	has_computers = models.BooleanField(default=False)
 	computers = models.IntegerField(default=0)
 	cost = models.IntegerField(default=20)
+	computer_fee = models.IntegerField(default=10)
 
 class Booking(models.Model):
 	title = models.CharField(max_length=100, blank=True)
@@ -31,6 +41,13 @@ class Booking(models.Model):
 	purpose = models.CharField(max_length=30, choices=PURPOSES, default='Studying')
 	attendee = models.CharField(max_length=30, default='none')
 	referenceNo = models.IntegerField()
-	computers = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(8)])
+	computers = models.IntegerField(default=0, validators=[MinValueValidator(0)])
 	cost = models.IntegerField(blank=True)
 	venue = models.CharField(max_length=30, choices=VENUES, default='Coworking Space')
+	status = models.CharField(max_length=30, choices=STATUS, default='Booked')
+	time_stay = models.IntegerField(default=0)
+
+class Review(models.Model):
+	submit_date = models.DateTimeField(default=datetime.today())
+	stars = models.IntegerField(default=3, validators=[MinValueValidator(1), MaxValueValidator(5)])
+	comment = models.TextField()

@@ -126,11 +126,11 @@ class BookingInfoView(View):
 		attendees_id = request.session.get('attendees_id')
 		print(request.session.get('totTime'))
 		if request.session.get("venue") == "Coworking Space":
-			cost = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost * (len(attendees_id.split(", "))-1)
+			cost = (request.session.get('totTime') * Venue.objects.get(name="Coworking Space").cost * (len(attendees_id.split(", "))-1)) + (request.session.get('totTime') * request.session.get('computers') * Venue.objects.get(name="Coworking Space").computer_fee)
 		else:
 			cost = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost
 		request.session['cost'] = cost
-		request.session['unit_cost'] = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost
+		request.session['unit_cost'] = request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost + (request.session.get('totTime') * request.session.get('computers') * Venue.objects.get(name="Coworking Space").computer_fee)
 		form = self.form_class(
 			initial={
 			'refNum': request.session.get('refNum'), 
