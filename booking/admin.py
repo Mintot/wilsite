@@ -12,7 +12,11 @@ class VenueAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
 	model = Review
 	list_display = ['submit_date', 'stars', ]
+class MaxBook(admin.ModelAdmin):
+	model = MaxDaysOfBooking
+	list_display = ['max_days', ]
 
 admin.site.register(Booking, BookingAdmin)
 admin.site.register(Venue, VenueAdmin)
 admin.site.register(Review, ReviewAdmin)
+admin.site.register(MaxDaysOfBooking, MaxBook)

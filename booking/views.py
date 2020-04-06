@@ -41,6 +41,7 @@ class BookingDetailsView(View):
 		user = self.request.user
 		form = self.form_class(cap=request.session.get('space'), pcCap=request.session.get('comps'))
 		venue = request.session.get('venue')
+		print(venue)
 		if Venue.objects.get(name=venue).has_computers == 0:  			# Hides the computer field
 			form.fields['computers'].widget = forms.HiddenInput()
 		users = list(Client.objects.all().exclude(first_name=""))
@@ -146,16 +147,21 @@ class BookingInfoView(View):
 		return render(request, self.template_name, context={'form': form})
 	def post(self, request):
 		user = self.request.user
-		form = self.form_class(request.POST, balance=user.balance, cost=request.session.get('cost'), points=user.points, unit_cost=request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost)
+		form = self.form_class(request.POST, balance=user.coins, cost=request.session.get('cost'), points=user.points, unit_cost=request.session.get('totTime') * Venue.objects.get(name=request.session.get('venue')).cost)
 		if form.is_valid():
+			payment_method = 'Points'
 			unit_cost = request.session.get('unit_cost')
 			credit = unit_cost - user.points
 			if credit < 0:
 				credit = 0
 				user.points = user.points - unit_cost
 			else:
+				if user.points == 0:
+					payment_method = 'Coins'
+				else:
+					payment_method = 'Coins and Points'
 				user.points = 0
-			user.balance = (user.balance - credit) - (request.session.get('cost') - unit_cost)
+			user.coins = (user.coins - credit) - (request.session.get('cost') - unit_cost)
 			user.save()
 			venue = request.session.get('venue')
 			startDate = str(request.session.get('start_days'))[1:len(str(request.session.get('start_days')))-1].split(", ")
@@ -175,7 +181,7 @@ class BookingInfoView(View):
 				i = i + 1
 				for at_id in attendees_id.split(", "):
 					if at_id.strip() != "":
-						booking = Booking(referenceNo=refNum, cost=cost, venue=venue, startTime=start_time, endDate=end_day, startDate=start_day, endTime=end_time, purpose=purpose, attendee=at_id, )
+						booking = Booking(referenceNo=refNum, cost=cost, venue=venue, startTime=start_time, endDate=end_day, startDate=start_day, endTime=end_time, purpose=purpose, attendee=at_id, booker=attendees_id.split(", ")[0], payment_method=payment_method, )
 						booking.save()
 			print('SUCCESS')
 			return redirect('home:Homepage')
@@ -208,6 +214,7 @@ def review_book(request):
 	all_day_t = []
 	all_time_f = []
 	all_time_t = []
+	print("Venue is  " + venue)
 	while i < len(fr_day):
 		print(i)
 		fr_d = fr_day[i]

@@ -18,9 +18,15 @@ STATUS = (
 	('Cancelled', 'Cancelled'),
 	('Completed', 'Completed'),
 	('No Show', 'No Show'),
-	("Late", "Late"),
+	('Late', 'Late'),
 	('Overstayed', 'Overstayed'),
 	('Cancelled by Admin', 'Cancelled by Admin'),
+)
+PAYMENT_METHOD = (
+	('Coins', 'Coins'),
+	('Points', 'Points'),
+	('Coins and Points', 'Coins and Points'),
+	('None', 'None'),
 )
 
 class Venue(models.Model):
@@ -46,8 +52,13 @@ class Booking(models.Model):
 	venue = models.CharField(max_length=30, choices=VENUES, default='Coworking Space')
 	status = models.CharField(max_length=30, choices=STATUS, default='Booked')
 	time_stay = models.IntegerField(default=0)
+	booker = models.CharField(max_length=30, default='none')
+	payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD, default='Coins')
 
 class Review(models.Model):
 	submit_date = models.DateTimeField(default=datetime.today())
 	stars = models.IntegerField(default=3, validators=[MinValueValidator(1), MaxValueValidator(5)])
 	comment = models.TextField()
+
+class MaxDaysOfBooking(models.Model):
+	max_days = models.IntegerField(default=3)

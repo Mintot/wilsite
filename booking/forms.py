@@ -222,7 +222,7 @@ class BookingInfoForm(forms.ModelForm):
 		if credit < 0:
 			credit = 0
 		if self.balance - credit < self.cost - self.unit_cost:
-			raise forms.ValidationError('You do not have enough balance. Your current balance is ' + str(self.balance) + '.')
+			raise forms.ValidationError('You do not have enough coins. Your current coins is ' + str(self.balance) + '.')
 		return self.cost
 	class Meta:
 		model = Booking
