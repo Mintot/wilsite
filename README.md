@@ -44,7 +44,7 @@ To add users including yourselves:
 ### Testcases
 For the tests on startups and technopreneurship functionality, I have created thousands of dummy data with testcases.
 They can be viewed [on our shared Google Drive](https://drive.google.com/drive/u/0/folders/19jZIcuH_OkQ7swMcJ6k6zdbDhKdO9SxO).
-You are also to re-do the "Database" and "Server" steps above.
+You are also to re-do the last three points in "Database" and the entire "Server" steps above.
 
 ## Contact Us
 Should you have concerns, we are reachable via the following:
