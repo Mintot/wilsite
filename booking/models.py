@@ -53,7 +53,8 @@ class Booking(models.Model):
 	status = models.CharField(max_length=30, choices=STATUS, default='Booked')
 	time_stay = models.IntegerField(default=0)
 	booker = models.CharField(max_length=30, default='none')
-	payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD, default='Coins')
+	points = models.IntegerField(default=0)
+	coins = models.IntegerField(default=0)
 
 class Review(models.Model):
 	submit_date = models.DateTimeField(default=datetime.today())

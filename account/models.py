@@ -40,7 +40,7 @@ class TechnoTeam(models.Model):
 
 class StartUpTeam(models.Model):
 	team_image = models.ImageField(upload_to='media/')
-	startup_name = models.CharField(max_length=20)
+	startup_name = models.CharField(max_length=30)
 	company_name = models.CharField(max_length=40)
 	founders = models.TextField()
 	main_address = models.CharField(max_length=500)
@@ -61,3 +61,45 @@ class StartUpTeam(models.Model):
 	internet = models.IntegerField(default=0)
 	coins = models.IntegerField(default=0)
 	points = models.IntegerField(default=0)
+
+class Activity(models.Model):
+	team = models.CharField(max_length=30)
+	incubatee = models.CharField(max_length=20)
+	title = models.CharField(max_length=100)
+	category = models.CharField(max_length=100)
+	facilitator = models.CharField(max_length=100)
+	schedule = models.DateTimeField()
+	venue = models.CharField(max_length=100)
+	description = models.TextField()
+	attendees = models.CharField(max_length=250)
+	cost = models.IntegerField(default=0)
+	payment_mode = models.CharField(max_length=30)
+
+class Transaction(models.Model):
+	team = models.CharField(max_length=30)
+	date = models.DateField()
+	debcre = models.CharField(max_length=6)
+	category = models.CharField(max_length=100)
+	bookact = models.CharField(max_length=100)
+	description = models.TextField()
+	payment_mode = models.CharField(max_length=30)
+
+class Investment(models.Model):
+	team = models.CharField(max_length=30)
+	source = models.CharField(max_length=75)
+	inv_type = models.CharField(max_length=30)
+	amount = models.IntegerField()
+	date_received = models.DateField()
+	remark = models.TextField()
+
+class Revenue(models.Model):
+	team = models.CharField(max_length=30)
+	amount = models.IntegerField()
+	date_received = models.DateField()
+	remark = models.TextField()
+
+class Expense(models.Model):
+	team = models.CharField(max_length=30)
+	amount = models.IntegerField()
+	date_transact = models.DateField()
+	remark = models.TextField()
