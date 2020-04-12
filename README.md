@@ -23,12 +23,14 @@ skip-grant-tables
 * Go to the database admin at localhost/phpmyadmin.
 * Go to Import tab.
 * Click "Choose file" and choose "db.sql" found in this application.
+
 ### Server
 In order to run the application in Django, do the following in your command prompt:
 ```bash
 python manage.py migrate
 python manage.py runserver
 ```
+
 ### Adding Custom Users
 To add users including yourselves:
 * Go back to the database admin at localhost/phpmyadmin.
@@ -38,6 +40,11 @@ To add users including yourselves:
 * Navigate yourself to the bottommost part of the page and click "Go" (the one beside "Reset").
 * Now go back to "[your site]/signin", place your username, fill up more fields, and click "Submit".
 * Now you can go to booking via "[your site]/booking".
+
+### Testcases
+For the tests on startups and technopreneurship functionality, I have created thousands of dummy data with testcases.
+They can be viewed [on our shared Google Drive](https://drive.google.com/drive/u/0/folders/19jZIcuH_OkQ7swMcJ6k6zdbDhKdO9SxO).
+You are also to re-do the "Database" and "Server" steps above.
 
 ## Contact Us
 Should you have concerns, we are reachable via the following:
